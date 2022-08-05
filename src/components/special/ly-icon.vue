@@ -1,9 +1,5 @@
-<script>
-
-export default {
-  name: 'ly-icon'
-}
+<script lang="ts" setup>
 </script>
 <template>
-  <div></div>
+  <el-icon></el-icon>
 </template>
