@@ -12,6 +12,8 @@
     "@element-plus/icons-vue": "^2.0.6",
     "autoprefixer": "^10.4.7",
     "element-plus": "^2.2.11",
+    "unplugin-auto-import": "^0.11.1",
+    "unplugin-vue-components": "^0.22.4",
     "vite-plugin-eslint": "^1.8.0",
     "vue": "^3.2.37",
     "vue-router": "4"

@@ -7,6 +7,6 @@ const value = ref(false)
 
 <template>
   <!--<ly-icon/>-->
-  <ly-toggle v-model="value" on-value="1"/>
+  <ly-toggle v-model="value" on-value="1" />
   <router-view />
 </template>

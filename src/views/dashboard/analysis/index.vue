@@ -6,10 +6,6 @@
 
 <script>
 export default {
-  name: "analysis"
+  name: 'HomePage'
 }
 </script>
-
-<style scoped>
-
-</style>

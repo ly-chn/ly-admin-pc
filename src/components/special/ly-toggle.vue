@@ -38,7 +38,7 @@ const value = computed({
 </script>
 <template>
   <div @click="value=1">
-    {{modelValue}}
+    {{ modelValue }}
     <slot v-if="modelValue === onValue" name="on" @click="value=offValue">on</slot>
     <slot v-else name="off" @click="value=onValue">off</slot>
   </div>

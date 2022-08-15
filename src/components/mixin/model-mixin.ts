@@ -1,28 +1,28 @@
-import {computed, defineComponent} from "vue";
+import {defineComponent} from 'vue'
 
 export const ModelMixin = defineComponent({
-    props: {
-        /**
+  props: {
+    /**
          * 用于双向绑定
          */
-        modelValue: {
-            required: true
-        }
-    },
-    emits: {
-        /**
+    modelValue: {
+      required: true
+    }
+  },
+  emits: {
+    /**
          * v-model change
          */
-        change: null
+    change: null
+  },
+  computed: {
+    value: {
+      get() {
+        return this.modelValue
+      },
+      set(val: unknown) {
+        this.$emit('change', val)
+      },
     },
-    computed: {
-        value: {
-            get() {
-                return this.modelValue
-            },
-            set(val: unknown) {
-                this.$emit('change', val)
-            },
-        },
-    }
+  }
 })
