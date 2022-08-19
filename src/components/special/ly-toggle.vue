@@ -3,9 +3,16 @@ import {computed, defineComponent, toRefs, watchEffect} from 'vue'
 
 export default defineComponent({
   props: {
-    modelValue: {},
-    onValue: {},
-    offValue: {}
+    modelValue: null,
+    /**
+     * 启用时的值
+     */
+    onValue: {
+      default: true
+    },
+    offValue: {
+      default: false
+    }
   },
   emits: {
     'update:modelValue': null,
@@ -17,7 +24,7 @@ export default defineComponent({
         emit('update:modelValue', offValue.value)
       }
     })
-    const activated = computed(() => modelValue === onValue)
+    const activated = computed(() => modelValue.value === onValue.value)
     return {
       activated,
       emit,
