@@ -3,16 +3,16 @@ import {defineComponent} from 'vue'
 export const ModelMixin = defineComponent({
   props: {
     /**
-         * 用于双向绑定
-         */
+     * 用于双向绑定
+     */
     modelValue: {
       required: true
     }
   },
   emits: {
     /**
-         * v-model change
-         */
+     * v-model change
+     */
     change: null
   },
   computed: {

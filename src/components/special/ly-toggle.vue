@@ -16,7 +16,6 @@ const {onValue, offValue, modelValue} = defineProps({
 })
 const emit = defineEmits(['update:modelValue'])
 watchEffect(() => {
-  console.log(modelValue, onValue, offValue)
   if (![onValue, offValue].includes(modelValue)) {
     emit('update:modelValue', offValue)
   }
@@ -26,11 +25,9 @@ const value = computed({
     return modelValue
   },
   set() {
-    if (modelValue === offValue) {
-      console.log(offValue, modelValue)
+    if (modelValue === onValue) {
       emit('update:modelValue', offValue)
     } else {
-      console.log(onValue, modelValue)
       emit('update:modelValue', onValue)
     }
   },
