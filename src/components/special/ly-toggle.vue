@@ -1,42 +1,34 @@
-<script lang="ts" setup>
-// import {defineProps} from 'vue'
+<script lang="ts">
+import {computed, defineComponent, toRefs, watchEffect} from 'vue'
 
-import {computed, watchEffect} from 'vue'
-
-const {onValue, offValue, modelValue} = defineProps({
-  /**
-   * 开启时的值
-   */
-  onValue: {},
-  /**
-   * 关闭时的值
-   */
-  offValue: {},
-  modelValue: {}
-})
-const emit = defineEmits(['update:modelValue'])
-watchEffect(() => {
-  if (![onValue, offValue].includes(modelValue)) {
-    emit('update:modelValue', offValue)
+export default defineComponent({
+  props: {
+    modelValue: {},
+    onValue: {},
+    offValue: {}
+  },
+  emits: {
+    'update:modelValue': null,
+  },
+  setup(props, {emit, slots}) {
+    const {modelValue, onValue, offValue} = toRefs(props)
+    watchEffect(() => {
+      if (![onValue.value, offValue.value].includes(modelValue.value)) {
+        emit('update:modelValue', offValue.value)
+      }
+    })
+    const activated = computed(() => modelValue === onValue)
+    return {
+      activated,
+      emit,
+      slots
+    }
   }
 })
-const value = computed({
-  get() {
-    return modelValue
-  },
-  set() {
-    if (modelValue === onValue) {
-      emit('update:modelValue', offValue)
-    } else {
-      emit('update:modelValue', onValue)
-    }
-  },
-})
+
 </script>
 <template>
-  <div @click="value=1">
-    {{ modelValue }}
-    <slot v-if="modelValue === onValue" name="on" @click="value=offValue">on</slot>
-    <slot v-else name="off" @click="value=onValue">off</slot>
+  <div @click="emit('update:modelValue', activated ? offValue : onValue)">
+    <slot v-bind="{modelValue, onValue, offValue}">{{ modelValue }}</slot>
   </div>
 </template>
