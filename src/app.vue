@@ -3,6 +3,6 @@
 
 <template>
   <el-config-provider>
-    <RouterView />
+    <router-view />
   </el-config-provider>
 </template>

@@ -21,7 +21,7 @@ const dashboard: RouteRecordRaw = {
     {
       path: 'analysis',
       name: 'Analysis',
-      component: () => import('/@/views/dashboard/analysis/index.vue'),
+      component: () => import('/@/views/dashboard/analysis/analysis-page.vue'),
       meta: {
         // affix: true,
         title: 'analysis'

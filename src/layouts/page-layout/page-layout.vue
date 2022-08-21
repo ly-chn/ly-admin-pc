@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container class="min-h-screen">
     <el-aside width="200px">
       <el-menu
           default-active="2"
