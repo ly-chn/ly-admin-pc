@@ -1,16 +1,13 @@
 <template>
-  <el-container>
-    <el-aside width="200px">
+  <el-container class="min-h-screen">
+    <el-aside :width="drawer?'auto':'200px'">
       <el-menu
           default-active="2"
           class="el-menu-vertical-demo"
-          :collapse="isCollapse"
-          @open="handleOpen"
-          @close="handleClose"
-      >
+          :collapse="drawer">
         <el-sub-menu index="1">
           <template #title>
-            <el-icon><location /></el-icon>
+            <ly-icon type="el-location"/>
             <span>Navigator One</span>
           </template>
           <el-menu-item-group>
@@ -27,25 +24,19 @@
           </el-sub-menu>
         </el-sub-menu>
         <el-menu-item index="2">
-          <el-icon><icon-menu /></el-icon>
+          <ly-icon type="el-icon-menu"/>
           <template #title>Navigator Two</template>
-        </el-menu-item>
-        <el-menu-item index="3" disabled>
-          <el-icon><document /></el-icon>
-          <template #title>Navigator Three</template>
-        </el-menu-item>
-        <el-menu-item index="4">
-          <el-icon><setting /></el-icon>
-          <template #title>Navigator Four</template>
         </el-menu-item>
       </el-menu>
     </el-aside>
     <el-container>
       <el-header>
-        <el-icon @click="drawer = !drawer">
-          <fold v-if="drawer" />
-          <expand v-else />
-        </el-icon>
+        <ly-toggle v-model="drawer">
+          <el-icon>
+            <fold v-if="drawer" />
+            <expand v-else />
+          </el-icon>
+        </ly-toggle>
       </el-header>
       <el-main>
         <router-view #default="{ Component, route }">
@@ -65,9 +56,10 @@
 <script lang="ts" setup>
 import {computed, ref} from 'vue'
 import {Expand, Fold} from '@element-plus/icons-vue'
+import LyToggle from '/@/components/special/ly-toggle.vue'
+import LyIcon from '/@/components/special/ly-icon.vue'
 
 
-const name = 'PageLayout'
 const drawer = ref(false)
 
 
