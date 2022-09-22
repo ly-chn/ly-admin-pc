@@ -1,13 +1,12 @@
 <template>
   <el-container class="min-h-screen">
     <el-aside :width="drawer?'auto':'200px'">
-      <el-menu
-          default-active="2"
-          class="el-menu-vertical-demo"
-          :collapse="drawer">
+      <el-menu :collapse="drawer"
+               class="el-menu-vertical-demo"
+               default-active="2">
         <el-sub-menu index="1">
           <template #title>
-            <ly-icon type="el-location"/>
+            <ly-icon type="el-location" />
             <span>Navigator One</span>
           </template>
           <el-menu-item-group>
@@ -24,7 +23,7 @@
           </el-sub-menu>
         </el-sub-menu>
         <el-menu-item index="2">
-          <ly-icon type="el-icon-menu"/>
+          <ly-icon type="el-icon-menu" />
           <template #title>Navigator Two</template>
         </el-menu-item>
       </el-menu>
@@ -48,13 +47,15 @@
           </transition>
         </router-view>
       </el-main>
-      <el-footer>Footer</el-footer>
+      <!--<el-footer class="text-right">
+        &#45;&#45; by: xy
+      </el-footer>-->
     </el-container>
   </el-container>
 </template>
 
 <script lang="ts" setup>
-import {computed, ref} from 'vue'
+import {ref} from 'vue'
 import {Expand, Fold} from '@element-plus/icons-vue'
 import LyToggle from '/@/components/special/ly-toggle.vue'
 import LyIcon from '/@/components/special/ly-icon.vue'
@@ -62,11 +63,4 @@ import LyIcon from '/@/components/special/ly-icon.vue'
 
 const drawer = ref(false)
 
-
-const getTabsState = computed(() => {
-  // return tabStore.getTabList.filter((item) => !item.meta?.hideTab);
-  return []
-})
 </script>
-
-
