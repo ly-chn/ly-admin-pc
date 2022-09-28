@@ -1,36 +1,30 @@
-<script lang="ts">
-import {defineComponent, provide, reactive, toRefs} from 'vue'
+<script lang="ts" setup>
+import {provide, reactive, toRefs} from 'vue'
+import {colSpanProps} from '/@/components/form/form-item/form-item'
 
-export default defineComponent({
-  name: 'LyForm',
-  props: {
-    /**
-     * 计划去掉
-     */
-    model: null,
-    labelWidth: {
-      type: [Number, String],
-      default: 'auto'
-    },
-    /**
-     * 为true时，表单不可编辑
-     */
-    disabled: {
-      type: Boolean
-    }
+const props = defineProps({
+  /**
+   * label宽度
+   */
+  labelWidth: {
+    type: [Number, String],
+    default: 'auto'
   },
-  setup(props, {emit}) {
-    provide('formInstance',   reactive({
-      ...toRefs(props),
-      emit
-    }))
-    return {}
-  }
+  /**
+   * 为true时，表单不可编辑
+   */
+  disabled: {
+    type: Boolean
+  },
+  ...colSpanProps
 })
 
+provide('formInstance', reactive({
+  ...toRefs(props),
+}))
 </script>
 <template>
-  <el-form :model="model" :label-width="labelWidth" @submit.prevent>
+  <el-form :label-width="labelWidth" @submit.prevent>
     <el-row>
       <slot />
     </el-row>
