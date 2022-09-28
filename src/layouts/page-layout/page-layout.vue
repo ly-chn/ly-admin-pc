@@ -57,9 +57,6 @@
 <script lang="ts" setup>
 import {ref} from 'vue'
 import {Expand, Fold} from '@element-plus/icons-vue'
-import LyToggle from '/@/components/special/ly-toggle.vue'
-import LyIcon from '/@/components/special/ly-icon.vue'
-
 
 const drawer = ref(false)
 

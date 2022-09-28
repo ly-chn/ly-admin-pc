@@ -1,0 +1,3 @@
+root = true
+[*.ts]
+indent_size = 2

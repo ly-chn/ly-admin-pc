@@ -8,12 +8,9 @@
 </template>
 
 <script>
-import LyIcon from '../../../components/special/ly-icon.vue'
-import LyInput from '../../../components/form/form-item/ly-input.vue'
-import LyForm from '../../../components/form/form/ly-form.vue'
+
 export default {
   name: 'HomePage',
-  components: {LyForm, LyInput, LyIcon},
   data() {
     return {
       form: {
