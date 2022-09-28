@@ -1,37 +1,25 @@
-<script lang="ts">
-import {computed, defineComponent, toRefs, watchEffect} from 'vue'
+<script lang="ts" setup>
+import {computed, watchEffect} from 'vue'
 
-export default defineComponent({
-  props: {
-    modelValue: null,
-    /**
-     * 启用时的值
-     */
-    onValue: {
-      default: true
-    },
-    offValue: {
-      default: false
-    }
+const props = defineProps({
+  modelValue: null,
+  /**
+   * 启用时的值
+   */
+  onValue: {
+    default: true
   },
-  emits: {
-    'update:modelValue': null,
-  },
-  setup(props, {emit, slots}) {
-    const {modelValue, onValue, offValue} = toRefs(props)
-    watchEffect(() => {
-      if (![onValue.value, offValue.value].includes(modelValue.value)) {
-        emit('update:modelValue', offValue.value)
-      }
-    })
-    const activated = computed(() => modelValue.value === onValue.value)
-    return {
-      activated,
-      emit,
-      slots
-    }
+  offValue: {
+    default: false
   }
 })
+const emit = defineEmits(['update:modelValue'])
+watchEffect(() => {
+  if (![props.onValue, props.offValue].includes(props.modelValue)) {
+    emit('update:modelValue', props.offValue)
+  }
+})
+const activated = computed(() => props.modelValue === props.onValue)
 
 </script>
 <template>
