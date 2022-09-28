@@ -56,7 +56,7 @@ const setCurrentValue = (value: any) => emit('update:modelValue', value)
               :placeholder="placeholder"
               :show-password="showPassword"
               :show-word-limit="Boolean(maxlength)"
-              :value="modelValue"
+              :model-value="modelValue"
               @input="setCurrentValue" />
   </ly-form-item>
 </template>
