@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import {computed, inject} from 'vue'
+import {computed, inject, onMounted, ref} from 'vue'
 import {formItemProps} from '/@/components/form/form-item/form-item'
+import {ElFormItem} from 'element-plus'
 
 const props = defineProps({
   ...formItemProps
@@ -14,7 +15,9 @@ const usefulRules = computed(() => [].concat(props.rules as [], formItemInstance
   .filter(it => !!it).map(it => typeof it === 'function' ? (it as () => object)() : it))
 const usefulLabel = computed(() => props.label || formItemInstance?.label)
 const usefulSpan = computed(() => formItemInstance?.colSpan || formInstance?.colSpan || 4)
-
+const formItem = ref()
+console.log('ElFormItem', ElFormItem)
+onMounted(()=>console.log(formItem))
 </script>
 <template>
   <el-col :span="usefulSpan" class="ly-form-item-col">

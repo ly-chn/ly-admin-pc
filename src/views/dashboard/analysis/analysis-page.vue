@@ -1,8 +1,8 @@
 <template>
   <div>
-    <ly-icon type="el-edit"/>
+    <ly-icon type="el-edit" />
     <ly-form>
-      <ly-input label="名称" v-model="form.name" placeholder="请输入名称"/>
+      <ly-input label="名称" v-model="form.name" placeholder="请输入名称" />
     </ly-form>
   </div>
 </template>
