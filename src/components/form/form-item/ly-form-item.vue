@@ -1,32 +1,39 @@
 <script lang="ts" setup>
-import {computed, inject, onMounted, ref} from 'vue'
-import {formItemProps} from '/@/components/form/form-item/form-item'
-import {ElFormItem} from 'element-plus'
+import {computed, PropType, useSlots} from 'vue'
+import {ColSpanProps} from '/@/components/form/form-item/form-item'
 
 const props = defineProps({
-  ...formItemProps
+  /**
+   * 为true时，表单不可编辑
+   */
+  disabled: Boolean,
+  /**
+   * 表单rule变化时触发校验
+   */
+  validateOnRuleChange: Boolean,
+  /**
+   * 用于控制该表单内组件的尺寸
+   */
+  size: String as PropType<'large' | 'default' | 'small'>,
+  /**
+   * 当校验失败时，滚动到第一个错误表单项
+   */
+  scrollToError: Boolean,
+  rules: Array,
+  label: String,
+  // ...colSpanProps
 })
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const formItemInstance = inject('formItemInstance', undefined) as any
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const formInstance = inject('formInstance', undefined) as any
-const usefulRules = computed(() => [].concat(props.rules as [], formItemInstance?.rules)
-  .filter(it => !!it).map(it => typeof it === 'function' ? (it as () => object)() : it))
-const usefulLabel = computed(() => props.label || formItemInstance?.label)
-const usefulSpan = computed(() => formItemInstance?.colSpan || formInstance?.colSpan || 4)
-const formItem = ref()
-console.log('ElFormItem', ElFormItem)
-onMounted(()=>console.log(formItem))
+const slots = useSlots()
+const hasLabel = computed(() => props.label || slots.label)
 </script>
 <template>
-  <el-col :span="usefulSpan" class="ly-form-item-col">
-    <el-form-item ref="formItem"
-                  :label="usefulLabel"
-                  :rules="usefulRules"
-                  :value="modelValue"
-                  class="ly-form-item">
-      <slot />
-    </el-form-item>
-  </el-col>
+  <div v-if="hasLabel" ref="labelWrap" class="el-form-item__label">
+    <slot name="label">{{ label }}</slot>
+  </div>
+  <div class="ly-form-item-content">
+    <slot />
+  </div>
 </template>
+<style scoped>
+
+</style>

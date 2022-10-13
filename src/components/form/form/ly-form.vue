@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {provide, reactive, toRefs} from 'vue'
+import {computed, provide, reactive, toRefs} from 'vue'
 import {colSpanProps} from '/@/components/form/form-item/form-item'
 
 const props = defineProps({
@@ -22,11 +22,15 @@ const props = defineProps({
 provide('formInstance', reactive({
   ...toRefs(props),
 }))
+console.log(props)
+const formClassList = computed(() => {
+  return []
+})
 </script>
 <template>
-  <el-form :label-width="labelWidth" @submit.prevent>
+  <form :class="formClassList">
     <el-row>
       <slot />
     </el-row>
-  </el-form>
+  </form>
 </template>
