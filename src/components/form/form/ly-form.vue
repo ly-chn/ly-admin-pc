@@ -1,28 +1,21 @@
 <script lang="ts" setup>
-import {computed, provide, reactive, toRefs} from 'vue'
-import {colSpanProps} from '/@/components/form/form-item/form-item'
+import {computed, provide, reactive, toRef, toRefs} from 'vue'
+import {lyFormCtxSymbol, lyFormProps} from './ly-form-key'
+import {useAutoLabelWidth} from '/@/components/form/util/auto-label-width'
 
-const props = defineProps({
-  /**
-   * label宽度
-   */
-  labelWidth: {
-    type: [Number, String],
-    default: 'auto'
-  },
-  /**
-   * 为true时，表单不可编辑
-   */
-  disabled: {
-    type: Boolean
-  },
-  ...colSpanProps
-})
+const props = defineProps(lyFormProps)
 
-provide('formInstance', reactive({
+const reactiveForm =reactive({
   ...toRefs(props),
+  ...useAutoLabelWidth(props.maxLabelWidth)
+})
+console.log(reactiveForm)
+// todo: 为什么会出现类型不匹配的情况, 好难受啊
+provide(lyFormCtxSymbol, reactive({
+  // ...toRefs(props),
+  ...useAutoLabelWidth(props.maxLabelWidth)
 }))
-console.log(props)
+
 const formClassList = computed(() => {
   return []
 })

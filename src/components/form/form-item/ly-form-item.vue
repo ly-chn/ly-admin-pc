@@ -1,39 +1,76 @@
 <script lang="ts" setup>
-import {computed, PropType, useSlots} from 'vue'
-import {ColSpanProps} from '/@/components/form/form-item/form-item'
+import {computed, inject, nextTick, onBeforeUnmount, onMounted, ref, useSlots, watchEffect} from 'vue'
+import {colSpanProps} from '/@/components/form/util/form-props'
+import {lyFormCtxSymbol} from '/@/components/form/form/ly-form-key'
+import {useResizeObserver} from '@vueuse/core'
 
+const compKey = Symbol.for('ly-form-item')
+
+const formCtx = inject(lyFormCtxSymbol)
 const props = defineProps({
+  /**
+   * 最大label宽度
+   */
+  maxLabelWidth: {
+    type: Number,
+    default: 0
+  },
   /**
    * 为true时，表单不可编辑
    */
   disabled: Boolean,
-  /**
-   * 表单rule变化时触发校验
-   */
-  validateOnRuleChange: Boolean,
-  /**
-   * 用于控制该表单内组件的尺寸
-   */
-  size: String as PropType<'large' | 'default' | 'small'>,
-  /**
-   * 当校验失败时，滚动到第一个错误表单项
-   */
-  scrollToError: Boolean,
   rules: Array,
   label: String,
-  // ...colSpanProps
+  ...colSpanProps
 })
 const slots = useSlots()
+const labelRef = ref<HTMLDivElement>()
+
 const hasLabel = computed(() => props.label || slots.label)
+const updateLabelWidth = (width: number) => {
+  formCtx?.registerLabelWidth(compKey, width)
+}
+
+const getLabelWidth = () => {
+  if (labelRef.value) {
+    const width = window.getComputedStyle(labelRef.value).width
+    return Math.ceil(Number.parseFloat(width))
+  } else {
+    return 0
+  }
+}
+
+useResizeObserver(
+  () => (labelRef.value?.firstElementChild ?? null) as HTMLElement | null,
+  () => updateLabelWidth(getLabelWidth())
+)
+
+onMounted(() => {
+  updateLabelWidth(getLabelWidth())
+})
+
+onBeforeUnmount(() => {
+  updateLabelWidth(0)
+})
+watchEffect(() => {
+  console.log('update', labelRef.value, formCtx, typeof formCtx?.autoLabelWidth ,typeof formCtx?.deregisterLabelWidth)
+  if (labelRef.value && formCtx?.autoLabelWidth) {
+    labelRef.value.style.minWidth = formCtx.autoLabelWidth
+    console.log('after update', labelRef.value.style.minWidth, formCtx.autoLabelWidth)
+  }
+})
 </script>
 <template>
-  <div v-if="hasLabel" ref="labelWrap" class="el-form-item__label">
+  <div v-if="hasLabel" ref="labelRef" class="el-form-item__label w-auto overflow-hidden text-ellipsis">
     <slot name="label">{{ label }}</slot>
   </div>
   <div class="ly-form-item-content">
     <slot />
   </div>
 </template>
-<style scoped>
 
+<style scoped>
+.el-form-item__label {
+  width: auto;
+}
 </style>

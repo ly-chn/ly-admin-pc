@@ -1,6 +1,3 @@
-// 表单项通用
-import {ComponentObjectPropsOptions} from 'vue'
-
 export const formItemProps = {
   modelValue: null,
   label: String,
@@ -10,7 +7,7 @@ export const formItemProps = {
 }
 
 // 布局通用
-export const colSpanProps: ComponentObjectPropsOptions = {
+export const colSpanProps = {
   /**
    * all of 24
    */

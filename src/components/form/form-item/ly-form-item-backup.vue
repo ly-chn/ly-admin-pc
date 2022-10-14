@@ -16,8 +16,6 @@ const usefulRules = computed(() => [].concat(props.rules as [], formItemInstance
 const usefulLabel = computed(() => props.label || formItemInstance?.label)
 const usefulSpan = computed(() => formItemInstance?.colSpan || formInstance?.colSpan || 4)
 const formItem = ref()
-console.log('ElFormItem', ElFormItem)
-onMounted(()=>console.log(formItem))
 </script>
 <template>
   <el-col :span="usefulSpan" class="ly-form-item-col">
