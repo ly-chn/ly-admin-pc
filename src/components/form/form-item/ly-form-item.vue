@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {computed, inject, nextTick, onBeforeUnmount, onMounted, ref, useSlots, watchEffect} from 'vue'
+import {computed, inject, onBeforeUnmount, onMounted, ref, useSlots, watchEffect} from 'vue'
 import {colSpanProps} from '/@/components/form/util/form-props'
 import {lyFormCtxSymbol} from '/@/components/form/form/ly-form-key'
 import {useResizeObserver} from '@vueuse/core'
@@ -53,10 +53,8 @@ onBeforeUnmount(() => {
   updateLabelWidth(0)
 })
 watchEffect(() => {
-  console.log('update', labelRef.value, formCtx, typeof formCtx?.autoLabelWidth ,typeof formCtx?.deregisterLabelWidth)
   if (labelRef.value && formCtx?.autoLabelWidth) {
     labelRef.value.style.minWidth = formCtx.autoLabelWidth
-    console.log('after update', labelRef.value.style.minWidth, formCtx.autoLabelWidth)
   }
 })
 </script>
@@ -65,7 +63,7 @@ watchEffect(() => {
     <slot name="label">{{ label }}</slot>
   </div>
   <div class="ly-form-item-content">
-    <slot />
+    <slot/>
   </div>
 </template>
 

@@ -1,4 +1,4 @@
-import {ExtractPropTypes, InjectionKey, PropType} from 'vue'
+import {ExtractPropTypes, InjectionKey, PropType, UnwrapRef} from 'vue'
 import {FormItemContext, FormItemProp, FormValidateCallback, FormValidationResult} from 'element-plus'
 import {Arrayable} from 'element-plus/es/utils'
 import {useAutoLabelWidth} from '/@/components/form/util/auto-label-width'
@@ -31,7 +31,7 @@ export const lyFormProps = {
   ...colSpanProps
 }
 export type LyFormProps = ExtractPropTypes<typeof lyFormProps>
-export type LyFormContext = LyFormProps & ReturnType<typeof useAutoLabelWidth> & {
+export type LyFormContext = LyFormProps & UnwrapRef<ReturnType<typeof useAutoLabelWidth>> & {
   // expose
   addField: (field: FormItemContext) => void
   removeField: (field: FormItemContext) => void
