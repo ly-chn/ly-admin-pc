@@ -1,8 +1,8 @@
 import {ExtractPropTypes, InjectionKey, PropType, UnwrapRef} from 'vue'
 import {FormItemContext, FormItemProp, FormValidateCallback, FormValidationResult} from 'element-plus'
 import {Arrayable} from 'element-plus/es/utils'
-import {useAutoLabelWidth} from '/@/components/form/util/auto-label-width'
 import {colSpanProps} from '/@/components/form/util/form-props'
+import {useAutoLabelWidth} from '/@/components/form/util/form-util'
 
 
 export const lyFormProps = {

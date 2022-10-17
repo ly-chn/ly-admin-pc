@@ -1,4 +1,4 @@
-import {computed, reactive, watchEffect} from 'vue'
+import {computed, reactive} from 'vue'
 
 export function useAutoLabelWidth(maxLabelWidth: number) {
   const labelWidthMap = reactive(new Map<symbol, number>())
@@ -15,10 +15,13 @@ export function useAutoLabelWidth(maxLabelWidth: number) {
   const deregisterLabelWidth = (key: symbol) => {
     labelWidthMap.delete(key)
   }
-  console.log('labelWidthMap', labelWidthMap)
   return {
     autoLabelWidth,
     registerLabelWidth,
     deregisterLabelWidth
   }
+}
+
+export function useColSpan() {
+  // pass
 }

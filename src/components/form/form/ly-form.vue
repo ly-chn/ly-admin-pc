@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {computed, provide, reactive, toRefs} from 'vue'
 import {lyFormCtxSymbol, lyFormProps} from './ly-form-key'
-import {useAutoLabelWidth} from '/@/components/form/util/auto-label-width'
+import {useAutoLabelWidth} from '/@/components/form/util/form-util'
 
 const props = defineProps(lyFormProps)
 
