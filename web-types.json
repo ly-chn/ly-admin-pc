@@ -1,0 +1,501 @@
+{
+  "framework": "vue",
+  "name": "ly-admin-pc",
+  "version": "0.0.0",
+  "contributions": {
+    "html": {
+      "description-markup": "markdown",
+      "types-syntax": "typescript",
+      "tags": [
+        {
+          "name": "ly-form",
+          "description": "",
+          "slots": [
+            {
+              "name": "default"
+            }
+          ],
+          "source": {
+            "module": "./src/components/form/form/ly-form.vue",
+            "symbol": "default"
+          }
+        },
+        {
+          "name": "ly-form",
+          "description": "",
+          "slots": [
+            {
+              "name": "default"
+            }
+          ],
+          "source": {
+            "module": "./src/components/form/form/ly-form.vue",
+            "symbol": "default"
+          }
+        },
+        {
+          "name": "ly-form-item",
+          "description": "",
+          "attributes": [
+            {
+              "name": "maxLabelWidth",
+              "description": "最大label宽度",
+              "value": {
+                "kind": "expression",
+                "type": "number"
+              },
+              "default": "0"
+            },
+            {
+              "name": "disabled",
+              "description": "为true时，表单不可编辑",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "rules",
+              "value": {
+                "kind": "expression",
+                "type": "array"
+              }
+            },
+            {
+              "name": "label",
+              "value": {
+                "kind": "expression",
+                "type": "string"
+              }
+            }
+          ],
+          "slots": [
+            {
+              "name": "label"
+            },
+            {
+              "name": "default"
+            }
+          ],
+          "source": {
+            "module": "./src/components/form/form-item/ly-form-item.vue",
+            "symbol": "default"
+          }
+        },
+        {
+          "name": "ly-form-item",
+          "description": "",
+          "attributes": [
+            {
+              "name": "maxLabelWidth",
+              "description": "最大label宽度",
+              "value": {
+                "kind": "expression",
+                "type": "number"
+              },
+              "default": "0"
+            },
+            {
+              "name": "disabled",
+              "description": "为true时，表单不可编辑",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "rules",
+              "value": {
+                "kind": "expression",
+                "type": "array"
+              }
+            },
+            {
+              "name": "label",
+              "value": {
+                "kind": "expression",
+                "type": "string"
+              }
+            }
+          ],
+          "slots": [
+            {
+              "name": "label"
+            },
+            {
+              "name": "default"
+            }
+          ],
+          "source": {
+            "module": "./src/components/form/form-item/ly-form-item.vue",
+            "symbol": "default"
+          }
+        },
+        {
+          "name": "ly-form-item-backup",
+          "description": "",
+          "slots": [
+            {
+              "name": "default"
+            }
+          ],
+          "source": {
+            "module": "./src/components/form/form-item/ly-form-item-backup.vue",
+            "symbol": "default"
+          }
+        },
+        {
+          "name": "ly-form-item-backup",
+          "description": "",
+          "slots": [
+            {
+              "name": "default"
+            }
+          ],
+          "source": {
+            "module": "./src/components/form/form-item/ly-form-item-backup.vue",
+            "symbol": "default"
+          }
+        },
+        {
+          "name": "ly-icon",
+          "description": "",
+          "attributes": [
+            {
+              "name": "type",
+              "required": true,
+              "value": {
+                "kind": "expression",
+                "type": "string"
+              }
+            },
+            {
+              "name": "color",
+              "value": {
+                "kind": "expression",
+                "type": "string"
+              }
+            },
+            {
+              "name": "size",
+              "value": {
+                "kind": "expression",
+                "type": "string|number"
+              }
+            }
+          ],
+          "source": {
+            "module": "./src/components/special/ly-icon.vue",
+            "symbol": "default"
+          }
+        },
+        {
+          "name": "ly-icon",
+          "description": "",
+          "attributes": [
+            {
+              "name": "type",
+              "required": true,
+              "value": {
+                "kind": "expression",
+                "type": "string"
+              }
+            },
+            {
+              "name": "color",
+              "value": {
+                "kind": "expression",
+                "type": "string"
+              }
+            },
+            {
+              "name": "size",
+              "value": {
+                "kind": "expression",
+                "type": "string|number"
+              }
+            }
+          ],
+          "source": {
+            "module": "./src/components/special/ly-icon.vue",
+            "symbol": "default"
+          }
+        },
+        {
+          "name": "ly-input",
+          "description": "",
+          "attributes": [
+            {
+              "name": "label",
+              "description": "标签文本",
+              "value": {
+                "kind": "expression",
+                "type": "string"
+              }
+            },
+            {
+              "name": "rules",
+              "description": "表单验证规则",
+              "value": {
+                "kind": "expression",
+                "type": "array|func|object"
+              }
+            },
+            {
+              "name": "disabled",
+              "description": "为true时，表单不可编辑",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "kind": "expression",
+                "type": "null"
+              }
+            },
+            {
+              "name": "maxlength",
+              "description": "原生属性，最大输入长度",
+              "value": {
+                "kind": "expression",
+                "type": "number"
+              }
+            },
+            {
+              "name": "minlength",
+              "description": "原生属性，最小输入长度",
+              "value": {
+                "kind": "expression",
+                "type": "number"
+              }
+            },
+            {
+              "name": "showPassword",
+              "description": "是否显示切换密码图标",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "prefixIcon",
+              "description": "输入框头部图标",
+              "value": {
+                "kind": "expression",
+                "type": "string"
+              }
+            },
+            {
+              "name": "suffixIcon",
+              "description": "输入框尾部图标",
+              "value": {
+                "kind": "expression",
+                "type": "string"
+              }
+            },
+            {
+              "name": "placeholder",
+              "value": {
+                "kind": "expression",
+                "type": "string"
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ],
+          "source": {
+            "module": "./src/components/form/form-item/ly-input.vue",
+            "symbol": "default"
+          }
+        },
+        {
+          "name": "ly-input",
+          "description": "",
+          "attributes": [
+            {
+              "name": "label",
+              "description": "标签文本",
+              "value": {
+                "kind": "expression",
+                "type": "string"
+              }
+            },
+            {
+              "name": "rules",
+              "description": "表单验证规则",
+              "value": {
+                "kind": "expression",
+                "type": "array|func|object"
+              }
+            },
+            {
+              "name": "disabled",
+              "description": "为true时，表单不可编辑",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "modelValue",
+              "value": {
+                "kind": "expression",
+                "type": "null"
+              }
+            },
+            {
+              "name": "maxlength",
+              "description": "原生属性，最大输入长度",
+              "value": {
+                "kind": "expression",
+                "type": "number"
+              }
+            },
+            {
+              "name": "minlength",
+              "description": "原生属性，最小输入长度",
+              "value": {
+                "kind": "expression",
+                "type": "number"
+              }
+            },
+            {
+              "name": "showPassword",
+              "description": "是否显示切换密码图标",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "prefixIcon",
+              "description": "输入框头部图标",
+              "value": {
+                "kind": "expression",
+                "type": "string"
+              }
+            },
+            {
+              "name": "suffixIcon",
+              "description": "输入框尾部图标",
+              "value": {
+                "kind": "expression",
+                "type": "string"
+              }
+            },
+            {
+              "name": "placeholder",
+              "value": {
+                "kind": "expression",
+                "type": "string"
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ],
+          "source": {
+            "module": "./src/components/form/form-item/ly-input.vue",
+            "symbol": "default"
+          }
+        },
+        {
+          "name": "ly-toggle",
+          "description": "",
+          "attributes": [
+            {
+              "name": "modelValue",
+              "value": {
+                "kind": "expression",
+                "type": "null"
+              }
+            },
+            {
+              "name": "onValue",
+              "description": "启用时的值",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              },
+              "default": "true"
+            },
+            {
+              "name": "offValue",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              },
+              "default": "false"
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ],
+          "slots": [
+            {
+              "name": "default"
+            }
+          ],
+          "source": {
+            "module": "./src/components/special/ly-toggle.vue",
+            "symbol": "default"
+          }
+        },
+        {
+          "name": "ly-toggle",
+          "description": "",
+          "attributes": [
+            {
+              "name": "modelValue",
+              "value": {
+                "kind": "expression",
+                "type": "null"
+              }
+            },
+            {
+              "name": "onValue",
+              "description": "启用时的值",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              },
+              "default": "true"
+            },
+            {
+              "name": "offValue",
+              "value": {
+                "kind": "expression",
+                "type": "boolean"
+              },
+              "default": "false"
+            }
+          ],
+          "events": [
+            {
+              "name": "update:modelValue"
+            }
+          ],
+          "slots": [
+            {
+              "name": "default"
+            }
+          ],
+          "source": {
+            "module": "./src/components/special/ly-toggle.vue",
+            "symbol": "default"
+          }
+        }
+      ]
+    }
+  }
+}

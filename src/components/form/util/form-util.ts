@@ -1,4 +1,5 @@
 import {computed, reactive} from 'vue'
+import {LyColSpanProps} from '/@/components/form/util/form-props'
 
 export function useAutoLabelWidth(maxLabelWidth: number) {
   const labelWidthMap = reactive(new Map<symbol, number>())
@@ -22,6 +23,20 @@ export function useAutoLabelWidth(maxLabelWidth: number) {
   }
 }
 
-export function useColSpan() {
-  // pass
+export function useColSpan(props?: LyColSpanProps) {
+  if (props?.only) {
+    return 24
+  }
+  if (props?.half) {
+    return 12
+  }
+  if (props?.oneThird) {
+    return 8
+  }
+  if (props?.quarter) {
+    return 6
+  }
+  if (props?.span) {
+    return props.span
+  }
 }

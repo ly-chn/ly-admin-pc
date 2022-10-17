@@ -1,3 +1,5 @@
+import {ExtractPropTypes} from 'vue'
+
 export const formItemProps = {
   modelValue: null,
   label: String,
@@ -5,7 +7,7 @@ export const formItemProps = {
   disabled: Boolean,
   placeholder: String
 }
-
+export type LyColSpanProps = ExtractPropTypes<typeof colSpanProps>
 // 布局通用
 export const colSpanProps = {
   /**

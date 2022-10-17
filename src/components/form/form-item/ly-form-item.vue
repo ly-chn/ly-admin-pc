@@ -3,6 +3,7 @@ import {computed, inject, onBeforeUnmount, onMounted, ref, useSlots, watchEffect
 import {colSpanProps} from '/@/components/form/util/form-props'
 import {lyFormCtxSymbol} from '/@/components/form/form/ly-form-key'
 import {useResizeObserver} from '@vueuse/core'
+import {useColSpan} from '/@/components/form/util/form-util'
 
 const compKey = Symbol.for('ly-form-item')
 
@@ -57,18 +58,33 @@ watchEffect(() => {
     labelRef.value.style.minWidth = formCtx.autoLabelWidth
   }
 })
+
+const span = computed(()=>{
+  return useColSpan(props) || useColSpan(formCtx)
+})
 </script>
 <template>
-  <div v-if="hasLabel" ref="labelRef" class="el-form-item__label w-auto overflow-hidden text-ellipsis">
-    <slot name="label">{{ label }}</slot>
-  </div>
-  <div class="ly-form-item-content">
-    <slot/>
-  </div>
+  <el-col :span="span" class="flex ly-form-item">
+    <div v-if="hasLabel" ref="labelRef" class="el-form-item__label ly-form-item__label">
+      <slot name="label">{{ label }}</slot>
+    </div>
+    <div class="ly-form-item__content">
+      <slot />
+    </div>
+  </el-col>
 </template>
 
 <style scoped>
 .el-form-item__label {
-  width: auto;
+  @apply w-auto overflow-hidden text-ellipsis text-justify inline-block;
+  text-align-last: justify;
+  text-justify: distribute;
+}
+
+.ly-form-item{
+  @apply px-4 mb-4
+}
+.ly-form-item__content{
+  @apply flex-1
 }
 </style>
