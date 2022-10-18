@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import {computed, inject} from 'vue'
+import {lyFormCtxSymbol, lyFormItemCtxSymbol} from '/@/components/form/util/form-ctx'
 
 const props = defineProps({
   /**
@@ -40,10 +41,10 @@ const props = defineProps({
   placeholder: String
 })
 const emit = defineEmits(['update:modelValue'])
-const formItemInstance = inject('formItemInstance', undefined) as any
-const formInstance = inject('formInstance', undefined) as any
+const formItemInstance = inject(lyFormItemCtxSymbol, undefined)
+const formInstance = inject(lyFormCtxSymbol, undefined)
 const disabledItem = computed(() => props.disabled || formItemInstance?.disabled || formInstance?.disabled)
-const usefulRules = computed(() => [].concat(props.rules as [], formItemInstance?.rules)
+const usefulRules = computed(() => [].concat(props.rules as [], formItemInstance?.rules as never)
   .filter(it => !!it).map(it => typeof it === 'function' ? (it as () => object)() : it))
 const usefulLabel = computed(() => props.label || formItemInstance?.label)
 const setCurrentValue = (value: any) => emit('update:modelValue', value)
@@ -53,10 +54,10 @@ const setCurrentValue = (value: any) => emit('update:modelValue', value)
     <el-input :disabled="disabledItem"
               :maxlength="maxlength"
               :minlength="minlength"
+              :model-value="modelValue"
               :placeholder="placeholder"
               :show-password="showPassword"
               :show-word-limit="Boolean(maxlength)"
-              :model-value="modelValue"
               @input="setCurrentValue" />
   </ly-form-item>
 </template>

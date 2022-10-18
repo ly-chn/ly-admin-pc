@@ -22,7 +22,6 @@ declare module '@vue/runtime-core' {
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     LyForm: typeof import('./src/components/form/form/ly-form.vue')['default']
     LyFormItem: typeof import('./src/components/form/form-item/ly-form-item.vue')['default']
-    LyFormItemBackup: typeof import('./src/components/form/form-item/ly-form-item-backup.vue')['default']
     LyIcon: typeof import('./src/components/special/ly-icon.vue')['default']
     LyInput: typeof import('./src/components/form/form-item/ly-input.vue')['default']
     LyToggle: typeof import('./src/components/special/ly-toggle.vue')['default']

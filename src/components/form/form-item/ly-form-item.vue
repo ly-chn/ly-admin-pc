@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import {computed, inject, onBeforeUnmount, onMounted, ref, useSlots, watchEffect} from 'vue'
 import {colSpanProps} from '/@/components/form/util/form-props'
-import {lyFormCtxSymbol} from '/@/components/form/form/ly-form-key'
 import {useResizeObserver} from '@vueuse/core'
 import {useColSpan} from '/@/components/form/util/form-util'
+import {lyFormCtxSymbol} from '/@/components/form/util/form-ctx'
 
 const compKey = Symbol.for('ly-form-item')
 

@@ -43,3 +43,29 @@ export type LyFormContext = LyFormProps & UnwrapRef<ReturnType<typeof useAutoLab
   ) => FormValidationResult
 }
 export const lyFormCtxSymbol: InjectionKey<LyFormContext> = Symbol.for('ly:form-ctx')
+
+export const lyFormItemProps ={
+  /**
+   * 最大label宽度
+   */
+  maxLabelWidth: {
+    type: Number,
+    default: 0
+  },
+  /**
+   * 为true时，表单不可编辑
+   */
+  disabled: Boolean,
+  /**
+   * 表单校验规则
+   */
+  rules: Array,
+  /**
+   * 表单label
+   */
+  label: String,
+  ...colSpanProps
+}
+export type LyFormItemProps = ExtractPropTypes<typeof lyFormItemProps>
+export type LyFormItemContext = LyFormItemProps
+export const lyFormItemCtxSymbol: InjectionKey<LyFormItemContext> = Symbol.for('ly:form-item-ctx')
