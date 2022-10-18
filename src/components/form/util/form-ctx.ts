@@ -69,3 +69,7 @@ export const lyFormItemProps ={
 export type LyFormItemProps = ExtractPropTypes<typeof lyFormItemProps>
 export type LyFormItemContext = LyFormItemProps
 export const lyFormItemCtxSymbol: InjectionKey<LyFormItemContext> = Symbol.for('ly:form-item-ctx')
+
+export const FormItemEmitEnum = {
+
+}

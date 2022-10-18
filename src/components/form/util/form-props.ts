@@ -1,13 +1,29 @@
 import {ExtractPropTypes} from 'vue'
 
 export const formItemProps = {
+  /**
+   * 用于v-model
+   */
   modelValue: null,
+  /**
+   * 表单label
+   */
   label: String,
+  /**
+   * 校验规则
+   */
   rules: [Object, Function, Array],
+  /**
+   * 为true时，表单不可编辑
+   */
   disabled: Boolean,
+  /**
+   * 占位文字
+   */
   placeholder: String
 }
-export type LyColSpanProps = ExtractPropTypes<typeof colSpanProps>
+// todo: 重命名, 名字容易和form-item产生歧义
+export type LyFormItemProps = ExtractPropTypes<typeof formItemProps>
 // 布局通用
 export const colSpanProps = {
   /**
@@ -33,6 +49,7 @@ export const colSpanProps = {
     type: Number
   }
 }
+export type LyColSpanProps = ExtractPropTypes<typeof colSpanProps>
 
 // 字典项通用
 export const dictOptionsProps = {

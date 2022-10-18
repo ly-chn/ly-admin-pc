@@ -1,23 +1,10 @@
 <script lang="ts" setup>
 import {computed, inject} from 'vue'
 import {lyFormCtxSymbol, lyFormItemCtxSymbol} from '/@/components/form/util/form-ctx'
+import {formItemProps} from '/@/components/form/util/form-props'
+import {useFormItem} from '/@/components/form/util/form-util'
 
 const props = defineProps({
-  /**
-   * 标签文本
-   */
-  label: String,
-  /**
-   * 表单验证规则
-   */
-  rules: {
-    type: [Array, Function, Object]
-  },
-  /**
-   * 为true时，表单不可编辑
-   */
-  disabled: Boolean,
-  modelValue: null,
   /**
    * 原生属性，最大输入长度
    */
@@ -38,20 +25,14 @@ const props = defineProps({
    * 输入框尾部图标
    */
   suffixIcon: String,
-  placeholder: String
+  ...formItemProps
 })
 const emit = defineEmits(['update:modelValue'])
-const formItemInstance = inject(lyFormItemCtxSymbol, undefined)
-const formInstance = inject(lyFormCtxSymbol, undefined)
-const disabledItem = computed(() => props.disabled || formItemInstance?.disabled || formInstance?.disabled)
-const usefulRules = computed(() => [].concat(props.rules as [], formItemInstance?.rules as never)
-  .filter(it => !!it).map(it => typeof it === 'function' ? (it as () => object)() : it))
-const usefulLabel = computed(() => props.label || formItemInstance?.label)
-const setCurrentValue = (value: any) => emit('update:modelValue', value)
+const ctx = useFormItem(props)
 </script>
 <template>
-  <ly-form-item :label="usefulLabel" :rules="usefulRules">
-    <el-input :disabled="disabledItem"
+  <ly-form-item :label="ctx.label" :rules="ctx.rules">
+    <el-input :disabled="ctx.disabled"
               :maxlength="maxlength"
               :minlength="minlength"
               :model-value="modelValue"

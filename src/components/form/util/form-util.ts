@@ -1,5 +1,6 @@
-import {computed, reactive} from 'vue'
-import {LyColSpanProps} from '/@/components/form/util/form-props'
+import {computed, inject, reactive} from 'vue'
+import {LyColSpanProps, LyFormItemProps} from '/@/components/form/util/form-props'
+import {lyFormCtxSymbol, lyFormItemCtxSymbol} from '/@/components/form/util/form-ctx'
 
 export function useAutoLabelWidth(maxLabelWidth: number) {
   const labelWidthMap = reactive(new Map<symbol, number>())
@@ -39,4 +40,25 @@ export function useColSpan(props?: LyColSpanProps) {
   if (props?.span) {
     return props.span
   }
+}
+
+export function useFormItem(props: LyFormItemProps) {
+  const formItemInstance = inject(lyFormItemCtxSymbol, undefined)
+  const formInstance = inject(lyFormCtxSymbol, undefined)
+  const disabled = computed(() => props.disabled || formItemInstance?.disabled || formInstance?.disabled || false)
+  const rules = computed(() => [].concat(props.rules as [], formItemInstance?.rules as never)
+    .filter(it => !!it).map(it => typeof it === 'function' ? (it as () => object)() : it))
+  const label = computed(() => props.label || formItemInstance?.label)
+  return reactive({disabled, rules, label})
+}
+
+export function useModel(props: LyFormItemProps, emit:  (event: 'update:modelValue', ...args: any[]) => void) {
+  return computed({
+    get() {
+      return props.modelValue
+    },
+    set(value, ...args){
+      emit('update:modelValue', ...args)
+    }
+  })
 }
