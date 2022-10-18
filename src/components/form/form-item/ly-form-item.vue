@@ -59,12 +59,12 @@ watchEffect(() => {
   }
 })
 
-const span = computed(()=>{
+const usefulSpan = computed(()=>{
   return useColSpan(props) || useColSpan(formCtx)
 })
 </script>
 <template>
-  <el-col :span="span" class="flex ly-form-item">
+  <el-col :span="usefulSpan" class="flex ly-form-item">
     <div v-if="hasLabel" ref="labelRef" class="el-form-item__label ly-form-item__label">
       <slot name="label">{{ label }}</slot>
     </div>
