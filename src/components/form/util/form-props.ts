@@ -1,6 +1,6 @@
 import {ExtractPropTypes} from 'vue'
 
-export const formItemProps = {
+export const formFieldProps = {
   /**
    * 用于v-model
    */
@@ -22,8 +22,7 @@ export const formItemProps = {
    */
   placeholder: String
 }
-// todo: 重命名, 名字容易和form-item产生歧义
-export type LyFormItemProps = ExtractPropTypes<typeof formItemProps>
+export type LyFormFieldProps = ExtractPropTypes<typeof formFieldProps>
 // 布局通用
 export const colSpanProps = {
   /**

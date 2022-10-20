@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import {computed, inject} from 'vue'
-import {lyFormCtxSymbol, lyFormItemCtxSymbol} from '/@/components/form/util/form-ctx'
-import {formItemProps} from '/@/components/form/util/form-props'
-import {useFormItem} from '/@/components/form/util/form-util'
+import {formFieldProps} from '/@/components/form/util/form-props'
+import {useFormField} from '/@/components/form/util/form-util'
 
 const props = defineProps({
   /**
@@ -25,10 +23,10 @@ const props = defineProps({
    * 输入框尾部图标
    */
   suffixIcon: String,
-  ...formItemProps
+  ...formFieldProps
 })
 const emit = defineEmits(['update:modelValue'])
-const ctx = useFormItem(props)
+const ctx = useFormField(props, emit)
 </script>
 <template>
   <ly-form-item :label="ctx.label" :rules="ctx.rules">
@@ -39,6 +37,6 @@ const ctx = useFormItem(props)
               :placeholder="placeholder"
               :show-password="showPassword"
               :show-word-limit="Boolean(maxlength)"
-              @input="setCurrentValue" />
+              @input="ctx.emitValue" />
   </ly-form-item>
 </template>
