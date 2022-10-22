@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import {computed, inject, onBeforeUnmount, onMounted, ref, useSlots, watchEffect} from 'vue'
+import {computed, inject, onBeforeUnmount, onMounted, provide, reactive, ref, toRefs, useSlots, watchEffect} from 'vue'
 import {colSpanProps} from '/@/components/form/util/form-props'
 import {useResizeObserver} from '@vueuse/core'
 import {useColSpan} from '/@/components/form/util/form-util'
 import {lyFormCtxSymbol} from '/@/components/form/util/form-ctx'
+import {formItemContextKey} from 'element-plus'
 
 const compKey = Symbol.for('ly-form-item')
 
@@ -24,6 +25,8 @@ const props = defineProps({
   label: String,
   ...colSpanProps
 })
+
+const validateStatus = ref<''|'ing'|'fail'|'ok'>('')
 const slots = useSlots()
 const labelRef = ref<HTMLDivElement>()
 
