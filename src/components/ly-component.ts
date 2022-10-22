@@ -7,10 +7,10 @@ import type {App} from 'vue'
 
 export const LyComponent = {
   install: (Vue: App) => {
-    Vue.component('LyIcon', LyIcon)
-    Vue.component('LyInput', LyInput)
-    Vue.component('LyForm', LyForm)
-    Vue.component('LyFormItem', LyFormItem)
-    Vue.component('LyToggle', LyToggle)
+    Vue.component(LyIcon.name, LyIcon)
+    Vue.component(LyInput.name, LyInput)
+    Vue.component(LyForm.name, LyForm)
+    Vue.component(LyFormItem.name, LyFormItem)
+    Vue.component(LyToggle.name, LyToggle)
   }
 }
