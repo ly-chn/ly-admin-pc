@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import {formFieldProps} from '/@/components/form/util/form-props'
 import {useFormField} from '/@/components/form/util/form-util'
-
 const props = defineProps({
   /**
    * 原生属性，最大输入长度
