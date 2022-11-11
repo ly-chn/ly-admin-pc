@@ -196,7 +196,7 @@ const context = reactive({
 provide(formItemContextKey, context)
 
 defineExpose({
-  // size,
+  // size, todo: provide a size
   validate
 })
 </script>
