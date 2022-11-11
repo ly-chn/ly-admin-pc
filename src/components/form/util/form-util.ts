@@ -42,6 +42,7 @@ export function useColSpan(props?: LyColSpanProps) {
   }
 }
 
+// todo: 支持emit和modelValue两种
 export function useFormField(props: LyFormFieldProps, emit:  (event: 'update:modelValue', ...args: any[]) => void) {
   const formItemInstance = inject(lyFormItemCtxSymbol, undefined)
   const formInstance = inject(lyFormCtxSymbol, undefined)

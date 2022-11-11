@@ -1,4 +1,6 @@
 import {ExtractPropTypes} from 'vue'
+import {FormItemRule} from 'element-plus'
+import {Arrayable} from 'element-plus/es/utils'
 
 export const formFieldProps = {
   /**
@@ -50,7 +52,7 @@ export const colSpanProps = {
 }
 export type LyColSpanProps = ExtractPropTypes<typeof colSpanProps>
 
-// 字典项通用
+// 字典项通用 todo: 去掉, 改成vueUse, 入参是dictCode, options也可以考虑保留, 其余不要了
 export const dictOptionsProps = {
   /**
    * 可选项, 如果不提供的话将通过字典项获取
@@ -97,3 +99,8 @@ export const dictOptionsProps = {
    */
   allowCreate: Boolean
 }
+
+export type FormValidateRuleGenerate = ((...args: unknown[]) => FormItemRule)
+
+// 表单校验
+export type FormValidateRule = Arrayable<FormItemRule | FormValidateRuleGenerate>
