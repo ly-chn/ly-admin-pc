@@ -67,7 +67,12 @@ export const lyFormItemProps ={
   ...colSpanProps
 }
 export type LyFormItemProps = ExtractPropTypes<typeof lyFormItemProps>
-export type LyFormItemContext = LyFormItemProps
+export type LyFormItemContext = FormItemContext & LyFormItemProps & {
+  validate: (
+    trigger: string
+  ) => FormValidationResult,
+  clearValidate(): void
+}
 export const lyFormItemCtxSymbol: InjectionKey<LyFormItemContext> = Symbol.for('ly:form-item-ctx')
 
 export const FormItemEmitEnum = {
