@@ -1,4 +1,4 @@
-import {ExtractPropTypes} from 'vue'
+import {ExtractPropTypes, PropType} from 'vue'
 import {FormItemRule} from 'element-plus'
 import {Arrayable} from 'element-plus/es/utils'
 
@@ -14,7 +14,7 @@ export const formFieldProps = {
   /**
    * 校验规则
    */
-  rules: [Object, Function, Array],
+  rules: [Object, Function, Array] as PropType<FormValidateRule>,
   /**
    * 为true时，表单不可编辑
    */
