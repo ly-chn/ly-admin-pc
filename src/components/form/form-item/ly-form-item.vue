@@ -12,7 +12,7 @@ import {
   watchEffect
 } from 'vue'
 import {colSpanProps, FormValidateRule, FormValidateRuleGenerate} from '/@/components/form/util/form-props'
-import {useResizeObserver} from '@vueuse/core'
+import {refDebounced, useResizeObserver} from '@vueuse/core'
 import {useColSpan} from '/@/components/form/util/form-util'
 import {lyFormCtxSymbol} from '/@/components/form/util/form-ctx'
 import {
@@ -20,7 +20,7 @@ import {
   formItemContextKey,
   FormItemRule,
   FormItemValidateState,
-  FormValidateFailure
+  FormValidateFailure, useNamespace
 } from 'element-plus'
 import {IsInstance} from '/@/components/util/is-instance'
 import {castArray} from 'lodash'
@@ -128,7 +128,7 @@ const normalizedRules = computed(() => {
     }
     return rule
   }) as FormItemRule[]
-  if (!result.some(it => it.required)) {
+  if (result.some(it => it.required)) {
     result.push({required: true, message: '自动生成的非空校验'})
   }
   return result
@@ -185,6 +185,18 @@ const clearValidate: FormItemContext['clearValidate'] = () => {
   setValidationState('')
   validateMessage.value = ''
 }
+const ns = useNamespace('form-item')
+
+const formItemClasses = computed(() => [
+  ns.b(),
+  // ns.m(_size.value),
+  ns.is('error', validateState.value === 'error'),
+  ns.is('validating', validateState.value === 'validating'),
+  ns.is('success', validateState.value === 'success'),
+  ns.is('required', normalizedRules.value.some((rule) => rule.required) || props.required),
+])
+const validateStateDebounced = refDebounced(validateState, 100)
+
 
 const context = reactive({
   validateState,
@@ -201,7 +213,7 @@ defineExpose({
 })
 </script>
 <template>
-  <el-col :span="finalSpan" class="flex ly-form-item">
+  <el-col :span="finalSpan" class="flex ly-form-item" :class="formItemClasses">
     <component :is="labelFor?'label':'div'"
                v-if="hasLabel"
                ref="labelRef"
@@ -209,8 +221,15 @@ defineExpose({
                class="el-form-item__label ly-form-item__label">
       <slot name="label">{{ label }}</slot>
     </component>
-    <div class="ly-form-item__content">
+    <div :class="ns.e('content')">
       <slot />
+      <transition :name="`${ns.namespace.value}-zoom-in-top`">
+        <slot v-if="validateStateDebounced==='error'" name="error" :error="validateMessage">
+          <div :class="ns.e('error')">
+            {{ validateMessage }}
+          </div>
+        </slot>
+      </transition>
     </div>
   </el-col>
 </template>
