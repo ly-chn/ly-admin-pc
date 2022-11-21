@@ -27,6 +27,7 @@ import {castArray} from 'lodash'
 import type { RuleItem } from 'async-validator'
 import AsyncValidator from 'async-validator'
 import {LyFormConstant} from '/@/components/form/util/ly-form-constant'
+import {Rules} from '/@/components/util/ly-rules'
 
 const compKey = Symbol.for('ly-form-item')
 
@@ -123,6 +124,9 @@ const normalizedRules = computed(() => {
     rules.push(...castArray(props.rules))
   }
   const result = rules.map(rule => {
+    if (rule === Rules.must) {
+      return Rules.must(`${props.label ?? '此项'}不能为空`)
+    }
     if (IsInstance.func(rule)) {
       return (rule as FormValidateRuleGenerate)()
     }
