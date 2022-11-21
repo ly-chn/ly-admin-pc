@@ -20,7 +20,7 @@ import {
   formItemContextKey,
   FormItemRule,
   FormItemValidateState,
-  FormValidateFailure, useNamespace
+  FormValidateFailure, useNamespace, useSize
 } from 'element-plus'
 import {IsInstance} from '/@/components/util/is-instance'
 import {castArray} from 'lodash'
@@ -190,10 +190,11 @@ const clearValidate: FormItemContext['clearValidate'] = () => {
   validateMessage.value = ''
 }
 const ns = useNamespace('form-item')
+const size = useSize(undefined, { formItem: false })
 
 const formItemClasses = computed(() => [
   ns.b(),
-  // ns.m(_size.value),
+  ns.m(size.value),
   ns.is('error', validateState.value === 'error'),
   ns.is('validating', validateState.value === 'validating'),
   ns.is('success', validateState.value === 'success'),
@@ -212,7 +213,7 @@ const context = reactive({
 provide(formItemContextKey, context)
 
 defineExpose({
-  // size, todo: provide a size
+  size,
   validate
 })
 </script>
