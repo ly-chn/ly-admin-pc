@@ -168,7 +168,7 @@ const doValidate = async (rules: RuleItem[]): Promise<any> => {
 }
 const validate: FormItemContext['validate'] = async (trigger, callback) => {
   if (callback) {
-    throw Error('sorry, 即便这里有callback函数, 咱也别用了, 不考虑回调那啥了')
+    throw Error('sorry, 并不支持回调')
   }
   const hasCallback = IsInstance.func(callback)
   const rules = getFilteredRule(trigger)

@@ -44,14 +44,18 @@ export function useColSpan(props?: LyColSpanProps) {
 
 // todo: 支持emit和modelValue两种
 export function useFormField(props: LyFormFieldProps, emit:  (event: 'update:modelValue', ...args: any[]) => void) {
-  const formItemInstance = inject(lyFormItemCtxSymbol, undefined)
   const formInstance = inject(lyFormCtxSymbol, undefined)
-  const disabled = computed(() => props.disabled || formItemInstance?.disabled || formInstance?.disabled || false)
-  const rules = computed(() => [].concat(props.rules as [], formItemInstance?.rules as never)
-    .filter(it => !!it).map(it => typeof it === 'function' ? (it as () => object)() : it))
-  const label = computed(() => props.label || formItemInstance?.label)
+  const disabled = computed(() => props.disabled || formInstance?.disabled || false)
   const emitValue = (value: any, ...others: any[])=>{
     emit('update:modelValue', value, ...others)
   }
-  return reactive({disabled, rules, label, emitValue})
+  const modelValue = computed({
+    get() {
+      return props.modelValue
+    },
+    set(v) {
+      emit('update:modelValue', v)
+    },
+  })
+  return reactive({disabled, emitValue, modelValue})
 }
