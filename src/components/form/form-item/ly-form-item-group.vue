@@ -2,7 +2,7 @@
   <slot></slot>
 </template>
 <script lang="ts" setup>
-import {LyFormItemContext} from '/@/components/form/util/form-ctx'
+import {LyFormItemContext} from '@/components/form/util/form-ctx'
 import {provide} from 'vue'
 
 const fields: LyFormItemContext[] = []

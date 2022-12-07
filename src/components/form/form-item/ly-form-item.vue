@@ -11,10 +11,10 @@ import {
   useSlots,
   watchEffect
 } from 'vue'
-import {colSpanProps, FormValidateRule, FormValidateRuleGenerate} from '/@/components/form/util/form-props'
+import {colSpanProps, FormValidateRule, FormValidateRuleGenerate} from '@/components/form/util/form-props'
 import {refDebounced, useResizeObserver} from '@vueuse/core'
-import {useColSpan} from '/@/components/form/util/form-util'
-import {lyFormCtxSymbol} from '/@/components/form/util/form-ctx'
+import {useColSpan} from '@/components/form/util/form-util'
+import {lyFormCtxSymbol} from '@/components/form/util/form-ctx'
 import {
   FormItemContext,
   formItemContextKey,
@@ -22,12 +22,12 @@ import {
   FormItemValidateState,
   FormValidateFailure, useNamespace, useSize
 } from 'element-plus'
-import {IsInstance} from '/@/components/util/is-instance'
+import {IsInstance} from '@/util/is-instance'
 import {castArray} from 'lodash'
 import type { RuleItem } from 'async-validator'
 import AsyncValidator from 'async-validator'
-import {LyFormConstant} from '/@/components/form/util/ly-form-constant'
-import {Rules} from '/@/components/util/ly-rules'
+import {LyFormConstant} from '@/components/form/util/ly-form-constant'
+import {Rules} from '@/components/util/ly-rules'
 
 const compKey = Symbol.for('ly-form-item')
 

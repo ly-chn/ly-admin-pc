@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory, RouteRecordRaw} from 'vue-router'
+import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
 import {visitorRoutes} from './routes'
 import {App} from 'vue'
 
@@ -8,10 +8,7 @@ const whiteRouteNameList: string[] = [];
   routes.map(it => whiteRouteNameList.push(<string>it.name) && createVisitorRoutes(it.children || []))
 })(visitorRoutes)
 const router = createRouter({
-  history: createWebHashHistory('/'),
-  routes: visitorRoutes,
-  strict: true,
-  scrollBehavior: () => ({left: 0, top: 0})
+  history: createWebHistory('/'), routes: visitorRoutes, strict: true, scrollBehavior: () => ({left: 0, top: 0})
 })
 
 // reset router

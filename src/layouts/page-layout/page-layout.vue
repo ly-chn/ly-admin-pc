@@ -1,32 +1,7 @@
 <template>
   <el-container class="min-h-screen">
     <el-aside :width="drawer?'auto':'200px'">
-      <el-menu :collapse="drawer"
-               class="el-menu-vertical-demo"
-               default-active="2">
-        <el-sub-menu index="1">
-          <template #title>
-            <ly-icon type="el-location" />
-            <span>Navigator One</span>
-          </template>
-          <el-menu-item-group>
-            <template #title><span>Group One</span></template>
-            <el-menu-item index="1-1">item one</el-menu-item>
-            <el-menu-item index="1-2">item two</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="Group Two">
-            <el-menu-item index="1-3">item three</el-menu-item>
-          </el-menu-item-group>
-          <el-sub-menu index="1-4">
-            <template #title><span>item four</span></template>
-            <el-menu-item index="1-4-1">item one</el-menu-item>
-          </el-sub-menu>
-        </el-sub-menu>
-        <el-menu-item index="2">
-          <ly-icon type="el-icon-menu" />
-          <template #title>Navigator Two</template>
-        </el-menu-item>
-      </el-menu>
+      <simple-menu/>
     </el-aside>
     <el-container>
       <el-header>
@@ -47,9 +22,6 @@
           </transition>
         </router-view>
       </el-main>
-      <!--<el-footer class="text-right">
-        &#45;&#45; by: xy
-      </el-footer>-->
     </el-container>
   </el-container>
 </template>
@@ -57,6 +29,7 @@
 <script lang="ts" setup>
 import {ref} from 'vue'
 import {Expand, Fold} from '@element-plus/icons-vue'
+import SimpleMenu from '@/layouts/page-layout/simple-menu.vue'
 
 const drawer = ref(false)
 

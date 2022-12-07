@@ -1,6 +1,6 @@
 import {computed, inject, reactive} from 'vue'
-import {LyColSpanProps, LyFormFieldProps} from '/@/components/form/util/form-props'
-import {lyFormCtxSymbol, lyFormItemCtxSymbol} from '/@/components/form/util/form-ctx'
+import {LyColSpanProps, LyFormFieldProps} from '@/components/form/util/form-props'
+import {lyFormCtxSymbol, lyFormItemCtxSymbol} from '@/components/form/util/form-ctx'
 
 export function useAutoLabelWidth(maxLabelWidth: number) {
   const labelWidthMap = reactive(new Map<symbol, number>())

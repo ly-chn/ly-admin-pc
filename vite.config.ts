@@ -27,14 +27,14 @@ export default defineConfig({
   ],
   resolve: {
     alias: [
-      // /@/xxxx => src/xxxx
+      // @/xxxx => src/xxxx
       {
-        find: /\/@\//,
+        find: /@\//,
         replacement: pathResolve('src') + '/',
       },
-      // /#/xxxx => types/xxxx
+      // #/xxxx => types/xxxx
       {
-        find: /\/#\//,
+        find: /#\//,
         replacement: pathResolve('types') + '/',
       },
     ],

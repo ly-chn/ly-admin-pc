@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "types": "types",
   "scripts": {
     "dev": "vite --host",
     "test": "vitest run",

@@ -12,7 +12,7 @@
 <script lang="ts" setup>
 
 import {reactive, ref} from 'vue'
-import LyInput from '/@/components/form/form-item/ly-input.vue'
+import LyInput from '@/components/form/form-item/ly-input.vue'
 
 const form:Record<string, unknown> = reactive({})
 
