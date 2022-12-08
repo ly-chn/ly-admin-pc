@@ -6,7 +6,7 @@ export const PageLayout = () => import('@/layouts/page-layout/page-layout.vue')
 export const visitorRoutes: RouteRecordRaw[] = [
   {
     id: IdUtil.nextId(),
-    path: '/dashboard',
+    path: '/',
     name: 'Dashboard',
     component: PageLayout,
     redirect: '/dashboard/analysis',
@@ -16,7 +16,7 @@ export const visitorRoutes: RouteRecordRaw[] = [
     children: [
       {
         id: IdUtil.nextId(),
-        path: 'analysis',
+        path: '/dashboard/analysis',
         name: 'Analysis',
         component: () => import('@/views/dashboard/analysis/analysis-page.vue'),
         meta: {

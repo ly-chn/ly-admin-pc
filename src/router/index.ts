@@ -11,7 +11,7 @@ const router = createRouter({
   history: createWebHistory('/'), routes: visitorRoutes, strict: true, scrollBehavior: () => ({left: 0, top: 0})
 })
 
-// reset router
+// 重置路由
 export function resetRouter() {
   router.getRoutes().forEach((route) => {
     const {name} = route
