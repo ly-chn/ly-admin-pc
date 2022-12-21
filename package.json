@@ -8,7 +8,8 @@
     "dev": "vite --host",
     "test": "vitest run",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "web-types": "vue-docgen-web-types --watch"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",

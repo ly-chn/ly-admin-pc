@@ -46,6 +46,13 @@ export const visitorRoutes: RouteRecordRaw[] = [
       meta: {
         title: '角色管理'
       }
+    }, {
+      id: IdUtil.nextId(),
+      path: 'dict-manage',
+      component: () => import('@/views/system/dict-manage.vue'),
+      meta: {
+        title: '字典管理'
+      }
     }]
   }
 ]

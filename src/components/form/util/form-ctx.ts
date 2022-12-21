@@ -28,6 +28,7 @@ export const lyFormProps = {
     type: Number,
     default: 999
   },
+  searchForm: Boolean,
   ...colSpanProps
 }
 export type LyFormProps = ExtractPropTypes<typeof lyFormProps>
