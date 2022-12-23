@@ -1,6 +1,6 @@
-import {computed, inject, reactive} from 'vue'
-import {LyColSpanProps, LyFormFieldProps} from '@/components/form/util/form-props'
-import {lyFormCtxSymbol, lyFormItemCtxSymbol} from '@/components/form/util/form-ctx'
+import {computed, inject, reactive, ref, watchEffect} from 'vue'
+import {DictOptionsProps, LyColSpanProps, LyDictItem, LyFormFieldProps} from '@/components/form/util/form-props'
+import {lyFormCtxSymbol} from '@/components/form/util/form-ctx'
 
 export function useAutoLabelWidth(maxLabelWidth: number) {
   const labelWidthMap = reactive(new Map<symbol, number>())
@@ -42,11 +42,10 @@ export function useColSpan(props?: LyColSpanProps) {
   }
 }
 
-// todo: 支持emit和modelValue两种
-export function useFormField(props: LyFormFieldProps, emit:  (event: 'update:modelValue', ...args: any[]) => void) {
+export function useFormField(props: LyFormFieldProps, emit: (event: 'update:modelValue', ...args: any[]) => void) {
   const formInstance = inject(lyFormCtxSymbol, undefined)
   const disabled = computed(() => props.disabled || formInstance?.disabled || false)
-  const emitValue = (value: any, ...others: any[])=>{
+  const emitValue = (value: any, ...others: any[]) => {
     emit('update:modelValue', value, ...others)
   }
   const modelValue = computed({
@@ -55,7 +54,19 @@ export function useFormField(props: LyFormFieldProps, emit:  (event: 'update:mod
     },
     set(v) {
       emit('update:modelValue', v)
-    },
+    }
   })
   return reactive({disabled, emitValue, modelValue})
+}
+
+export function useDictOption<T extends DictOptionsProps>(props: T) {
+  const options = ref<LyDictItem[]>()
+  watchEffect(()=>{
+    if (props.options) {
+      options.value = props.options
+    }else{
+      options.value = []
+    }
+  })
+  return options
 }
