@@ -3,7 +3,7 @@ import {computed, provide, reactive, toRefs} from 'vue'
 import {useAutoLabelWidth} from '@/components/form/util/form-util'
 import {lyFormCtxSymbol, lyFormProps} from '@/components/form/util/form-ctx'
 
-const props = defineProps(lyFormProps)
+const props = defineProps({...lyFormProps})
 
 provide(lyFormCtxSymbol, reactive({
   ...toRefs(props),
