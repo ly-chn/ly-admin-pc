@@ -28,11 +28,11 @@ const emit = defineEmits(['update:modelValue'])
 const ctx = useFormField(props, emit)
 </script>
 <template>
-  <ly-form-item :label="props.label" :rules="props.rules" :value="modelValue">
+  <ly-form-item :label="props.label" :rules="props.rules" :value="ctx.model">
     <el-input :disabled="ctx.disabled"
               :maxlength="maxlength"
               :minlength="minlength"
-              v-model="ctx.modelValue"
+              v-model="ctx.model"
               :placeholder="placeholder"
               :show-password="showPassword"
               :show-word-limit="Boolean(maxlength)" />

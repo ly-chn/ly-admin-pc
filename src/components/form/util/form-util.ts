@@ -48,7 +48,7 @@ export function useFormField(props: LyFormFieldProps, emit: (event: 'update:mode
   const emitValue = (value: any, ...others: any[]) => {
     emit('update:modelValue', value, ...others)
   }
-  const modelValue = computed({
+  const model = computed({
     get() {
       return props.modelValue
     },
@@ -56,7 +56,7 @@ export function useFormField(props: LyFormFieldProps, emit: (event: 'update:mode
       emit('update:modelValue', v)
     }
   })
-  return reactive({disabled, emitValue, modelValue})
+  return reactive({disabled, emitValue, model})
 }
 
 export function useDictOption<T extends DictOptionsProps>(props: T) {
