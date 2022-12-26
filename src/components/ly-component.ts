@@ -5,6 +5,8 @@ import LyFormItem from '@/components/form/form-item/ly-form-item.vue'
 import LyToggle from '@/components/special/ly-toggle.vue'
 import {App} from 'vue'
 import LySelect from '@/components/form/form-item/ly-select.vue'
+import LyBtnSearch from '@/components/button/ly-btn-search.vue'
+import LyBtnReset from '@/components/button/ly-btn-reset.vue'
 
 export const LyComponent = {
   install: (Vue: App) => {
@@ -14,5 +16,7 @@ export const LyComponent = {
     Vue.component('LyFormItem', LyFormItem)
     Vue.component('LyToggle', LyToggle)
     Vue.component('LySelect', LySelect)
+    Vue.component('LyBtnSearch', LyBtnSearch)
+    Vue.component('LyBtnReset', LyBtnReset)
   }
 }

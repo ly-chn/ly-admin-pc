@@ -7,6 +7,7 @@
       <ly-input label="身份证" v-model="form.idCard"/>
       <ly-select label="性别" v-model="form.sex" :options="options" :rules="$rules.must"/>
     </ly-form>
+    <ly-btn-search/>
   </div>
 </template>
 
@@ -14,6 +15,7 @@
 
 import {reactive, ref} from 'vue'
 import {LyDictItem} from '@/components/form/util/form-props'
+import LyBtnSearch from '@/components/button/ly-btn-search.vue'
 
 const form: Record<string, unknown> = reactive({})
 const options: LyDictItem[] = [{

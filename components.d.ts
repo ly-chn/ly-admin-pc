@@ -8,6 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ElAside: typeof import('element-plus/es')['ElAside']
+    ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElContainer: typeof import('element-plus/es')['ElContainer']
@@ -23,6 +24,9 @@ declare module '@vue/runtime-core' {
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSelectV2: typeof import('element-plus/es')['ElSelectV2']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    LyBtnCreate: typeof import('./src/components/button/ly-btn-create.vue')['default']
+    LyBtnReset: typeof import('./src/components/button/ly-btn-reset.vue')['default']
+    LyBtnSearch: typeof import('./src/components/button/ly-btn-search.vue')['default']
     LyForm: typeof import('./src/components/form/form/ly-form.vue')['default']
     LyFormItem: typeof import('./src/components/form/form-item/ly-form-item.vue')['default']
     LyIcon: typeof import('./src/components/special/ly-icon.vue')['default']

@@ -1,20 +1,16 @@
 <script lang="ts" setup>
+import {PropType} from 'vue'
+import {ElIconName} from '#/element-plus'
 
-import {Component} from 'vue'
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+defineProps({
+  type: String as PropType<ElIconName>,
+  color: String,
+  size: [String, Number]
+})
 
-const ElIcon: { [key: string]: Component } = {}
-Object.entries(ElementPlusIconsVue).forEach(entry => ElIcon[`El${entry[0]}`] = entry[1])
-
-defineProps<{
-  type: string,
-  color?: string,
-  size?: string | number
-}>()
 </script>
 <template>
-  <div></div>
-  <!--<el-icon :color="color" :size="size">-->
-  <!--  <component :is="type"/>-->
-  <!--</el-icon>-->
+  <el-icon :color="color" :size="size">
+    <component :is="type"/>
+  </el-icon>
 </template>
