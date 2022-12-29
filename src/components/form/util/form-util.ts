@@ -1,6 +1,7 @@
 import {computed, inject, reactive, ref, watchEffect} from 'vue'
 import {DictOptionsProps, LyColSpanProps, LyDictItem, LyFormFieldProps} from '@/components/form/util/form-props'
 import {lyFormCtxSymbol} from '@/components/form/util/form-ctx'
+import {Prefix} from '#/utility-type'
 
 export function useAutoLabelWidth(maxLabelWidth: number) {
   const labelWidthMap = reactive(new Map<symbol, number>())
@@ -61,12 +62,41 @@ export function useFormField(props: LyFormFieldProps, emit: (event: 'update:mode
 
 export function useDictOption<T extends DictOptionsProps>(props: T) {
   const options = ref<LyDictItem[]>()
-  watchEffect(()=>{
+  watchEffect(() => {
     if (props.options) {
       options.value = props.options
-    }else{
+    } else {
       options.value = []
     }
   })
   return options
+}
+
+/**
+ * 生成可写的对象, 用于统一v-model用法
+ * @param props 组件props
+ * @param key 组件props中的key
+ * @param emit 组件emit
+ * @param transformGet computed get转换, 参数为props[key]的值, 返回值作为computed的get返回值
+ * @param transformSet computed set转换, 参数为set的参数, 返回值作为emit的参数(如果是数字, 则自动解构)
+ * @return 可写计算属性
+ */
+export function useModel<T extends Record<string, any>, K extends Extract<keyof T, string>>
+(props: T,
+  key: K,
+  emit: (event: Prefix<'update:', K>, ...args: any[]) => void,
+  transformGet: (v: T[K]) => any = v => v,
+  transformSet: (v: T[K]) => [T[K], ...any] = v => [v]) {
+  return computed({
+    get() {
+      return transformGet(props[key])
+    },
+    set(v: T[K]) {
+      // 值没有发生改变, 则不触发emit
+      if (transformGet(v) === v) {
+        return
+      }
+      emit(`update:${key}`, ...transformSet(v))
+    }
+  })
 }

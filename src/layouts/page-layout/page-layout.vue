@@ -2,19 +2,17 @@
   <el-container class="min-h-screen">
     <el-aside :width="drawer?'auto':'200px'">
       <el-scrollbar>
-        <el-menu :collapse="drawer" router :default-active="activeMenu">
-          <simple-menu-item :menu-item="menuItem" v-for="menuItem of menuList" :key="menuItem.id"
-                            :base-path="menuItem.path"/>
+        <el-menu :collapse="drawer" :default-active="activeMenu" router>
+          <simple-menu-item v-for="menuItem of menuList" :key="menuItem.id" :base-path="menuItem.path"
+                            :menu-item="menuItem"/>
         </el-menu>
       </el-scrollbar>
     </el-aside>
     <el-container>
       <el-header>
         <ly-toggle v-model="drawer">
-          <el-icon>
-            <fold v-if="drawer"/>
-            <expand v-else/>
-          </el-icon>
+          <ly-icon v-if="drawer" type="el-icon-Fold"/>
+          <ly-icon v-else type="el-icon-Expand"/>
         </ly-toggle>
       </el-header>
       <el-main>
@@ -33,7 +31,6 @@
 
 <script lang="ts" setup>
 import {computed, ref} from 'vue'
-import {Expand, Fold} from '@element-plus/icons-vue'
 import SimpleMenuItem from '@/layouts/page-layout/simple-menu-item.vue'
 import {useRouter} from 'vue-router'
 

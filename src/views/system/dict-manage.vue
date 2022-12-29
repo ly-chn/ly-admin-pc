@@ -1,16 +1,19 @@
 <template>
-  <div>
-    <ly-form search-form quarter @search="()=>{}" @reset="()=>{}">
+  <ly-area-search>
+    <ly-form quarter search-form @reset="()=>{}" @search="()=>{}">
       <ly-input label="字典名称"/>
       <ly-input label="字典编码"/>
       <template #operation>
         <el-button>新增</el-button>
       </template>
     </ly-form>
-     字典管理
-  </div>
+    <template #table>
+
+    </template>
+  </ly-area-search>
+  字典管理
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 
 </script>
