@@ -10,11 +10,11 @@ const emit = defineEmits(['update:modelValue'])
 
 const options = useDictOption(props)
 
-const ctx = useFormField(props, emit)
+const {disabled, modelValue} = useFormField(props, emit)
 </script>
 <template>
-  <ly-form-item :label="props.label" :rules="props.rules" :value="ctx.model">
-    <el-select-v2 :options="options" :disabled="ctx.disabled" v-model="ctx.model" :placeholder="placeholder">
+  <ly-form-item :label="props.label" :rules="props.rules" :value="modelValue">
+    <el-select-v2 :options="options" :disabled="disabled" v-model="modelValue" :placeholder="placeholder">
       <template #default="scope">
         <slot v-bind="scope">
           <div :title="scope.item.desc">{{ scope.item.label }}</div>

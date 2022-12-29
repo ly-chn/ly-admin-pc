@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import {formFieldProps} from '@/components/form/util/form-props'
 import {useFormField} from '@/components/form/util/form-util'
+
 const props = defineProps({
   /**
    * 原生属性，最大输入长度
@@ -25,16 +26,16 @@ const props = defineProps({
   ...formFieldProps
 })
 const emit = defineEmits(['update:modelValue'])
-const ctx = useFormField(props, emit)
+const {modelValue, disabled} = useFormField(props, emit)
 </script>
 <template>
-  <ly-form-item :label="props.label" :rules="props.rules" :value="ctx.model">
-    <el-input :disabled="ctx.disabled"
+  <ly-form-item :label="props.label" :rules="props.rules" :value="modelValue">
+    <el-input v-model="modelValue"
+              :disabled="disabled"
               :maxlength="maxlength"
               :minlength="minlength"
-              v-model="ctx.model"
               :placeholder="placeholder"
               :show-password="showPassword"
-              :show-word-limit="Boolean(maxlength)" />
+              :show-word-limit="Boolean(maxlength)"/>
   </ly-form-item>
 </template>

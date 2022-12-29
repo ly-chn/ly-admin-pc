@@ -1,6 +1,6 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 
-import {useModel} from '@/components/form/util/form-util'
+import {useFieldModel} from '@/components/form/util/form-util'
 
 const props = defineProps({
   pageSize: Number,
@@ -10,9 +10,12 @@ const props = defineProps({
 
 const emits = defineEmits(['update:pageSize', 'update:currentPage'])
 
-const pageSize = useModel(props, 'pageSize', emits)
-const currentPage = useModel(props, 'currentPage', emits)
+const pageSize = useFieldModel(props, emits, 'pageSize')
+const currentPage = useFieldModel(props, emits, 'currentPage')
 </script>
 <template>
-  <el-pagination v-model:page-size="pageSize" v-model:current-page="currentPage" :total="total" :page-sizes="[10, 20, 30, 50]"/>
+  <el-pagination v-model:current-page="currentPage"
+                 v-model:page-size="pageSize"
+                 :page-sizes="[10, 20, 30, 50]"
+                 :total="total"/>
 </template>

@@ -44,20 +44,15 @@ export function useColSpan(props?: LyColSpanProps) {
 }
 
 export function useFormField(props: LyFormFieldProps, emit: (event: 'update:modelValue', ...args: any[]) => void) {
-  const formInstance = inject(lyFormCtxSymbol, undefined)
-  const disabled = computed(() => props.disabled || formInstance?.disabled || false)
-  const emitValue = (value: any, ...others: any[]) => {
-    emit('update:modelValue', value, ...others)
-  }
-  const model = computed({
-    get() {
-      return props.modelValue
-    },
-    set(v) {
-      emit('update:modelValue', v)
-    }
+  return reactive({
+    disabled: useFieldDisabled(props),
+    modelValue: useFieldModel(props, emit, 'modelValue')
   })
-  return reactive({disabled, emitValue, model})
+}
+
+export function useFieldDisabled(props: LyFormFieldProps){
+  const formInstance = inject(lyFormCtxSymbol, undefined)
+  return computed(() => props.disabled || formInstance?.disabled || false)
 }
 
 export function useDictOption<T extends DictOptionsProps>(props: T) {
@@ -81,10 +76,10 @@ export function useDictOption<T extends DictOptionsProps>(props: T) {
  * @param transformSet computed set转换, 参数为set的参数, 返回值作为emit的参数(如果是数字, 则自动解构)
  * @return 可写计算属性
  */
-export function useModel<T extends Record<string, any>, K extends Extract<keyof T, string>>
+export function useFieldModel<T extends Record<string, any>, K extends Extract<keyof T, string> >
 (props: T,
-  key: K,
   emit: (event: Prefix<'update:', K>, ...args: any[]) => void,
+  key: K = 'modelValue' as K,
   transformGet: (v: T[K]) => any = v => v,
   transformSet: (v: T[K]) => [T[K], ...any] = v => [v]) {
   return computed({
