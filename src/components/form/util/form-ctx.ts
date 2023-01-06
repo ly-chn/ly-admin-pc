@@ -3,6 +3,7 @@ import {FormItemProp, FormValidateCallback, FormValidationResult} from 'element-
 import {Arrayable} from 'element-plus/es/utils'
 import {colSpanProps} from '@/components/form/util/form-props'
 import {useAutoLabelWidth} from '@/components/form/util/form-util'
+import {LyPropType} from '@/components/util/ly-prop-type'
 
 
 export const lyFormProps = {
@@ -19,7 +20,7 @@ export const lyFormProps = {
   /**
    * 用于控制该表单内组件的尺寸
    */
-  size: String as PropType<'large' | 'default' | 'small'>,
+  size: LyPropType.size,
   /**
    * 当校验失败时，滚动到第一个错误表单项
    */
