@@ -8,6 +8,9 @@ import LySelect from '@/components/form/form-item/ly-select.vue'
 import LyBtnSearch from '@/components/button/ly-btn-search.vue'
 import LyBtnReset from '@/components/button/ly-btn-reset.vue'
 import LyAreaSearch from '@/components/area/ly-area-search.vue'
+import LyTable from '@/components/table/ly-table.vue'
+import LyColumnIndex from '@/components/table/column/ly-column-index.vue'
+import LyColumnSelection from '@/components/table/column/ly-column-selection.vue'
 
 export const LyComponent = {
   install: (Vue: App) => {
@@ -20,5 +23,8 @@ export const LyComponent = {
     Vue.component('LyBtnSearch', LyBtnSearch)
     Vue.component('LyBtnReset', LyBtnReset)
     Vue.component('LyAreaSearch', LyAreaSearch)
+    Vue.component('LyTable', LyTable)
+    Vue.component('LyColumnIndex', LyColumnIndex)
+    Vue.component('LyColumnSelection', LyColumnSelection)
   }
 }

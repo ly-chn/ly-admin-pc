@@ -24,6 +24,26 @@ export const visitorRoutes: RouteRecordRaw[] = [
         }
       }
     ]
+  },  {
+    id: IdUtil.nextId(),
+    path: '/tmp',
+    name: 'Tmp',
+    component: PageLayout,
+    redirect: '/tmp/tmp',
+    meta: {
+      title: '测试'
+    },
+    children: [
+      {
+        id: IdUtil.nextId(),
+        path: '/tmp/tmp',
+        name: 'Tmp',
+        component: () => import('@/views/tmp/tmp-page.vue'),
+        meta: {
+          title: '测试'
+        }
+      }
+    ]
   }, {
     id: IdUtil.nextId(),
     path: '/system',

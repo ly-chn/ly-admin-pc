@@ -50,13 +50,13 @@ export function useFormField(props: LyFormFieldProps, emit: (event: 'update:mode
   })
 }
 
-export function useFieldDisabled(props: LyFormFieldProps){
+export function useFieldDisabled(props: LyFormFieldProps) {
   const formInstance = inject(lyFormCtxSymbol, undefined)
-  return computed(() => props.disabled || formInstance?.disabled || false)
+  return computed(() => props.disabled || formInstance?.disabled)
 }
 
 export function useDictOption<T extends DictOptionsProps>(props: T) {
-  const options = ref<LyDictItem[]>()
+  const options = ref<LyDictItem[]>([])
   watchEffect(() => {
     if (props.options) {
       options.value = props.options
@@ -76,22 +76,22 @@ export function useDictOption<T extends DictOptionsProps>(props: T) {
  * @param transformSet computed set转换, 参数为set的参数, 返回值作为emit的参数(如果是数字, 则自动解构)
  * @return 可写计算属性
  */
-export function useFieldModel<T extends Record<string, any>, K extends Extract<keyof T, string> >
+export function useFieldModel<T extends Record<string, any>, K extends Extract<keyof T, string>>
 (props: T,
   emit: (event: Prefix<'update:', K>, ...args: any[]) => void,
   key: K = 'modelValue' as K,
   transformGet: (v: T[K]) => any = v => v,
-  transformSet: (v: T[K]) => [T[K], ...any] = v => [v]) {
+  transformSet: (v: T[K]) => T[K] = v => v) {
   return computed({
     get() {
       return transformGet(props[key])
     },
     set(v: T[K]) {
       // 值没有发生改变, 则不触发emit
-      if (transformGet(v) === v) {
+      if (transformGet(props[key]) === v) {
         return
       }
-      emit(`update:${key}`, ...transformSet(v))
+      emit(`update:${key}`, transformSet(v))
     }
   })
 }

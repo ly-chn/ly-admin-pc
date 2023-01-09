@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import {LyPropType} from '@/components/util/ly-prop-type'
-import {PropType, ref} from 'vue'
-import {TableProps} from 'element-plus'
+import {PropType, ref, watchEffect} from 'vue'
+import {ElTable, TableProps} from 'element-plus'
 import {useFieldModel} from '@/components/form/util/form-util'
+import {getRowIdentity} from '@/components/table/ly-table-util'
 
 const props = defineProps({
   // 显示的数据
@@ -36,30 +37,37 @@ const props = defineProps({
   // 已选中的内容(v-model)
   selectedRowKeys: Array
 })
-const table = ref()
+const table = ref<InstanceType<typeof ElTable>>()
 const emits = defineEmits(['update:selectedRowKeys'])
+
 const selectRowKeys = useFieldModel(props, emits, 'selectedRowKeys')
-const handleRowSelect = ()=>{
-  selectRowKeys.
+const handleRowSelect = () => {
+  selectRowKeys.value = (table.value?.getSelectionRows() as []).map(it => getRowIdentity(it, props.rowKey))
 }
+watchEffect(() => {
+  table.value?.clearSelection()
+  props.data?.filter(it => selectRowKeys.value?.includes(getRowIdentity(it, props.rowKey)))
+    .forEach(row => table.value?.toggleRowSelection(row, true))
+})
 </script>
 <template>
-  <el-table :data="data"
-            :fit="false"
-            ref="table"
+  <el-table ref="table"
+            :data="data"
             :height="height"
             :lazy="lazy"
             :load="load"
-            @select="handleRowSelect"
             :max-height="maxHeight"
             :row-key="rowKey"
             :size="size"
             :span-method="spanMethod"
             border
+            fit
             highlight-current-row
             resizable
             stripe
-            style="width: 100%">
+            style="width: 100%"
+            @select="handleRowSelect"
+            @select-all="handleRowSelect">
     <template #default>
       <slot></slot>
     </template>
