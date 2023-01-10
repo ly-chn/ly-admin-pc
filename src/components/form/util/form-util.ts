@@ -44,10 +44,10 @@ export function useColSpan(props?: LyColSpanProps) {
 }
 
 export function useFormField(props: LyFormFieldProps, emit: (event: 'update:modelValue', ...args: any[]) => void) {
-  return reactive({
+  return {
     disabled: useFieldDisabled(props),
-    modelValue: useFieldModel(props, emit, 'modelValue')
-  })
+    modelValue: useFieldModel(props, emit)
+  }
 }
 
 export function useFieldDisabled(props: LyFormFieldProps) {
@@ -87,6 +87,7 @@ export function useFieldModel<T extends Record<string, any>, K extends Extract<k
       return transformGet(props[key])
     },
     set(v: T[K]) {
+      console.log('set v', v)
       // 值没有发生改变, 则不触发emit
       if (transformGet(props[key]) === v) {
         return

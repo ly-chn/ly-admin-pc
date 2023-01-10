@@ -3,15 +3,16 @@
     <ly-column-expand/>
     <ly-column-selection/>
     <ly-column-index/>
-    <el-table-column label="id" prop="id" width="180"/>
-    <el-table-column label="name" prop="name"/>
-    <el-table-column label="age" prop="age" width="180"/>
+    <ly-column label="id" prop="id" width="180"/>
+    <ly-column label="name" prop="name"/>
+    <ly-column label="age" prop="age" width="180"/>
   </ly-table>
 </template>
 
 <script lang="ts" setup>
 import {ref} from 'vue'
 import LyColumnExpand from '@/components/table/column/ly-column-expand.vue'
+import LyColumn from '@/components/table/column/ly-column.vue'
 
 const data = ref<any[]>([])
 const selectedRowKeys = ref([])

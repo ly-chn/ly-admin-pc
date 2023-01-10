@@ -30,6 +30,7 @@ declare module '@vue/runtime-core' {
     LyBtnCreate: typeof import('./src/components/button/ly-btn-create.vue')['default']
     LyBtnReset: typeof import('./src/components/button/ly-btn-reset.vue')['default']
     LyBtnSearch: typeof import('./src/components/button/ly-btn-search.vue')['default']
+    LyColumn: typeof import('./src/components/table/column/ly-column.vue')['default']
     LyColumnExpand: typeof import('./src/components/table/column/ly-column-expand.vue')['default']
     LyColumnIndex: typeof import('./src/components/table/column/ly-column-index.vue')['default']
     LyColumnSelection: typeof import('./src/components/table/column/ly-column-selection.vue')['default']
