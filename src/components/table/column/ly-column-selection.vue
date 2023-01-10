@@ -1,12 +1,15 @@
 <template>
-  <el-table-column type="selection" width="40" :fixed="fixed"/>
+  <el-table-column :fixed="fixed" type="selection" width="40"/>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import {PropType} from 'vue'
 
 defineProps({
-  fixed: [Boolean, String] as PropType<true | 'left' | 'right'>
+  // 列是否固定在左侧或者右侧。 true 表示固定在左侧
+  fixed: [Boolean, String] as PropType<true | 'left' | 'right'>,
+  // Function 的返回值用来决定这一行的 CheckBox 是否可以勾选
+  selectable: Function as PropType<(row: any, index: number) => boolean>
 })
 </script>
 
