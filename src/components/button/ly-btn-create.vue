@@ -1,7 +1,5 @@
 <template>
-  <el-button type="primary">
-    <ly-icon type="el-icon-Plus"/> 新增
-  </el-button>
+  <ly-btn type="primary" icon="el-icon-Plus">新增</ly-btn>
 </template>
 
 <script setup lang="ts">

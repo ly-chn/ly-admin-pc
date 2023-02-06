@@ -1,5 +1,9 @@
 <template>
-  <el-table-column :label="label" :prop="prop" :width="width" :min-width="minWidth" :fixed="fixed" :sortable="sortable" :align="align"/>
+  <el-table-column :label="label" :prop="prop" :width="width" :min-width="minWidth" :fixed="fixed" :sortable="sortable" :align="align">
+    <template #default="{ row, column, $index }" v-if="$slots.default">
+      <slot v-bind="{ row, column, $index }"></slot>
+    </template>
+  </el-table-column>
 </template>
 
 <script lang="ts" setup>
@@ -10,9 +14,15 @@ import {PropType} from 'vue'
 defineProps({
   ...dictOptionsProps,
   // 显示的标题
-  label: String,
+  label: {
+    type: String,
+    required: true
+  },
   // 字段名称 对应列内容的字段名， 也可以使用 property 属性
-  prop: String,
+  prop: {
+    type: String,
+    required: true
+  },
   // 对应列的宽度
   width: LyPropType.sideLength,
   // 对应列的最小宽度， 对应列的最小宽度，与 width 的区别是 width 是固定的，min-width 会把剩余宽度按比例分配给设置了 min-width 的列

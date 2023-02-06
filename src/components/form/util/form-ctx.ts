@@ -54,7 +54,7 @@ export type LyFormContext = LyFormProps & UnwrapRef<ReturnType<typeof useAutoLab
     callback?: FormValidateCallback
   ) => FormValidationResult
 }
-export const lyFormCtxSymbol: InjectionKey<LyFormContext> = Symbol.for('ly:form-ctx')
+export const lyFormCtxKey: InjectionKey<LyFormContext> = Symbol.for('ly:form-ctx')
 
 export const lyFormItemProps = {
   /**

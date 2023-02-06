@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import {LyPropType} from '@/components/util/ly-prop-type'
-import {PropType, ref, watchEffect} from 'vue'
+import {inject, PropType, ref, watchEffect} from 'vue'
 import {ElTable, TableProps} from 'element-plus'
 import {useFieldModel} from '@/components/form/util/form-util'
 import {getRowIdentity} from '@/components/table/ly-table-util'
+import {searchAreaCtxKey} from '@/components/area/area-ctx'
 
 const props = defineProps({
   // 显示的数据
@@ -49,10 +50,14 @@ watchEffect(() => {
   props.data?.filter(it => selectRowKeys.value?.includes(getRowIdentity(it, props.rowKey)))
     .forEach(row => table.value?.toggleRowSelection(row, true))
 })
+
+const searchCtx = inject(searchAreaCtxKey, null)
+
+const finalData = props.data ?? searchCtx?.tableData
 </script>
 <template>
   <el-table ref="table"
-            :data="data"
+            :data="finalData"
             :height="height"
             :lazy="lazy"
             :load="load"

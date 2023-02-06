@@ -14,7 +14,7 @@ import {
 import {colSpanProps, FormValidateRule, FormValidateRuleGenerate} from '@/components/form/util/form-props'
 import {refDebounced, useResizeObserver} from '@vueuse/core'
 import {useColSpan} from '@/components/form/util/form-util'
-import {lyFormCtxSymbol} from '@/components/form/util/form-ctx'
+import {lyFormCtxKey} from '@/components/form/util/form-ctx'
 import {
   FormItemContext,
   formItemContextKey,
@@ -31,7 +31,7 @@ import {Rules} from '@/components/util/ly-rules'
 
 const compKey = Symbol.for('ly-form-item')
 
-const formCtx = inject(lyFormCtxSymbol)
+const formCtx = inject(lyFormCtxKey)
 const props = defineProps({
   /**
    * 最大label宽度
@@ -247,7 +247,7 @@ defineExpose({
 }
 
 .ly-form-item {
-  @apply px-4 mb-4
+  @apply px-2 mb-4
 }
 
 .ly-form-item__content {

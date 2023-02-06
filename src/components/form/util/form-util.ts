@@ -1,6 +1,6 @@
 import {computed, inject, reactive, ref, watchEffect} from 'vue'
 import {DictOptionsProps, LyColSpanProps, LyDictItem, LyFormFieldProps} from '@/components/form/util/form-props'
-import {lyFormCtxSymbol} from '@/components/form/util/form-ctx'
+import {lyFormCtxKey} from '@/components/form/util/form-ctx'
 import {Prefix} from '#/utility-type'
 
 export function useAutoLabelWidth(maxLabelWidth: number) {
@@ -51,7 +51,7 @@ export function useFormField(props: LyFormFieldProps, emit: (event: 'update:mode
 }
 
 export function useFieldDisabled(props: LyFormFieldProps) {
-  const formInstance = inject(lyFormCtxSymbol, undefined)
+  const formInstance = inject(lyFormCtxKey, undefined)
   return computed(() => props.disabled || formInstance?.disabled)
 }
 
@@ -87,7 +87,6 @@ export function useFieldModel<T extends Record<string, any>, K extends Extract<k
       return transformGet(props[key])
     },
     set(v: T[K]) {
-      console.log('set v', v)
       // 值没有发生改变, 则不触发emit
       if (transformGet(props[key]) === v) {
         return

@@ -19,9 +19,11 @@
         <router-view #default="{ Component, route }">
           <transition appear mode="out-in" name="fade-slide">
             <!--     :include="getCaches"      -->
-            <keep-alive>
-              <component :is="Component" :key="route.fullPath"/>
-            </keep-alive>
+            <div :key="route.name">
+              <keep-alive>
+                <component :is="Component" :key="route.fullPath"/>
+              </keep-alive>
+            </div>
           </transition>
         </router-view>
       </el-main>

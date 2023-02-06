@@ -1,19 +1,29 @@
 <template>
-  <ly-area-search>
-    <ly-form quarter search-form @reset="()=>{}" @search="()=>{}">
-      <ly-input label="字典名称"/>
-      <ly-input label="字典编码"/>
+  <ly-area-search :context="searchCtx">
+    <ly-form quarter search-form>
+      <ly-input label="字典名称" v-model="searchForm.dictName"/>
+      <ly-input label="字典编码" v-model="searchForm.dictCode"/>
       <template #operation>
         <el-button>新增</el-button>
       </template>
     </ly-form>
     <template #table>
-
+      <ly-table>
+        <ly-column-index/>
+        <ly-column label="字典名称" prop="dictName"/>
+        <ly-column label="字典编码" prop="dictCode"/>
+        <ly-column label="字典类型" prop="dictType"/>
+        <ly-column label="创建时间" prop="createTime"/>
+      </ly-table>
     </template>
   </ly-area-search>
-  字典管理
 </template>
 
-<script lang="ts" setup>
+<script setup>
+import {useSearchPage} from '@/use/search-page'
+import {dictApi} from '@/api/system/dict'
+import LyColumn from '@/components/table/column/ly-column.vue'
 
+const searchCtx = useSearchPage(dictApi)
+const searchForm = searchCtx.searchForm
 </script>

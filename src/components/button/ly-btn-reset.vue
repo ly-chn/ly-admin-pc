@@ -1,7 +1,5 @@
 <template>
-  <el-button type="primary">
-    <ly-icon type="el-icon-Refresh"/> <span>重置</span>
-  </el-button>
+  <ly-btn type="info" icon="el-icon-Refresh">重置</ly-btn>
 </template>
 
 <script setup lang="ts">
