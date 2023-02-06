@@ -5,10 +5,13 @@ import {ElTable, TableProps} from 'element-plus'
 import {useFieldModel} from '@/components/form/util/form-util'
 import {getRowIdentity} from '@/components/table/ly-table-util'
 import {searchAreaCtxKey} from '@/components/area/area-ctx'
+import LyPaging from '@/components/special/ly-paging.vue'
+import {Paging} from '@/use/search-page'
 
 const props = defineProps({
   // 显示的数据
   data: Array,
+  paging: Object as PropType<Paging>,
   // Table 的尺寸
   size: LyPropType.size,
   /**
@@ -54,6 +57,8 @@ watchEffect(() => {
 const searchCtx = inject(searchAreaCtxKey, null)
 
 const finalData = props.data ?? searchCtx?.tableData
+
+const finalPaging = props.paging ?? searchCtx?.paging
 </script>
 <template>
   <el-table ref="table"
@@ -77,4 +82,8 @@ const finalData = props.data ?? searchCtx?.tableData
       <slot></slot>
     </template>
   </el-table>
+  <ly-paging v-if="finalPaging"
+             v-model:page-num="finalPaging.pageNum"
+             v-model:page-size="finalPaging.pageSize"
+             v-model:total="finalPaging.total"/>
 </template>
