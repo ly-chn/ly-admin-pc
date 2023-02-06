@@ -12,6 +12,7 @@ import LyTable from '@/components/table/ly-table.vue'
 import LyColumnIndex from '@/components/table/column/ly-column-index.vue'
 import LyColumnSelection from '@/components/table/column/ly-column-selection.vue'
 import LyBtn from '@/components/button/ly-btn.vue'
+import LyDialog from '@/components/dialog/ly-dialog.vue'
 
 export const LyComponent = {
   install: (Vue: App) => {
@@ -28,5 +29,6 @@ export const LyComponent = {
     Vue.component('LyColumnIndex', LyColumnIndex)
     Vue.component('LyColumnSelection', LyColumnSelection)
     Vue.component('LyBtn', LyBtn)
+    Vue.component('LyDialog', LyDialog)
   }
 }

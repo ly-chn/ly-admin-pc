@@ -1,7 +1,7 @@
 <template>
-  <el-table-column :width="width" :fixed="fixed">
+  <el-table-column :width="width" :fixed="fixed" label="操作" align="center">
     <template #default="{ row, column, $index }">
-      <slot v-bind="{ row, column, $index }"/>
+        <slot v-bind="{ row, column, $index }"/>
     </template>
   </el-table-column>
 </template>
