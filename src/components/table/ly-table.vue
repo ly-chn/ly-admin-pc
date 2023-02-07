@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {LyPropType} from '@/components/util/ly-prop-type'
-import {inject, PropType, ref, watchEffect} from 'vue'
+import {CSSProperties, inject, PropType, ref, watchEffect} from 'vue'
 import {ElTable, TableProps} from 'element-plus'
 import {useFieldModel} from '@/components/form/util/form-util'
 import {getRowIdentity} from '@/components/table/ly-table-util'
@@ -11,7 +11,12 @@ import {Paging} from '@/use/search-page'
 const props = defineProps({
   // 显示的数据
   data: Array,
+  // 分页
   paging: Object as PropType<Paging>,
+  // 将应用到table
+  style: [Object, String] as PropType<CSSProperties>,
+  // loading状态
+  loading: Boolean,
   // Table 的尺寸
   size: LyPropType.size,
   /**
@@ -59,9 +64,13 @@ const searchCtx = inject(searchAreaCtxKey, null)
 const finalData = props.data ?? searchCtx?.tableData
 
 const finalPaging = props.paging ?? searchCtx?.paging
+
+const finalLoading = props.loading || searchCtx?.loading
 </script>
 <template>
   <el-table ref="table"
+            :style="style"
+            v-loading="finalLoading"
             :data="finalData"
             :height="height"
             :lazy="lazy"
