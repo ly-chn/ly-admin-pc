@@ -14,7 +14,10 @@ const props = defineProps({
   /**
    * 总数
    */
-  total: Number
+  total: {
+    type: Number,
+    default: 0
+  }
 })
 
 const emits = defineEmits(['update:pageSize', 'update:pageNum'])
@@ -25,7 +28,6 @@ const pageNum = useFieldModel(props, emits, 'pageNum')
 <template>
   <el-pagination v-model:current-page="pageNum"
                  v-model:page-size="pageSize"
-                 style="justify-content: right;margin-top: 1rem;"
                  background
                  small
                  :page-sizes="[10, 20, 30, 50]"

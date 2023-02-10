@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {LyPropType} from '@/components/util/ly-prop-type'
-import {CSSProperties, inject, PropType, ref, watchEffect} from 'vue'
+import {CSSProperties, h, inject, PropType, ref, useSlots, watchEffect} from 'vue'
 import {ElTable, TableProps} from 'element-plus'
 import {useFieldModel} from '@/components/form/util/form-util'
 import {getRowIdentity} from '@/components/table/ly-table-util'
@@ -66,8 +66,16 @@ const finalData = props.data ?? searchCtx?.tableData
 const finalPaging = props.paging ?? searchCtx?.paging
 
 const finalLoading = props.loading || searchCtx?.loading
+
+/**
+ * 允许自定义布局
+ */
+const enableCustomerLayout = true
 </script>
 <template>
+  <div v-if="enableCustomerLayout" class="mb-0.5 text-right">
+    <ly-btn icon="el-icon-Setting" size="small"/>
+  </div>
   <el-table ref="table"
             :style="style"
             v-loading="finalLoading"
@@ -92,6 +100,7 @@ const finalLoading = props.loading || searchCtx?.loading
     </template>
   </el-table>
   <ly-paging v-if="finalPaging"
+             class="mt-1"
              v-model:page-num="finalPaging.pageNum"
              v-model:page-size="finalPaging.pageSize"
              v-model:total="finalPaging.total"/>

@@ -44,6 +44,7 @@ declare module '@vue/runtime-core' {
     LyPaging: typeof import('./src/components/special/ly-paging.vue')['default']
     LySelect: typeof import('./src/components/form/form-item/ly-select.vue')['default']
     LyTable: typeof import('./src/components/table/ly-table.vue')['default']
+    LyTableColumnCustomize: typeof import('./src/components/table/ly-table-column-customize.vue')['default']
     LyToggle: typeof import('./src/components/special/ly-toggle.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

@@ -1,9 +1,11 @@
 <template>
-  <el-button :disabled="disabled" :link="link" :loading="loading" :plain="plain" :size="size" :text="text" :type="type">
+  <el-button :disabled="disabled" :link="link" :loading="loading" :circle="circle" :plain="plain" :size="size" :text="text" :type="type">
     <template v-if="icon" #icon>
       <ly-icon :type="icon"/>
     </template>
-    <slot></slot>
+    <template #default v-if="$slots.default">
+      <slot></slot>
+    </template>
   </el-button>
 </template>
 
@@ -44,6 +46,10 @@ defineProps({
   /**
    * 是否为链接按钮
    */
-  link: Boolean
+  link: Boolean,
+  /**
+   * 是否为圆形按钮
+   */
+  circle: Boolean
 })
 </script>
