@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {LyPropType} from '@/components/util/ly-prop-type'
-import {CSSProperties, inject, nextTick, PropType, provide, reactive, ref, toRaw, watchEffect} from 'vue'
+import {CSSProperties, inject, nextTick, PropType, provide, reactive, ref, watchEffect} from 'vue'
 import {ElTable, ElTree, TableProps} from 'element-plus'
 import {useFieldModel} from '@/components/form/util/form-util'
 import {calcShowAbleColumn, getRowIdentity, useColumnCollect} from '@/components/table/ly-table-util'
@@ -110,8 +110,8 @@ const enableCustomerLayout = true
       </template>
     </el-popover>
   </div>
-  <el-table ref="table"
-            :key="tableKey"
+  <el-table :key="tableKey"
+            ref="table"
             v-loading="finalLoading"
             :data="finalData"
             :height="height"
