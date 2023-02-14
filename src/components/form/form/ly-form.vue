@@ -11,8 +11,6 @@ const formClassList = computed(() => {
 })
 const fields = new Set<LyFormItemContext>()
 
-const addField: LyFormContext['addField'] = fields.add
-const removeField: LyFormContext['removeField'] = fields.delete
 const clearValidate: LyFormContext['clearValidate'] = () => {
   fields.forEach((field) => field.clearValidate())
 }
@@ -25,8 +23,10 @@ provide(
     ...toRefs(props),
     // resetFields,
     clearValidate,
-    addField,
-    removeField,
+    addField: fields.add,
+    removeField: fields.delete,
+    // todo
+    validateField: null as any,
     ...useAutoLabelWidth(props.maxLabelWidth)
   })
 )

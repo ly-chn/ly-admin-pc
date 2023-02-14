@@ -1,3 +1,7 @@
+import {lyTableColumnCollectCtxSymbol, LyTableColumnCollector} from '@/components/table/ly-table-ctx'
+import {provide, Ref, ref} from 'vue'
+import {TreeUtil} from '@/util/tree-util'
+
 /**
  * 来自element-plus, 待其export后将移除
  */
@@ -19,4 +23,31 @@ export const getRowIdentity = (
   } else if (typeof rowKey === 'function') {
     return rowKey.call(null, row)
   }
+}
+
+export const useColumnCollect = function () {
+  const columns: Ref<LyTableColumnCollector[]> = ref([])
+  provide(lyTableColumnCollectCtxSymbol, {
+    // 多级表头, 会存在重复添加的问题
+    addColumn: (column: LyTableColumnCollector) => columns.value.some(it => it.label === column.label) || columns.value.push(column)
+  })
+  return columns
+}
+
+export function calcShowAbleColumn(columns: Ref<LyTableColumnCollector[]>, checkedColumns: string[]) {
+  function shouldShow(column?: LyTableColumnCollector):boolean {
+    if (!column) {
+      return false
+    }
+    // 不必显示
+    if (!checkedColumns.includes(column.label)) {
+      return false
+    }
+    // 没有子节点, 可以显示
+    if (!column?.children.length) {
+      return true
+    }
+    return column.children.some(it=>shouldShow(it))
+  }
+  return checkedColumns.filter(it => shouldShow(TreeUtil.findNode(columns.value, 'label', it, 'children')))
 }

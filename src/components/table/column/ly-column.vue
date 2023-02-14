@@ -1,17 +1,11 @@
-<template>
-  <el-table-column :label="label" :prop="prop" :width="width" :min-width="minWidth" :fixed="fixed" :sortable="sortable" :align="align">
-    <template #default="{ row, column, $index }" v-if="$slots.default">
-      <slot v-bind="{ row, column, $index }"></slot>
-    </template>
-  </el-table-column>
-</template>
-
 <script lang="ts" setup>
 import {dictOptionsProps} from '@/components/form/util/form-props'
 import {LyPropType} from '@/components/util/ly-prop-type'
-import {PropType} from 'vue'
+import {computed, inject, onMounted, PropType, reactive, ref} from 'vue'
+import {lyTableColumnCollectCtxSymbol, lyTableColumnCustomerCtxSymbol} from '@/components/table/ly-table-ctx'
+import {useColumnCollect} from '@/components/table/ly-table-util'
 
-defineProps({
+const props = defineProps({
   ...dictOptionsProps,
   // 显示的标题
   label: {
@@ -34,4 +28,46 @@ defineProps({
   // 对齐方式
   align: String as PropType<'left' | 'center' | 'right'>
 })
+
+const columnCollectCtx = inject(lyTableColumnCollectCtxSymbol)
+const children = useColumnCollect()
+const el = ref<HTMLElement>()
+const columnContext = reactive({
+  label: props.label,
+  children: children,
+})
+
+const isInHeader = computed(() => {
+  let parent = el.value?.parentElement
+  while (parent) {
+    if (parent.classList.contains('hidden-columns')) {
+      return true
+    }
+    if (parent.tagName === 'tr') {
+      return false
+    }
+    parent = parent.parentElement
+  }
+  return false
+})
+onMounted(() => isInHeader.value && columnCollectCtx?.addColumn(columnContext))
+
+const columnCustomerContext = inject(lyTableColumnCustomerCtxSymbol)
+const showAble = computed(() => columnCustomerContext?.showAbleColumns?.includes(props.label))
+
 </script>
+<template>
+  <component :is="showAble?'el-table-column': 'div'"
+             ref="el"
+             :align="align"
+             :fixed="fixed"
+             :label="label"
+             :min-width="minWidth"
+             :prop="prop"
+             :sortable="sortable"
+             :width="width">
+    <template v-if="$slots.default" #default="scope">
+      <slot v-bind="{ row: scope?.row, column: scope?.column, $index: scope?.$index }"></slot>
+    </template>
+  </component>
+</template>

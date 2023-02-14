@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import {LyPropType} from '@/components/util/ly-prop-type'
-import {CSSProperties, h, inject, PropType, ref, useSlots, watchEffect} from 'vue'
-import {ElTable, TableProps} from 'element-plus'
+import {CSSProperties, inject, nextTick, PropType, provide, reactive, ref, toRaw, watchEffect} from 'vue'
+import {ElTable, ElTree, TableProps} from 'element-plus'
 import {useFieldModel} from '@/components/form/util/form-util'
-import {getRowIdentity} from '@/components/table/ly-table-util'
+import {calcShowAbleColumn, getRowIdentity, useColumnCollect} from '@/components/table/ly-table-util'
 import {searchAreaCtxKey} from '@/components/area/area-ctx'
 import LyPaging from '@/components/special/ly-paging.vue'
 import {Paging} from '@/use/search-page'
+import {lyTableColumnCustomerCtxSymbol} from '@/components/table/ly-table-ctx'
 
 const props = defineProps({
   // 显示的数据
@@ -60,13 +61,29 @@ watchEffect(() => {
 })
 
 const searchCtx = inject(searchAreaCtxKey, null)
-
 const finalData = props.data ?? searchCtx?.tableData
-
 const finalPaging = props.paging ?? searchCtx?.paging
-
 const finalLoading = props.loading || searchCtx?.loading
 
+const tableKey = ref(0)
+const columns = useColumnCollect()
+const showAbleColumns = ref<string[]>([])
+const checkedColumns = ref<string[]>([])
+const handleChangeColumnVisible = () => {
+  checkedColumns.value = configColumnsRef.value?.getCheckedKeys()
+  showAbleColumns.value = calcShowAbleColumn(columns, checkedColumns.value)
+  nextTick(() => {
+    tableKey.value++
+    console.log(tableKey.value)
+    table.value?.doLayout()
+  })
+}
+const configColumnsRef = ref()
+provide(lyTableColumnCustomerCtxSymbol, reactive({showAbleColumns}))
+const columnsRenderModel = ref()
+watchEffect(() => {
+  columnsRenderModel.value = JSON.parse(JSON.stringify(columns.value))
+})
 /**
  * 允许自定义布局
  */
@@ -74,10 +91,27 @@ const enableCustomerLayout = true
 </script>
 <template>
   <div v-if="enableCustomerLayout" class="mb-0.5 text-right">
-    <ly-btn icon="el-icon-Setting" size="small"/>
+    <el-popover
+        :width="200"
+        placement="bottom-start"
+        title="自定义显示的列"
+        trigger="hover">
+      <template #default>
+        <el-tree ref="configColumnsRef"
+                 :data="columnsRenderModel"
+                 check-strictly
+                 default-expand-all
+                 node-key="label"
+                 show-checkbox
+                 @check="handleChangeColumnVisible"/>
+      </template>
+      <template #reference>
+        <ly-btn icon="el-icon-Setting" size="small"/>
+      </template>
+    </el-popover>
   </div>
   <el-table ref="table"
-            :style="style"
+            :key="tableKey"
             v-loading="finalLoading"
             :data="finalData"
             :height="height"
@@ -87,8 +121,10 @@ const enableCustomerLayout = true
             :row-key="rowKey"
             :size="size"
             :span-method="spanMethod"
+            :style="style"
             border
             fit
+            flexible
             highlight-current-row
             resizable
             stripe
@@ -100,8 +136,8 @@ const enableCustomerLayout = true
     </template>
   </el-table>
   <ly-paging v-if="finalPaging"
-             class="mt-1"
              v-model:page-num="finalPaging.pageNum"
              v-model:page-size="finalPaging.pageSize"
-             v-model:total="finalPaging.total"/>
+             v-model:total="finalPaging.total"
+             class="mt-1"/>
 </template>
