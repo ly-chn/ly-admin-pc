@@ -65,7 +65,6 @@ const finalData = props.data ?? searchCtx?.tableData
 const finalPaging = props.paging ?? searchCtx?.paging
 const finalLoading = props.loading || searchCtx?.loading
 
-const tableKey = ref(0)
 const columns = useColumnCollect()
 const showAbleColumns = ref<string[]>([])
 const checkedColumns = ref<string[]>([])
@@ -73,8 +72,6 @@ const handleChangeColumnVisible = () => {
   checkedColumns.value = configColumnsRef.value?.getCheckedKeys()
   showAbleColumns.value = calcShowAbleColumn(columns, checkedColumns.value)
   nextTick(() => {
-    tableKey.value++
-    console.log(tableKey.value)
     table.value?.doLayout()
   })
 }
@@ -110,8 +107,7 @@ const enableCustomerLayout = true
       </template>
     </el-popover>
   </div>
-  <el-table :key="tableKey"
-            ref="table"
+  <el-table ref="table"
             v-loading="finalLoading"
             :data="finalData"
             :height="height"
