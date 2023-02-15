@@ -50,6 +50,7 @@ const props = defineProps({
 const table = ref<InstanceType<typeof ElTable>>()
 const emits = defineEmits(['update:selectedRowKeys'])
 
+// 选择列
 const selectRowKeys = useFieldModel(props, emits, 'selectedRowKeys')
 const handleRowSelect = () => {
   selectRowKeys.value = (table.value?.getSelectionRows() as []).map(it => getRowIdentity(it, props.rowKey))
@@ -60,11 +61,13 @@ watchEffect(() => {
     .forEach(row => table.value?.toggleRowSelection(row, true))
 })
 
+// 检索搭配
 const searchCtx = inject(searchAreaCtxKey, null)
 const finalData = props.data ?? searchCtx?.tableData
 const finalPaging = props.paging ?? searchCtx?.paging
 const finalLoading = props.loading || searchCtx?.loading
 
+// 自定义列
 const columns = useColumnCollect()
 const showAbleColumns = ref<string[]>([])
 const checkedColumns = ref<string[]>([])

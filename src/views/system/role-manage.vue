@@ -5,11 +5,11 @@
     <el-checkbox v-model="show.info">show info</el-checkbox>
     <el-checkbox v-model="show.state">show state</el-checkbox>
     <el-table :data="tableData" style="width: 100%">
-      <el-table-column label="#" type="index"/>
-      <el-table-column label="Date" v-if="show.date" prop="date" width="150">
-        <el-table-column label="Name" v-if="show.name" prop="name" width="120"/>
-        <el-table-column label="Delivery Info" v-if="show.info">
-          <el-table-column label="State" v-if="show.state" prop="state" width="120"/>
+      <el-table-column label="#" :key="'#'" type="index"/>
+      <el-table-column label="Date" :key="'Date'" v-if="show.date && (show.name || show.state)" prop="date" width="150">
+        <el-table-column label="Name" :key="'Name'" v-if="show.name" prop="name" width="120"/>
+        <el-table-column label="Delivery Info" :key="'Delivery Info'" v-if="show.info && show.state">
+          <el-table-column label="State" :key="'State'" v-if="show.state" prop="state" width="120"/>
         </el-table-column>
       </el-table-column>
     </el-table>
@@ -20,10 +20,10 @@
 import {ref} from 'vue'
 
 const show = ref({
-  date: true,
-  name: true,
-  info: true,
-  state: true
+  date: false,
+  name: false,
+  info: false,
+  state: false
 })
 const tableData = [
   {

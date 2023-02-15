@@ -62,6 +62,7 @@ const showAble = computed(() => columnCustomerContext?.showAbleColumns?.includes
              :align="align"
              :fixed="fixed"
              :label="label"
+             :key="label+'-key'"
              :min-width="minWidth"
              :prop="prop"
              :sortable="sortable"
