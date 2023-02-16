@@ -38,5 +38,8 @@ export default defineConfig({
         replacement: pathResolve('types') + '/',
       },
     ],
+  },
+  server: {
+    port: 920
   }
 })

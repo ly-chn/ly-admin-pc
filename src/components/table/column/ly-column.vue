@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {dictOptionsProps} from '@/components/form/util/form-props'
 import {LyPropType} from '@/components/util/ly-prop-type'
-import {computed, inject, onMounted, PropType, reactive, ref} from 'vue'
+import {computed, inject, onMounted, PropType, reactive, ref, watch} from 'vue'
 import {lyTableColumnCollectCtxSymbol, lyTableColumnCustomerCtxSymbol} from '@/components/table/ly-table-ctx'
 import {useColumnCollect} from '@/components/table/ly-table-util'
 
@@ -34,10 +34,10 @@ const children = useColumnCollect()
 const el = ref<HTMLElement>()
 const columnContext = reactive({
   label: props.label,
-  children: children,
+  children: children
 })
 
-const isInHeader = computed(() => {
+const isInHeader = () => {
   let parent = el.value?.parentElement
   while (parent) {
     if (parent.classList.contains('hidden-columns')) {
@@ -49,26 +49,30 @@ const isInHeader = computed(() => {
     parent = parent.parentElement
   }
   return false
-})
-onMounted(() => isInHeader.value && columnCollectCtx?.addColumn(columnContext))
+}
+onMounted(() => isInHeader() && columnCollectCtx?.addColumn(columnContext))
 
 const columnCustomerContext = inject(lyTableColumnCustomerCtxSymbol)
 const showAble = computed(() => columnCustomerContext?.showAbleColumns?.includes(props.label))
-
+const key = ref(Math.random())
+watch(showAble, () => key.value = Math.random(), {immediate: true})
 </script>
 <template>
-  <component :is="showAble?'el-table-column': 'div'"
-             ref="el"
-             :align="align"
-             :fixed="fixed"
-             :label="label"
-             :key="label+'-key'"
-             :min-width="minWidth"
-             :prop="prop"
-             :sortable="sortable"
-             :width="width">
+  <!--如果使用一些特殊手段, 会发生一些异常, 原因不明, 只能用这个笨办法了-->
+  <el-table-column v-if="showAble" :key="key"
+                   ref="el"
+                   :align="align"
+                   :fixed="fixed"
+                   :label="label"
+                   :min-width="minWidth"
+                   :prop="prop"
+                   :sortable="sortable"
+                   :width="width">
     <template v-if="$slots.default" #default="scope">
       <slot v-bind="{ row: scope?.row, column: scope?.column, $index: scope?.$index }"></slot>
     </template>
-  </component>
+  </el-table-column>
+  <div v-else ref="el">
+    <slot v-bind="{ row: undefined, column: undefined, $index: undefined }"></slot>
+  </div>
 </template>

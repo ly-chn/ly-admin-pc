@@ -34,8 +34,12 @@ export const useColumnCollect = function () {
   return columns
 }
 
+/**
+ * 计算显示的列, 以label为唯一标志
+ */
 export function calcShowAbleColumn(columns: Ref<LyTableColumnCollector[]>, checkedColumns: string[]) {
-  function shouldShow(column?: LyTableColumnCollector):boolean {
+  // todo: 优化这段代码
+  function shouldShow(column?: LyTableColumnCollector): boolean {
     if (!column) {
       return false
     }
@@ -47,8 +51,9 @@ export function calcShowAbleColumn(columns: Ref<LyTableColumnCollector[]>, check
     if (!column?.children.length) {
       return true
     }
-    return column.children.some(it=>shouldShow(it))
+    return column.children.some(it => shouldShow(it))
   }
+
   const result = checkedColumns.filter(it => shouldShow(TreeUtil.findNode(columns.value, 'label', it, 'children')))
   console.log('显示的列', result)
   return result
