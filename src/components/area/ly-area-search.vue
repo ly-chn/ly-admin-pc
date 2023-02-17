@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <div v-if="$slots.aside" class="mr-4">
+    <div v-if="$slots.aside" class="mr-4" style="min-height: 80vh;overflow-x: auto">
       <slot name="aside"></slot>
     </div>
     <area-search-main :context="context">

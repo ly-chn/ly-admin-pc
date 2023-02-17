@@ -1,4 +1,14 @@
+import {BasicTree} from '#/utility-type'
+
 export class TreeUtil {
+  /**
+   * 查找树中的节点
+   * @param tree 树结构
+   * @param nodeKey 要查找的节点key, 如id, label
+   * @param target 目标值, 与nodeKey对应
+   * @param childrenKey 子节点key
+   * @return 如未找到, 返回undefined, 否则返回该节点
+   */
   static findNode<T, K extends keyof T>(tree: T[], nodeKey: K, target: T[K], childrenKey: K = 'children' as K): T | undefined {
     if (!tree) {
       return undefined
@@ -14,5 +24,41 @@ export class TreeUtil {
         }
       }
     }
+  }
+
+  /**
+   * 过滤树节点
+   * @param tree 目标树
+   * @param keywords 关键词
+   * @param childrenKey 子节点的key
+   * @param keyList 允许匹配的key列表, 如果不传或空数组, 则匹配所有key
+   * @return 过滤后的树
+   */
+  static filter<K extends Extract<keyof T, string>, T extends BasicTree<K>>
+  (tree: T[] | undefined, keywords: string, childrenKey: K = 'children' as K, keyList?: K[]): T[] | undefined {
+    keywords = keywords?.trim()
+    if (!keywords || !tree) {
+      return tree
+    }
+    const validNode = new Set<BasicTree<K>>()
+    function valid(node: BasicTree<K>): boolean {
+      if (validNode.has(node)) {
+        return true
+      }
+      const nodeElement = node[childrenKey]
+      const valueCollect = Object.keys(node).filter(key => !keyList?.length || keyList.includes(key as K)).map(key => node[key as K]).join('')
+      const res = valueCollect.includes(keywords) || nodeElement?.some(it => valid(it)) || false
+      if (res) {
+        validNode.add(node)
+        return true
+      }
+      return false
+    }
+
+    return function filter(list?: T[]) {
+      const res = list?.filter(t => valid(t))
+      res?.forEach(item => item[childrenKey] ? filter(item[childrenKey] as T[]) : item[childrenKey])
+      return res
+    }(tree)
   }
 }

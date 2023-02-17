@@ -1,7 +1,7 @@
 <template>
   <div class="flex-1">
     <slot></slot>
-    <div style="height: 20px"></div>
+    <div style="height: 20px" v-if="$slots.default"></div>
     <slot name="table"></slot>
   </div>
 </template>

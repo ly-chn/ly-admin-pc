@@ -1,14 +1,12 @@
 <template>
   <ly-area-search :context="searchCtx">
     <template #aside>
-      <ly-table style="min-width: 200px" :data="tableData">
-        <ly-column label="字典名称" :key="'字典名称'" prop="dictName">
-          <template #header>
-            <el-input/>
-          </template>
-          nihc
-        </ly-column>
-      </ly-table>
+      <el-input/>
+      <el-tree :data="tableData">
+        <template #default="{data}">
+          {{data.dictName}}
+        </template>
+      </el-tree>
     </template>
     <ly-form quarter search-form>
       <ly-input label="字典名称" v-model="searchForm.dictName"/>

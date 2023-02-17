@@ -29,3 +29,10 @@ export type PrefixRecord<K, T extends string> = {
  * type PrefixKeyTemp = PrefixKey<Temp, 'prefix_'> // 'prefix_name' | 'prefix_age'
  */
 export type PrefixKey<K, T extends string> = keyof PrefixRecord<K, T>
+
+/**
+ * 基础树状结构
+ */
+export type BasicTree<K extends string> = {
+  [key in K]?: BasicTree<K>[]
+}

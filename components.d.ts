@@ -53,6 +53,7 @@ declare module '@vue/runtime-core' {
     LySelect: typeof import('./src/components/form/form-item/ly-select.vue')['default']
     LyTable: typeof import('./src/components/table/ly-table.vue')['default']
     LyToggle: typeof import('./src/components/special/ly-toggle.vue')['default']
+    LyTreeFilter: typeof import('./src/components/special/ly-tree-filter.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

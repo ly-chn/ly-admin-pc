@@ -89,8 +89,8 @@ watchEffect(() => {
 // 检索搭配
 const searchCtx = inject(searchAreaCtxKey, null)
 const finalData = computed(() => props.data ?? searchCtx?.tableData.value)
-const finalPaging = computed(() => props.paging ?? searchCtx?.paging)
-const finalLoading = computed(() => props.loading || searchCtx?.loading)
+const finalPaging = computed(() => props.paging ?? searchCtx?.paging.value)
+const finalLoading = computed(() => props.loading || searchCtx?.loading.value)
 
 // 自定义列
 const route = useRoute()
@@ -109,11 +109,8 @@ function handleChangeColumnVisible() {
   })
 }
 
-function handleStoreColumnConfig() {
-  tableStore.setItem('checkedColumn' + tableId, toRaw(checkedColumns.value))
-}
-
 const configColumnsRef = ref<InstanceType<typeof ElTree>>()
+const  handleStoreColumnConfig=()=> tableStore.setItem('checkedColumn' + tableId, toRaw(checkedColumns.value))
 onMounted(async () => {
   if (!props.adjustColumn) {
     return
