@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import {dictOptionsProps} from '@/components/form/util/form-props'
 import {LyPropType} from '@/components/util/ly-prop-type'
-import {computed, inject, onMounted, PropType, reactive, ref, watch} from 'vue'
+import {computed, inject, onMounted, PropType, reactive, ref} from 'vue'
 import {lyTableColumnCollectCtxSymbol, lyTableColumnCustomerCtxSymbol} from '@/components/table/ly-table-ctx'
 import {useColumnCollect} from '@/components/table/ly-table-util'
+import {TableColumn} from 'element-plus/es/components/table/src/table-column/defaults'
+import {ElTableColumn} from 'element-plus'
 
 const props = defineProps({
   ...dictOptionsProps,
@@ -31,35 +33,21 @@ const props = defineProps({
 
 const columnCollectCtx = inject(lyTableColumnCollectCtxSymbol)
 const children = useColumnCollect()
-const el = ref<HTMLElement>()
+const el = ref<HTMLDivElement | InstanceType<typeof ElTableColumn>>()
 const columnContext = reactive({
   label: props.label,
   children: children
 })
 
-const isInHeader = () => {
-  let parent = el.value?.parentElement
-  while (parent) {
-    if (parent.classList.contains('hidden-columns')) {
-      return true
-    }
-    if (parent.tagName === 'tr') {
-      return false
-    }
-    parent = parent.parentElement
-  }
-  return false
-}
-onMounted(() => isInHeader() && columnCollectCtx?.addColumn(columnContext))
+onMounted(() => columnCollectCtx?.addColumn(columnContext))
 
 const columnCustomerContext = inject(lyTableColumnCustomerCtxSymbol)
-const showAble = computed(() => columnCustomerContext?.showAbleColumns?.includes(props.label))
-const key = ref(Math.random())
-watch(showAble, () => key.value = Math.random(), {immediate: true})
+// 全部隐藏=全部显示
+const showAble = computed(() => !columnCustomerContext?.showAbleColumns.length || columnCustomerContext?.showAbleColumns?.includes(props.label))
 </script>
 <template>
   <!--如果使用一些特殊手段, 会发生一些异常, 原因不明, 只能用这个笨办法了-->
-  <el-table-column v-if="showAble" :key="key"
+  <el-table-column v-if="showAble"
                    ref="el"
                    :align="align"
                    :fixed="fixed"

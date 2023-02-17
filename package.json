@@ -15,6 +15,7 @@
     "autoprefixer": "^10.4.13",
     "axios": "^1.2.6",
     "element-plus": "^2.2.30",
+    "localforage": "^1.10.0",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },

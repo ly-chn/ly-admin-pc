@@ -1,14 +1,12 @@
 import {lyTableColumnCollectCtxSymbol, LyTableColumnCollector} from '@/components/table/ly-table-ctx'
 import {provide, Ref, ref} from 'vue'
 import {TreeUtil} from '@/util/tree-util'
+import * as localforage from 'localforage'
 
 /**
  * 来自element-plus, 待其export后将移除
  */
-export const getRowIdentity = (
-  row: any,
-  rowKey: string | ((row: any) => string) | undefined
-): any => {
+export const getRowIdentity = (row: any, rowKey: string | ((row: any) => string) | undefined): any => {
   if (!row) throw new Error('Row is required when get row identity')
   if (typeof rowKey === 'string') {
     if (!rowKey.includes('.')) {
@@ -25,7 +23,11 @@ export const getRowIdentity = (
   }
 }
 
-export const useColumnCollect = function () {
+/**
+ * 收集列, 并展示
+ * @return {Ref<LyTableColumnCollector[]>}
+ */
+export function useColumnCollect() {
   const columns: Ref<LyTableColumnCollector[]> = ref([])
   provide(lyTableColumnCollectCtxSymbol, {
     // 多级表头, 会存在重复添加的问题
@@ -58,3 +60,14 @@ export function calcShowAbleColumn(columns: Ref<LyTableColumnCollector[]>, check
   console.log('显示的列', result)
   return result
 }
+
+export type TableStore = {
+  // 选中的列
+  checkedColumn: {
+    key: string
+    value: string[]
+  }
+}
+
+export const tableStore = localforage.createInstance({name: 'table-store'})
+
