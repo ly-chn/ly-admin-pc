@@ -59,6 +59,7 @@ const showAble = computed(() => !columnCustomerContext?.showAbleColumns.length |
     <template v-if="$slots.default" #default="scope">
       <slot v-bind="{ row: scope?.row, column: scope?.column, $index: scope?.$index }"></slot>
     </template>
+    <template v-if="$slots.header" #header><slot name="header"></slot></template>
   </el-table-column>
   <div v-else ref="el">
     <slot v-bind="{ row: undefined, column: undefined, $index: undefined }"></slot>

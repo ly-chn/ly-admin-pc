@@ -55,6 +55,11 @@ const props = defineProps({
   spanMethod: Function as PropType<TableProps<any>['spanMethod']>,
   // 是否懒加载子节点数据
   lazy: Boolean,
+  // 是否显示表头
+  showHeader: {
+    type: Boolean,
+    default: true
+  },
   // 加载子节点数据的函数，lazy 为 true 时生效
   load: Function as PropType<TableProps<any>['load']>,
   // 已选中的内容(v-model)
@@ -83,9 +88,9 @@ watchEffect(() => {
 
 // 检索搭配
 const searchCtx = inject(searchAreaCtxKey, null)
-const finalData = props.data ?? searchCtx?.tableData
-const finalPaging = props.paging ?? searchCtx?.paging
-const finalLoading = props.loading || searchCtx?.loading
+const finalData = computed(() => props.data ?? searchCtx?.tableData.value)
+const finalPaging = computed(() => props.paging ?? searchCtx?.paging)
+const finalLoading = computed(() => props.loading || searchCtx?.loading)
 
 // 自定义列
 const route = useRoute()
@@ -114,7 +119,6 @@ onMounted(async () => {
     return
   }
   const storeCheckedColumn = await tableStore.getItem<string[]>('checkedColumn' + tableId)
-  console.log(storeCheckedColumn)
   if (storeCheckedColumn?.length) {
     configColumnsRef.value?.setCheckedKeys(storeCheckedColumn)
     checkedColumns.value = storeCheckedColumn
@@ -155,6 +159,7 @@ const columnsRenderModel = computed(() => JSON.parse(JSON.stringify(columns.valu
             :load="load"
             :max-height="maxHeight"
             :row-key="rowKey"
+            :show-header="showHeader"
             :size="size"
             :span-method="spanMethod"
             :style="style"

@@ -1,22 +1,24 @@
 <template>
-  <div>
-    <slot></slot>
-    <div style="height: 20px"></div>
-    <slot name="table"></slot>
+  <div class="flex">
+    <div v-if="$slots.aside" class="mr-4">
+      <slot name="aside"></slot>
+    </div>
+    <area-search-main :context="context">
+      <template #default><slot></slot></template>
+      <template #table><slot name="table"></slot></template>
+    </area-search-main>
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import {SearchPageContext} from '@/use/search-page'
-import {PropType, provide} from 'vue'
-import {searchAreaCtxKey} from '@/components/area/area-ctx'
+import {PropType} from 'vue'
+import AreaSearchMain from '@/components/area/component/area-search-main.vue'
 
-const props = defineProps({
+defineProps({
   context: {
     type: Object as PropType<SearchPageContext>,
     required: true
   }
 })
-
-provide(searchAreaCtxKey, props.context)
 </script>
