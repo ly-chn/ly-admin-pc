@@ -57,11 +57,11 @@ const showAble = computed(() => !columnCustomerContext?.showAbleColumns.length |
                    :sortable="sortable"
                    :width="width">
     <template v-if="$slots.default" #default="scope">
-      <slot v-bind="{ row: scope?.row, column: scope?.column, $index: scope?.$index }"></slot>
+      <slot v-bind="{ row: scope?.row, column: scope?.column, $index: scope?.$index }"/>
     </template>
-    <template v-if="$slots.header" #header><slot name="header"></slot></template>
+    <template v-if="$slots.header" #header><slot name="header"/></template>
   </el-table-column>
   <div v-else ref="el">
-    <slot v-bind="{ row: undefined, column: undefined, $index: undefined }"></slot>
+    <slot v-bind="{ row: undefined, column: undefined, $index: undefined }"/>
   </div>
 </template>

@@ -1,13 +1,14 @@
 <template>
-  <slot :data="data"></slot>
+  <slot :data="data"/>
 </template>
 
-<script setup lang="ts">
-import {TreeUtil} from '@/util/tree-util'
-import {computed, PropType} from 'vue'
+<script lang="ts" setup>
+import {PropType} from 'vue'
+import {useTreeFilter} from '@/use/tree-filter'
+import {BasicTree} from '#/utility-type'
 
 const props = defineProps({
-  data: {type: Array, required: true},
+  data: {type: Array as PropType<BasicTree<string>[]>, required: true},
   keywords: {type: String, required: true},
   childrenKey: {
     type: String,
@@ -17,5 +18,5 @@ const props = defineProps({
     type: Array as PropType<string[]>
   }
 })
-const data = computed(()=>TreeUtil.filter(props.data as any, props.keywords, props.childrenKey, props.keyList))
+const data = useTreeFilter(props.data, props.keywords, props.childrenKey, props.keyList)
 </script>

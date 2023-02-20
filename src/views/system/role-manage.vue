@@ -1,87 +1,78 @@
 <template>
-  <div>
-    <el-checkbox v-model="show.date">show date</el-checkbox>
-    <el-checkbox v-model="show.name">show name</el-checkbox>
-    <el-checkbox v-model="show.info">show info</el-checkbox>
-    <el-checkbox v-model="show.state">show state</el-checkbox>
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column label="#" :key="'#'" type="index"/>
-      <el-table-column label="Date" :key="'Date'" v-if="show.date && (show.name || show.state)" prop="date">
-        <el-table-column label="Name" :key="'Name'" v-if="show.name" prop="name"/>
-        <el-table-column label="Delivery Info" :key="'Delivery Info'" v-if="show.info && show.state">
-          <el-table-column label="State" :key="'State'" v-if="show.state" prop="state"/>
-        </el-table-column>
-      </el-table-column>
-    </el-table>
-  </div>
+  <el-input v-model="filterText" placeholder="Filter keyword"/>
+
+  <ly-tree
+      :data="data"
+      :keywords="filterText"
+      :props="defaultProps"
+      class="filter-tree"/>
 </template>
 
 <script lang="ts" setup>
 import {ref} from 'vue'
+import LyTree from '@/components/tree/ly-tree.vue'
 
-const show = ref({
-  date: false,
-  name: false,
-  info: false,
-  state: false
-})
-const tableData = [
+interface Tree {
+  id: number
+  label: string
+  children?: Tree[]
+}
+
+const filterText = ref('')
+
+const defaultProps = {
+  children: 'children',
+  label: 'label'
+}
+
+const data: Tree[] = [
   {
-    date: '2016-05-03',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036'
+    id: 1,
+    label: '节点 1',
+    children: [
+      {
+        id: 4,
+        label: 'Level two 1-1',
+        children: [
+          {
+            id: 9,
+            label: 'Level three 1-1-1'
+          },
+          {
+            id: 10,
+            label: 'Level three 1-1-2'
+          }
+        ]
+      }
+    ]
   },
   {
-    date: '2016-05-02',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036'
+    id: 2,
+    label: 'Level one 2',
+    children: [
+      {
+        id: 5,
+        label: 'Level two 2-1'
+      },
+      {
+        id: 6,
+        label: 'Level two 2-2'
+      }
+    ]
   },
   {
-    date: '2016-05-04',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036'
-  },
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036'
-  },
-  {
-    date: '2016-05-08',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036'
-  },
-  {
-    date: '2016-05-06',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036'
-  },
-  {
-    date: '2016-05-07',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036'
+    id: 3,
+    label: 'Level one 3',
+    children: [
+      {
+        id: 7,
+        label: '节点 two 3-1'
+      },
+      {
+        id: 8,
+        label: 'Level two 3-2'
+      }
+    ]
   }
 ]
-
 </script>

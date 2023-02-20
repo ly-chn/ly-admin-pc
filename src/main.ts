@@ -5,8 +5,8 @@ import App from './app.vue'
 import '/src/assets/style/global.scss'
 import router from './router'
 import {LyComponent} from '@/components/ly-component'
-import LyRules from '@/components/util/ly-rules'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import {LyPlugin} from '@/plugin'
 
 const app = createApp(App)
 
@@ -16,5 +16,5 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.use(router)
   .use(ElementPlus)
   .use(LyComponent)
-  .use(LyRules)
+  .use(LyPlugin)
   .mount('#app')

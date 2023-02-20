@@ -30,4 +30,4 @@ instance.interceptors.response.use(response => {
   return error
 })
 
-export const request = instance
+export const rest = instance

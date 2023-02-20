@@ -170,7 +170,7 @@ const columnsRenderModel = computed(() => JSON.parse(JSON.stringify(columns.valu
             @select="handleRowSelect"
             @select-all="handleRowSelect">
     <template #default>
-      <slot></slot>
+      <slot/>
     </template>
   </el-table>
   <ly-paging v-if="finalPaging"

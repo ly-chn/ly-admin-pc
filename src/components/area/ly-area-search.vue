@@ -1,11 +1,11 @@
 <template>
   <div class="flex">
     <div v-if="$slots.aside" class="mr-4" style="min-height: 80vh;overflow-x: auto">
-      <slot name="aside"></slot>
+      <slot name="aside"/>
     </div>
     <area-search-main :context="context">
-      <template #default><slot></slot></template>
-      <template #table><slot name="table"></slot></template>
+      <template #default><slot/></template>
+      <template #table><slot name="table"/></template>
     </area-search-main>
   </div>
 </template>

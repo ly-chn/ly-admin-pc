@@ -27,7 +27,7 @@ import {castArray} from 'lodash'
 import type { RuleItem } from 'async-validator'
 import AsyncValidator from 'async-validator'
 import {LyFormConstant} from '@/components/form/util/ly-form-constant'
-import {Rules} from '@/components/util/ly-rules'
+import {Rules} from '@/plugin/ly-rules'
 
 const compKey = Symbol.for('ly-form-item')
 

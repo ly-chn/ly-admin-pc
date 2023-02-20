@@ -35,10 +35,10 @@ export class TreeUtil {
    * @return 过滤后的树
    */
   static filter<K extends Extract<keyof T, string>, T extends BasicTree<K>>
-  (tree: T[] | undefined, keywords: string, childrenKey: K = 'children' as K, keyList?: K[]): T[] | undefined {
+  (tree: T[] | undefined, keywords: string, childrenKey: K = 'children' as K, keyList?: K[]): T[] {
     keywords = keywords?.trim()
     if (!keywords || !tree) {
-      return tree
+      return []
     }
     const validNode = new Set<BasicTree<K>>()
     function valid(node: BasicTree<K>): boolean {
@@ -54,11 +54,11 @@ export class TreeUtil {
       }
       return false
     }
-
-    return function filter(list?: T[]) {
-      const res = list?.filter(t => valid(t))
-      res?.forEach(item => item[childrenKey] ? filter(item[childrenKey] as T[]) : item[childrenKey])
+    function filter(list?: T[]) {
+      const res = list?.filter(t => valid(t)) || []
+      res.forEach(item => item[childrenKey] ? filter(item[childrenKey] as T[]) : item[childrenKey])
       return res
-    }(tree)
+    }
+    return filter(tree)
   }
 }

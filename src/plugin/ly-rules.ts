@@ -1,5 +1,4 @@
 import {FormItemRule} from 'element-plus'
-import {App} from 'vue'
 
 
 const trigger = ['blur', 'change']
@@ -29,17 +28,5 @@ export const Rules = {
       },
       trigger
     } as FormItemRule
-  },
-}
-
-export default {
-  install(app: App) {
-    app.config.globalProperties.$rules = Rules
-  }
-}
-
-declare module '@vue/runtime-core' {
-  export interface ComponentCustomProperties {
-    $rules: typeof Rules
   }
 }

@@ -15,6 +15,7 @@ import LyBtn from '@/components/button/ly-btn.vue'
 import LyDialog from '@/components/dialog/ly-dialog.vue'
 import LyColumn from '@/components/table/column/ly-column.vue'
 import LyColumnAction from '@/components/table/column/ly-column-action.vue'
+import LyTreeFilter from '@/components/special/ly-tree-filter.vue'
 
 export const LyComponent = {
   install: (Vue: App) => {
@@ -34,5 +35,6 @@ export const LyComponent = {
     Vue.component('LyColumnSelection', LyColumnSelection)
     Vue.component('LyBtn', LyBtn)
     Vue.component('LyDialog', LyDialog)
+    Vue.component('LyTreeFilter', LyTreeFilter)
   }
 }

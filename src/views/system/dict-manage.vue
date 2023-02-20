@@ -1,10 +1,11 @@
 <template>
   <ly-area-search :context="searchCtx">
     <template #aside>
-      <el-input/>
+      <el-input v-model="keywords"/>
+      <!--<ly-tree :data="tableData"></ly-tree>-->
       <el-tree :data="tableData">
         <template #default="{data}">
-          {{data.dictName}}
+          {{ data.dictName }}
         </template>
       </el-tree>
     </template>
@@ -31,7 +32,11 @@
 <script setup>
 import {useSearchPage} from '@/use/search-page'
 import {dictApi} from '@/api/system/dict'
+import {ref} from 'vue'
+import LyTree from '@/components/tree/ly-tree.vue'
 
+const keywords = ref()
 const searchCtx = useSearchPage(dictApi)
 const {searchForm, tableData} = searchCtx
+
 </script>

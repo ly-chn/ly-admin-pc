@@ -4,7 +4,7 @@
       <ly-icon :type="icon"/>
     </template>
     <template #default v-if="$slots.default">
-      <slot></slot>
+      <slot/>
     </template>
   </el-button>
 </template>

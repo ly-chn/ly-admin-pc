@@ -5,7 +5,7 @@
              :top="top"
              :width="width"
              draggable>
-    <slot></slot>
+    <slot/>
     <template #footer>
       <slot name="footer">
         <ly-btn @click="modelValue = false">取消</ly-btn>
