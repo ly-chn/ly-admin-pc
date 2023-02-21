@@ -5,7 +5,8 @@
            :filter-node-method="filterNode"
            :node-key="nodeKey"
            default-expand-all
-           v-on="bridgeEmits">
+           v-on="bridgeEmits"
+           @current-change="handleCurrentNodeChange">
     <template v-if="$slots.default" #default="scope">
       <slot v-bind="scope"/>
     </template>
@@ -15,11 +16,13 @@
 <script lang="ts" setup>
 import type {PropType} from 'vue'
 import {computed, ref, watchEffect} from 'vue'
-import {type TreeComponentProps} from 'element-plus/es/components/tree/src/tree.type'
 import {useBridgeEmits} from '@/use/bridge-emits'
-import { ElTree } from 'element-plus'
+import type {TreeNode} from 'element-plus'
+import {ElTree} from 'element-plus'
 import type {BasicTree} from '#/utility-type'
 import Pinyin from 'pinyin-match'
+import type {TreeComponentProps} from 'element-plus/es/components/tree/src/tree.type'
+import {useFieldModel} from '@/components/form/util/form-util'
 
 const props = defineProps({
   /**
@@ -86,14 +89,24 @@ const emits = defineEmits([
   'node-contextmenu',
   'node-collapse',
   'node-expand',
-  'check'
+  'check',
+  'update:currentNodeKey'
 ])
 const treeRef = ref<InstanceType<typeof ElTree>>()
 const bridgeEmits = useBridgeEmits(emits,
-  ['check-change', 'current-change', 'node-click', 'node-contextmenu', 'node-collapse', 'node-expand', 'check'])
+  ['check-change', 'node-click', 'node-contextmenu', 'node-collapse', 'node-expand', 'check'])
 
 watchEffect(() => treeRef.value?.filter(props.keywords?.trim()))
 const filterKey = computed(() => props.filterKey || [props.props.label])
 const filterNode = (keywords: string, data: BasicTree<string>) => !keywords || Object.keys(data)
   .some(k => filterKey.value.includes(k) && data[k] && Pinyin.match(String(data[k]), keywords))
+
+const currentNodeKey = useFieldModel(props, emits, 'currentNodeKey')
+
+function handleCurrentNodeChange(data: BasicTree<string>, node: TreeNode) {
+  if (props.nodeKey) {
+    currentNodeKey.value = data[props.nodeKey] as any
+  }
+  emits('current-change', data, node)
+}
 </script>

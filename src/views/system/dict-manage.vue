@@ -2,7 +2,7 @@
   <ly-area-search :context="dictItemSearchCtx">
     <template #aside>
       <el-input v-model="keywords" placeholder="过滤"/>
-      <ly-tree :data="dictList" :props="{label: 'dictName'}">
+      <ly-tree :data="dictList" :props="{label: 'dictName'}" @current-change="handleCurrentChange">
         <template #default="{data}">
           {{ data.dictName }}
         </template>
@@ -33,14 +33,31 @@
 <script setup>
 import {dictApi} from '@/api/system/dict'
 import {dictItemApi} from '@/api/system/dict-item'
+import LyTree from '@/components/tree/ly-tree.vue'
 import {useSearchPage} from '@/use/search-page'
 import {ref} from 'vue'
-import LyTree from '@/components/tree/ly-tree.vue'
+
+const currentDictId = ref()
 
 const keywords = ref()
-const dictItemSearchCtx = useSearchPage(dictItemApi)
+const dictItemSearchCtx = useSearchPage(dictItemApi, {
+  beforeSearch: (params) => {
+    if (!currentDictId.value) {
+      return null
+    }
+    params.dictId = currentDictId.value
+    return params
+  }
+})
 const {searchForm} = dictItemSearchCtx
+
 
 const dictList = ref()
 dictApi.all().then(res => dictList.value = res)
+
+// todo: 根据字典类型分组
+function handleCurrentChange(data){
+  currentDictId.value = data.id
+  dictItemSearchCtx.handleSearch()
+}
 </script>

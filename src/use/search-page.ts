@@ -1,9 +1,12 @@
 import {type Ref, ref} from 'vue'
+import LyTree from '@/components/tree/ly-tree.vue'
+import LyForm from '@/components/form/form/ly-form.vue'
 
 export interface SearchPageApi {
   search: (params: any) => Promise<any>
-  edit: (record: any) => Promise<any>
+  edit?: (record: any) => Promise<any>
   getById: (id: string) => Promise<any>
+  // todo: removeById
 }
 
 export interface SearchPageConfig {
@@ -51,12 +54,15 @@ export type Paging = {
 }
 
 export type SearchPageContext<T = any> = {
+
   searchForm: Record<string, any>
   handleSearch: () => Promise<void>
   handleReset: () => void
   loading: Ref<boolean>
   paging: Ref<Paging>
   tableData: Ref<T[]>
+  handleEdit: (recordId: string) => void
+  record: any
 }
 
 export function useSearchPage(api: SearchPageApi, config: SearchPageConfig = {}): SearchPageContext {
@@ -69,28 +75,48 @@ export function useSearchPage(api: SearchPageApi, config: SearchPageConfig = {})
   const paging = ref<Paging>({...defaultPaging})
   const tableData = ref()
   const loading = ref(false)
-  const handleSearch = async function () {
+  const editing = ref(false)
+  const record = ref()
+  const handleSearch = async () => {
     loading.value = true
     const params = beforeSearch({...defaultOrder, ...defaultPaging, ...searchForm.value})
     if (!params) {
+      loading.value = false
       return void console.log('取消请求')
     }
     const {pageNum, pageSize, total, list} = await api.search(params).finally(() => loading.value = false)
     paging.value = {pageNum, pageSize, total}
     tableData.value = list
   }
-  const handleReset = function () {
+  const handleReset = async () => {
     paging.value.pageSize = undefined
     paging.value.pageNum = 1
-    handleSearch()
+    await handleSearch()
   }
   handleReset()
+  const handleEdit = async (recordAble?: any) => {
+    editing.value = true
+    if (!recordAble) {
+      record.value = {}
+    }else if (typeof recordAble === 'string') {
+      record.value = await api.getById(recordAble)
+    } else {
+      record.value = {}
+    }
+  }
+
+  const handleSubmit = async (formRef: Ref<InstanceType<typeof LyForm>>) => {
+    await  formRef.value?.validate()
+
+  }
   return {
     searchForm,
     handleSearch,
     handleReset,
     loading,
     paging,
-    tableData
+    tableData,
+    handleEdit,
+    record
   }
 }
