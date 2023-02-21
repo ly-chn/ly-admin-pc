@@ -33,7 +33,7 @@ export interface SearchPageConfig {
 
 /**
  * 分页信息
- * todo: 移动到分页组件中
+ * lyTodo: 移动到分页组件中
  */
 export type Paging = {
   /**

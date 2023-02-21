@@ -4,7 +4,6 @@ import {LyPropType} from '@/components/util/ly-prop-type'
 import {computed, inject, onMounted, PropType, reactive, ref} from 'vue'
 import {lyTableColumnCollectCtxSymbol, lyTableColumnCustomerCtxSymbol} from '@/components/table/ly-table-ctx'
 import {useColumnCollect} from '@/components/table/ly-table-util'
-import {TableColumn} from 'element-plus/es/components/table/src/table-column/defaults'
 import {ElTableColumn} from 'element-plus'
 
 const props = defineProps({
@@ -59,7 +58,9 @@ const showAble = computed(() => !columnCustomerContext?.showAbleColumns.length |
     <template v-if="$slots.default" #default="scope">
       <slot v-bind="{ row: scope?.row, column: scope?.column, $index: scope?.$index }"/>
     </template>
-    <template v-if="$slots.header" #header><slot name="header"/></template>
+    <template v-if="$slots.header" #header>
+      <slot name="header"/>
+    </template>
   </el-table-column>
   <div v-else ref="el">
     <slot v-bind="{ row: undefined, column: undefined, $index: undefined }"/>

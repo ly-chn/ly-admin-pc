@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, {AxiosInstance} from 'axios'
 import {ElMessage} from 'element-plus'
 
 const instance = axios.create({
@@ -30,4 +30,4 @@ instance.interceptors.response.use(response => {
   return error
 })
 
-export const rest = instance
+export const rest: AxiosInstance = instance

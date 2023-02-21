@@ -1,16 +1,17 @@
-import {rest} from '../../util/rest.js'
+import {rest} from '@/util/rest'
 
 /**
  * 字典接口
  */
 export const dictApi = {
-  search(params) {
-    return rest.get('sys-dict/search', {params})
+  list() {
+    return rest.get('sys-dict/list')
   },
   edit(record) {
     return rest.post('sys-dict/edit', record)
   },
   getById(id) {
-    return rest.get(`sys-dict/id${id}`)
+    return rest.get(`sys-dict/${id}`)
   },
+
 }

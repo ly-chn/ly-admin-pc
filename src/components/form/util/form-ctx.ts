@@ -1,4 +1,4 @@
-import {ExtractPropTypes, InjectionKey, PropType, UnwrapRef} from 'vue'
+import {ExtractPropTypes, InjectionKey, UnwrapRef} from 'vue'
 import {FormItemProp, FormValidateCallback, FormValidationResult} from 'element-plus'
 import {Arrayable} from 'element-plus/es/utils'
 import {colSpanProps} from '@/components/form/util/form-props'

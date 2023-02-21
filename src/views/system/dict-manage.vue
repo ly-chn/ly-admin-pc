@@ -1,13 +1,12 @@
 <template>
   <ly-area-search :context="searchCtx">
     <template #aside>
-      <el-input v-model="keywords"/>
-      <!--<ly-tree :data="tableData"></ly-tree>-->
-      <el-tree :data="tableData">
+      <el-input v-model="keywords" placeholder="过滤"/>
+      <ly-tree :data="dictList" :props="{label: 'dictName'}">
         <template #default="{data}">
           {{ data.dictName }}
         </template>
-      </el-tree>
+      </ly-tree>
     </template>
     <ly-form quarter search-form>
       <ly-input label="字典名称" v-model="searchForm.dictName"/>
@@ -30,13 +29,14 @@
 </template>
 
 <script setup>
-import {useSearchPage} from '@/use/search-page'
 import {dictApi} from '@/api/system/dict'
 import {ref} from 'vue'
 import LyTree from '@/components/tree/ly-tree.vue'
 
 const keywords = ref()
-const searchCtx = useSearchPage(dictApi)
-const {searchForm, tableData} = searchCtx
+// const searchCtx = useSearchPage(dictApi)
+// const {searchForm, tableData} = searchCtx
 
+const dictList = ref()
+dictApi.list().then(res => dictList.value = res)
 </script>

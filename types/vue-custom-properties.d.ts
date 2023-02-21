@@ -1,9 +1,9 @@
 import {Rules} from '@/plugin/ly-rules'
-import {todo} from '@/plugin/todo'
+import {lyTodo} from '@/plugin/ly-todo'
 
 declare module '@vue/runtime-core' {
   export interface ComponentCustomProperties {
     $rules: typeof Rules
-    $todo: typeof todo
+    $todo: typeof lyTodo
   }
 }

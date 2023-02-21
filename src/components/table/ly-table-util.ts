@@ -40,7 +40,7 @@ export function useColumnCollect() {
  * 计算显示的列, 以label为唯一标志
  */
 export function calcShowAbleColumn(columns: Ref<LyTableColumnCollector[]>, checkedColumns: string[]) {
-  // todo: 优化这段代码
+  // lyTodo: 优化这段代码
   function shouldShow(column?: LyTableColumnCollector): boolean {
     if (!column) {
       return false

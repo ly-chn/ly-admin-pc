@@ -6,7 +6,7 @@
       {{ child.meta.title }}
     </simple-menu-item>
   </el-sub-menu>
-  <!--todo: 如果只有一个可用子菜单, 则跳转到子菜单-->
+  <!--lyTodo: 如果只有一个可用子菜单, 则跳转到子菜单-->
   <el-menu-item v-else :index="basePath">
     {{ menuItem.meta.title }}
   </el-menu-item>
