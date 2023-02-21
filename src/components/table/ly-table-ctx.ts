@@ -1,4 +1,4 @@
-import {InjectionKey} from 'vue'
+import type {InjectionKey} from 'vue'
 
 export type LyColumnCollectorContext = {
   /**

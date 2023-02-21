@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import {computed, inject, provide, reactive, toRefs} from 'vue'
 import {useAutoLabelWidth} from '@/components/form/util/form-util'
-import {LyFormContext, lyFormCtxKey, LyFormItemContext, lyFormProps} from '@/components/form/util/form-ctx'
+import type {LyFormContext, LyFormItemContext} from '@/components/form/util/form-ctx'
+import {lyFormCtxKey, lyFormProps} from '@/components/form/util/form-ctx'
 import {searchAreaCtxKey} from '@/components/area/area-ctx'
 
 const props = defineProps({...lyFormProps})

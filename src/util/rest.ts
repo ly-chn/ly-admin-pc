@@ -1,4 +1,4 @@
-import axios, {AxiosInstance} from 'axios'
+import axios, {type AxiosInstance} from 'axios'
 import {ElMessage} from 'element-plus'
 
 const instance = axios.create({

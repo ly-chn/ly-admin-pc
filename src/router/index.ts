@@ -1,6 +1,7 @@
-import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
+import type {RouteRecordRaw} from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import {visitorRoutes} from './routes'
-import {App} from 'vue'
+import type {App} from 'vue'
 
 const whiteRouteNameList: string[] = [];
 // generate visitor routes

@@ -10,8 +10,8 @@
 </template>
 
 <script lang="ts" setup>
-import {PropType} from 'vue'
-import {ElIconName} from '#/element-plus'
+import type {PropType} from 'vue'
+import type {ElIconName} from '#/element-plus'
 import {LyPropType} from '@/components/util/ly-prop-type'
 
 defineProps({

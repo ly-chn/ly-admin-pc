@@ -1,6 +1,6 @@
-import {ExtractPropTypes, PropType} from 'vue'
-import {FormItemRule} from 'element-plus'
-import {Arrayable} from 'element-plus/es/utils'
+import type {ExtractPropTypes, PropType} from 'vue'
+import type {FormItemRule} from 'element-plus'
+import type {Arrayable} from 'element-plus/es/utils'
 
 export const formFieldProps = {
   /**

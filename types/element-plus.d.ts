@@ -1,4 +1,4 @@
-import {Prefix} from '#/utility-type'
+import type  {Prefix} from '#/utility-type'
 
 // 所有的element-plus的icon组件
 type IconTypes = 'AddLocation' | 'Aim' | 'AlarmClock' | 'Apple' | 'ArrowDownBold' | 'ArrowDown' | 'ArrowLeftBold'

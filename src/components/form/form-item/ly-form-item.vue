@@ -4,27 +4,24 @@ import {
   inject,
   onBeforeUnmount,
   onMounted,
-  PropType,
   provide,
   reactive,
   ref,
   useSlots,
   watchEffect
 } from 'vue'
-import {colSpanProps, FormValidateRule, FormValidateRuleGenerate} from '@/components/form/util/form-props'
+import type {PropType} from 'vue'
+import {colSpanProps} from '@/components/form/util/form-props'
+import type {FormValidateRule} from '@/components/form/util/form-props'
+import type {FormValidateRuleGenerate} from '@/components/form/util/form-props'
 import {refDebounced, useResizeObserver} from '@vueuse/core'
 import {useColSpan} from '@/components/form/util/form-util'
 import {lyFormCtxKey} from '@/components/form/util/form-ctx'
-import {
-  FormItemContext,
-  formItemContextKey,
-  FormItemRule,
-  FormItemValidateState,
-  FormValidateFailure, useNamespace, useSize
-} from 'element-plus'
+import type {FormItemRule, FormItemValidateState, FormValidateFailure, FormItemContext} from 'element-plus'
+import {formItemContextKey, useNamespace, useSize} from 'element-plus'
 import {IsInstance} from '@/util/is-instance'
 import {castArray} from 'lodash'
-import type { RuleItem } from 'async-validator'
+import type {RuleItem} from 'async-validator'
 import AsyncValidator from 'async-validator'
 import {LyFormConstant} from '@/components/form/util/ly-form-constant'
 import {Rules} from '@/plugin/ly-rules'
@@ -48,7 +45,7 @@ const props = defineProps({
    * 校验规则
    */
   rules: {
-    type: [Object, Array, Function] as PropType<FormValidateRule>,
+    type: [Object, Array, Function] as PropType<FormValidateRule>
   },
   /**
    * 标签文本
@@ -141,11 +138,11 @@ const setValidationState = (state: FormItemValidateState) => {
   validateState.value = state
 }
 const getFilteredRule = (trigger: string) => normalizedRules.value
-  .filter(rule=>!rule.trigger || !trigger || castArray(rule.trigger).includes(trigger))
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  .filter(rule => !rule.trigger || !trigger || castArray(rule.trigger).includes(trigger))
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
   .map(({trigger, ...rule}) => rule)
 const onValidationFailed = (error: FormValidateFailure) => {
-  const { errors, fields } = error
+  const {errors, fields} = error
   if (!errors || !fields) {
     console.error(error)
   }
@@ -154,9 +151,9 @@ const onValidationFailed = (error: FormValidateFailure) => {
 }
 const doValidate = async (rules: RuleItem[]): Promise<any> => {
   const validator = new AsyncValidator({
-    target: rules,
+    target: rules
   })
-  return validator.validate({ target: props.value }, LyFormConstant.validateOptions)
+  return validator.validate({target: props.value}, LyFormConstant.validateOptions)
     .then(() => {
       setValidationState('success')
       return true as const
@@ -190,7 +187,7 @@ const clearValidate: FormItemContext['clearValidate'] = () => {
   validateMessage.value = ''
 }
 const ns = useNamespace('form-item')
-const size = useSize(undefined, { formItem: false })
+const size = useSize(undefined, {formItem: false})
 
 const formItemClasses = computed(() => [
   ns.b(),
@@ -198,7 +195,7 @@ const formItemClasses = computed(() => [
   ns.is('error', validateState.value === 'error'),
   ns.is('validating', validateState.value === 'validating'),
   ns.is('success', validateState.value === 'success'),
-  ns.is('required', normalizedRules.value.some((rule) => rule.required) || props.required),
+  ns.is('required', normalizedRules.value.some((rule) => rule.required) || props.required)
 ])
 const validateStateDebounced = refDebounced(validateState, 100)
 
@@ -218,7 +215,7 @@ defineExpose({
 })
 </script>
 <template>
-  <el-col :span="finalSpan" class="flex ly-form-item" :class="formItemClasses">
+  <el-col :class="formItemClasses" :span="finalSpan" class="flex ly-form-item">
     <component :is="labelFor?'label':'div'"
                v-if="hasLabel"
                ref="labelRef"
@@ -227,9 +224,9 @@ defineExpose({
       <slot name="label">{{ label }}</slot>
     </component>
     <div :class="ns.e('content')">
-      <slot />
+      <slot/>
       <transition :name="`${ns.namespace.value}-zoom-in-top`">
-        <slot v-if="validateStateDebounced==='error'" name="error" :error="validateMessage">
+        <slot v-if="validateStateDebounced==='error'" :error="validateMessage" name="error">
           <div :class="ns.e('error')">
             {{ validateMessage }}
           </div>

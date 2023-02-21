@@ -1,4 +1,4 @@
-import {RouteRecordRaw} from 'vue-router'
+import type {RouteRecordRaw} from 'vue-router'
 import {IdUtil} from '@/util/id-util'
 
 export const PageLayout = () => import('@/layouts/page-layout/page-layout.vue')

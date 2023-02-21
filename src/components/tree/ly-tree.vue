@@ -13,11 +13,12 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, PropType, ref, watchEffect} from 'vue'
-import {TreeComponentProps} from 'element-plus/es/components/tree/src/tree.type'
+import type {PropType} from 'vue'
+import {computed, ref, watchEffect} from 'vue'
+import {type TreeComponentProps} from 'element-plus/es/components/tree/src/tree.type'
 import {useBridgeEmits} from '@/use/bridge-emits'
-import {ElTree} from 'element-plus'
-import {BasicTree} from '#/utility-type'
+import { ElTree } from 'element-plus'
+import type {BasicTree} from '#/utility-type'
 import Pinyin from 'pinyin-match'
 
 const props = defineProps({

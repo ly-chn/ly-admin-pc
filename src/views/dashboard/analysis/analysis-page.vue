@@ -14,7 +14,7 @@
 <script lang="ts" setup>
 
 import {reactive, ref} from 'vue'
-import {LyDictItem} from '@/components/form/util/form-props'
+import type {LyDictItem} from '@/components/form/util/form-props'
 import LyBtnSearch from '@/components/button/ly-btn-search.vue'
 
 const form: Record<string, unknown> = reactive({})

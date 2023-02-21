@@ -1,4 +1,4 @@
-import {ValidateOption} from 'async-validator/dist-types/interface'
+import type {ValidateOption} from 'async-validator/dist-types/interface'
 
 export class LyFormConstant{
   /**

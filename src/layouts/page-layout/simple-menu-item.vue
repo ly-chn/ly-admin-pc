@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import {RouteRecordRaw} from 'vue-router'
+import type {RouteRecordRaw} from 'vue-router'
 import {computed} from 'vue'
 import {IsInstance} from '@/util/is-instance'
 

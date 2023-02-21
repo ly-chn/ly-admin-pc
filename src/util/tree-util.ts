@@ -1,4 +1,4 @@
-import {BasicTree} from '#/utility-type'
+import type  {BasicTree} from '#/utility-type'
 
 export class TreeUtil {
   /**
@@ -17,8 +17,8 @@ export class TreeUtil {
       if (node[nodeKey] === target) {
         return node
       }
-      if ((node[childrenKey] as T[])?.length) {
-        const findNode = this.findNode(node[childrenKey] as T[], nodeKey, target, childrenKey)
+      if ((node[childrenKey] as unknown as T[])?.length) {
+        const findNode = this.findNode(node[childrenKey] as unknown as T[], nodeKey, target, childrenKey)
         if (findNode) {
           return findNode
         }

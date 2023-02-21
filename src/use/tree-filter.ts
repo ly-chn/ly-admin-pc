@@ -1,5 +1,6 @@
-import {BasicTree} from '#/utility-type'
-import {computed, Ref, unref} from 'vue'
+import type {BasicTree} from '#/utility-type'
+import type {Ref} from 'vue'
+import {computed, unref} from 'vue'
 import {TreeUtil} from '@/util/tree-util'
 
 /**

@@ -5,7 +5,6 @@ import eslintPlugin from 'vite-plugin-eslint'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
-import vueJsx from '@vitejs/plugin-vue-jsx'
 import { fileURLToPath, URL } from 'node:url'
 
 function pathResolve(dir: string) {
@@ -24,21 +23,9 @@ export default defineConfig({
     }),
     Components({
       resolvers: [ElementPlusResolver()],
-    }), vueJsx()
+    })
   ],
   resolve: {
-    // alias: [
-    //   // @/xxxx => src/xxxx
-    //   {
-    //     find: /@\//,
-    //     replacement: pathResolve('src') + '/',
-    //   },
-    //   // #/xxxx => types/xxxx
-    //   {
-    //     find: /#\//,
-    //     replacement: pathResolve('types') + '/',
-    //   },
-    // ],
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       '#': fileURLToPath(new URL('./types', import.meta.url))

@@ -1,4 +1,4 @@
-import {InjectionKey} from 'vue'
-import {SearchPageContext} from '@/use/search-page'
+import type {InjectionKey} from 'vue'
+import type {SearchPageContext} from '@/use/search-page'
 
 export const searchAreaCtxKey: InjectionKey<SearchPageContext> = Symbol('search-area')

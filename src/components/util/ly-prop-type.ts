@@ -1,4 +1,4 @@
-import {PropType} from 'vue'
+import type {PropType} from 'vue'
 
 /**
  * 一些通用的类型

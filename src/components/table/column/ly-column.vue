@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import {dictOptionsProps} from '@/components/form/util/form-props'
 import {LyPropType} from '@/components/util/ly-prop-type'
-import {computed, inject, onMounted, PropType, reactive, ref} from 'vue'
+import type {PropType} from 'vue'
+import {computed, inject, onMounted, reactive, ref} from 'vue'
 import {lyTableColumnCollectCtxSymbol, lyTableColumnCustomerCtxSymbol} from '@/components/table/ly-table-ctx'
 import {useColumnCollect} from '@/components/table/ly-table-util'
 import {ElTableColumn} from 'element-plus'

@@ -1,4 +1,4 @@
-import {FormItemRule} from 'element-plus'
+import type {FormItemRule} from 'element-plus'
 
 
 const trigger = ['blur', 'change']

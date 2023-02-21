@@ -1,5 +1,7 @@
-import {lyTableColumnCollectCtxSymbol, LyTableColumnCollector} from '@/components/table/ly-table-ctx'
-import {provide, Ref, ref} from 'vue'
+import type {LyTableColumnCollector} from '@/components/table/ly-table-ctx'
+import {lyTableColumnCollectCtxSymbol} from '@/components/table/ly-table-ctx'
+import type {Ref} from 'vue'
+import {provide, ref} from 'vue'
 import {TreeUtil} from '@/util/tree-util'
 import * as localforage from 'localforage'
 

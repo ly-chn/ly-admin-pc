@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import {PropType} from 'vue'
-import {ElIconName} from '#/element-plus'
+import type {ElIconName} from '#/element-plus'
+import type {PropType} from 'vue'
 
 defineProps({
   type: String as PropType<ElIconName>,

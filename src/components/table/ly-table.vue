@@ -2,23 +2,24 @@
 import {LyPropType} from '@/components/util/ly-prop-type'
 import {
   computed,
-  CSSProperties,
   inject,
   nextTick,
   onMounted,
-  PropType,
   provide,
   reactive,
   ref,
   toRaw,
   watchEffect
 } from 'vue'
-import {ElPopover, ElTable, ElTree, TableProps} from 'element-plus'
+import type {PropType} from 'vue'
+import type {CSSProperties} from 'vue'
+import {ElPopover, ElTable, ElTree} from 'element-plus'
+import type {TableProps} from 'element-plus'
 import {useFieldModel} from '@/components/form/util/form-util'
 import {calcShowAbleColumn, getRowIdentity, tableStore, useColumnCollect} from '@/components/table/ly-table-util'
 import {searchAreaCtxKey} from '@/components/area/area-ctx'
 import LyPaging from '@/components/special/ly-paging.vue'
-import {Paging} from '@/use/search-page'
+import type {Paging} from '@/use/search-page'
 import {lyTableColumnCustomerCtxSymbol} from '@/components/table/ly-table-ctx'
 import {useRoute} from 'vue-router'
 

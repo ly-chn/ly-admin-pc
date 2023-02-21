@@ -1,8 +1,8 @@
-import {ExtractPropTypes, InjectionKey, UnwrapRef} from 'vue'
-import {FormItemProp, FormValidateCallback, FormValidationResult} from 'element-plus'
-import {Arrayable} from 'element-plus/es/utils'
+import type {ExtractPropTypes, InjectionKey, UnwrapRef} from 'vue'
+import type {FormItemProp, FormValidateCallback, FormValidationResult} from 'element-plus'
+import type {Arrayable} from 'element-plus/es/utils'
 import {colSpanProps} from '@/components/form/util/form-props'
-import {useAutoLabelWidth} from '@/components/form/util/form-util'
+import type {useAutoLabelWidth} from '@/components/form/util/form-util'
 import {LyPropType} from '@/components/util/ly-prop-type'
 
 

@@ -1,4 +1,4 @@
-import {App} from 'vue'
+import type {App} from 'vue'
 import {Rules} from '@/plugin/ly-rules'
 import {lyTodo} from '@/plugin/ly-todo'
 

@@ -11,8 +11,8 @@
 </template>
 
 <script lang="ts" setup>
-import {SearchPageContext} from '@/use/search-page'
-import {PropType} from 'vue'
+import type {SearchPageContext} from '@/use/search-page'
+import type {PropType} from 'vue'
 import AreaSearchMain from '@/components/area/component/area-search-main.vue'
 
 defineProps({

@@ -1,7 +1,7 @@
 import {computed, inject, reactive, ref, watchEffect} from 'vue'
-import {DictOptionsProps, LyColSpanProps, LyDictItem, LyFormFieldProps} from '@/components/form/util/form-props'
+import type {DictOptionsProps, LyColSpanProps, LyDictItem, LyFormFieldProps} from '@/components/form/util/form-props'
 import {lyFormCtxKey} from '@/components/form/util/form-ctx'
-import {Prefix} from '#/utility-type'
+import type {Prefix} from '#/utility-type'
 
 export function useAutoLabelWidth(maxLabelWidth: number) {
   const labelWidthMap = reactive(new Map<symbol, number>())

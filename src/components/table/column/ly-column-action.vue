@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 import {LyPropType} from '@/components/util/ly-prop-type'
-import {PropType} from 'vue'
+import type {PropType} from 'vue'
 
 defineProps({
   width: LyPropType.sideLength,
