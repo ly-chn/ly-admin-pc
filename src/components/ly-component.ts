@@ -16,6 +16,7 @@ import LyDialog from '@/components/dialog/ly-dialog.vue'
 import LyColumn from '@/components/table/column/ly-column.vue'
 import LyColumnAction from '@/components/table/column/ly-column-action.vue'
 import LyTree from '@/components/tree/ly-tree.vue'
+import LyBtnCreate from '@/components/button/ly-btn-create.vue'
 
 export const LyComponent = {
   install: (Vue: App) => {
@@ -25,16 +26,18 @@ export const LyComponent = {
     Vue.component('LyFormItem', LyFormItem)
     Vue.component('LyToggle', LyToggle)
     Vue.component('LySelect', LySelect)
-    Vue.component('LyBtnSearch', LyBtnSearch)
-    Vue.component('LyBtnReset', LyBtnReset)
     Vue.component('LyAreaSearch', LyAreaSearch)
     Vue.component('LyTable', LyTable)
     Vue.component('LyColumn', LyColumn)
     Vue.component('LyColumnIndex', LyColumnIndex)
     Vue.component('LyColumnAction', LyColumnAction)
     Vue.component('LyColumnSelection', LyColumnSelection)
-    Vue.component('LyBtn', LyBtn)
     Vue.component('LyDialog', LyDialog)
     Vue.component('LyTree', LyTree)
+
+    Vue.component('LyBtn', LyBtn)
+    Vue.component('LyBtnSearch', LyBtnSearch)
+    Vue.component('LyBtnReset', LyBtnReset)
+    Vue.component('LyBtnCreate', LyBtnCreate)
   }
 }

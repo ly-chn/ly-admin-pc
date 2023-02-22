@@ -1,11 +1,14 @@
 import {type Ref, ref} from 'vue'
-import LyTree from '@/components/tree/ly-tree.vue'
-import LyForm from '@/components/form/form/ly-form.vue'
+import {inject} from 'vue'
+import {ElMessage} from 'element-plus'
+import type LyForm from '@/components/form/form/ly-form.vue'
+import {searchAreaCtxKey} from '@/components/area/area-ctx'
+import {watchEffect} from 'vue'
 
 export interface SearchPageApi {
   search: (params: any) => Promise<any>
   edit?: (record: any) => Promise<any>
-  getById: (id: string) => Promise<any>
+  getById?: (id: string) => Promise<any>
   // todo: removeById
 }
 
@@ -53,18 +56,62 @@ export type Paging = {
   total?: number
 }
 
+/**
+ * 检索页上下文
+ */
 export type SearchPageContext<T = any> = {
-
-  searchForm: Record<string, any>
+  /**
+   * 检索表单
+   */
+  searchForm: Ref<Record<string, any>>
+  /**
+   * 执行检索
+   */
   handleSearch: () => Promise<void>
-  handleReset: () => void
+  /**
+   * 重置检索条件
+   */
+  handleReset: () => Promise<void>
+  /**
+   * 检索loading状态, 用于表格, 检索/重置按钮
+   */
   loading: Ref<boolean>
+  /**
+   * 检索的分页信息
+   */
   paging: Ref<Paging>
+  /**
+   * 检索结果-列表数据
+   */
   tableData: Ref<T[]>
-  handleEdit: (recordId: string) => void
+
+  /**
+   * 当前正在编辑的对象
+   */
   record: any
+  /**
+   * 当前编辑状态
+   */
+  editing: Ref<boolean>
+  /**
+   * 点击新增/修改时的事件
+   * @param {string} recordId 不存在时表示新增, 否则表示修改, 传字符串将getById, 否则直接使用
+   * @return {Promise<void>}
+   */
+  handleEdit: (recordAble: any) => Promise<void>
+  /**
+   * 新增/修改完成
+   * @param {Ref<InstanceType<typeof LyForm>>} formRef 表单存在则自动执行校验
+   */
+  handleSubmit: (formRef?: Ref<InstanceType<typeof LyForm>>) => Promise<void>
 }
 
+/**
+ * 用于快速构建检索页面逻辑操作
+ * @param api 所需api, 检索, 修改, 通过id查找, 批量删除
+ * @param config
+ * @return {SearchPageContext}
+ */
 export function useSearchPage(api: SearchPageApi, config: SearchPageConfig = {}): SearchPageContext {
   const {
     defaultOrder = {isAsc: 'desc', orderByColumn: 'createTime'},
@@ -95,19 +142,26 @@ export function useSearchPage(api: SearchPageApi, config: SearchPageConfig = {})
   }
   handleReset()
   const handleEdit = async (recordAble?: any) => {
-    editing.value = true
     if (!recordAble) {
       record.value = {}
-    }else if (typeof recordAble === 'string') {
+    } else if (typeof recordAble === 'string') {
+      if (!api.getById) {
+        throw Error('无法执行编辑操作: 需提供api: getById')
+      }
       record.value = await api.getById(recordAble)
     } else {
       record.value = {}
     }
+    editing.value = true
   }
 
-  const handleSubmit = async (formRef: Ref<InstanceType<typeof LyForm>>) => {
-    await  formRef.value?.validate()
-
+  const handleSubmit = async (formRef?: Ref<InstanceType<typeof LyForm>>) => {
+    if (!api.edit) {
+      throw Error('需提供edit api')
+    }
+    await formRef?.value?.validate()
+    await api.edit?.(record.value)
+    ElMessage.success(record.value?.id ? '已修改' : '已添加')
   }
   return {
     searchForm,
@@ -116,7 +170,29 @@ export function useSearchPage(api: SearchPageApi, config: SearchPageConfig = {})
     loading,
     paging,
     tableData,
+    record,
+    editing,
     handleEdit,
-    record
+    handleSubmit
+  }
+}
+
+export function useSearchPageEdit(formRef?: Ref<InstanceType<typeof LyForm>>) {
+  const searchCtx = inject(searchAreaCtxKey, null)
+  if (!searchCtx) {
+    throw Error('需置于检索表单上下文之中')
+  }
+  watchEffect(()=>{
+    if (searchCtx.editing.value) {
+      formRef?.value?.clearValidate()
+    }
+  })
+  const handleOk = async ()=>{
+    await searchCtx.handleSubmit(formRef)
+  }
+  return {
+    editing: searchCtx.editing,
+    record: searchCtx.record,
+    handleOk
   }
 }

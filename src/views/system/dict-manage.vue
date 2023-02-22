@@ -10,10 +10,10 @@
     </template>
 
     <ly-form quarter search-form>
-      <ly-input label="字典名称" v-model="searchForm.dictName"/>
-      <ly-input label="字典编码" v-model="searchForm.dictCode"/>
+      <ly-input label="字典标签" v-model="searchForm.label"/>
+      <ly-input label="字典值" v-model="searchForm.value"/>
       <template #operation>
-        <el-button>新增</el-button>
+        <ly-btn-create @click="handleEdit"/>
       </template>
     </ly-form>
 
@@ -33,6 +33,7 @@
 <script setup>
 import {dictApi} from '@/api/system/dict'
 import {dictItemApi} from '@/api/system/dict-item'
+import LyBtnCreate from '@/components/button/ly-btn-create.vue'
 import LyTree from '@/components/tree/ly-tree.vue'
 import {useSearchPage} from '@/use/search-page'
 import {ref} from 'vue'
@@ -49,8 +50,7 @@ const dictItemSearchCtx = useSearchPage(dictItemApi, {
     return params
   }
 })
-const {searchForm} = dictItemSearchCtx
-
+const {searchForm, handleEdit} = dictItemSearchCtx
 
 const dictList = ref()
 dictApi.all().then(res => dictList.value = res)
