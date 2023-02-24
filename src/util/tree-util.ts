@@ -54,11 +54,11 @@ export class TreeUtil {
       }
       return false
     }
-    function filter(list?: T[]) {
+    function filter(list?: BasicTree<K>[]) {
       const res = list?.filter(t => valid(t)) || []
-      res.forEach(item => item[childrenKey] ? filter(item[childrenKey] as T[]) : item[childrenKey])
+      res.forEach(item => item[childrenKey] ? filter(item[childrenKey]) : item[childrenKey])
       return res
     }
-    return filter(tree)
+    return filter(tree) as T[]
   }
 }

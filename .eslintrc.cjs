@@ -32,7 +32,7 @@ module.exports = {
       'error',
       'never'
     ],
-    'vue/no-setup-props-destructure': 'off',
-    '@typescript-eslint/no-explicit-any': 'off'
+    // 'vue/no-setup-props-destructure': 'off',
+    // '@typescript-eslint/no-explicit-any': 'off'
   }
 }
