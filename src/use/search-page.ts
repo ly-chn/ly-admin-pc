@@ -8,11 +8,13 @@ import type {PagingVO} from '#/rest'
 import type {DataRecord} from '#/rest'
 
 export interface SearchPageApi {
-  search<P = unknown, T = DataRecord>(params: P): Promise<PagingVO<T>>
+  search?<P = unknown, T = DataRecord>(params: P): Promise<PagingVO<T>>
 
   edit?<P = unknown, R = void>(record: P): Promise<R>
 
   getById?<T = DataRecord>(id: string): Promise<T>
+  
+  all?<T=DataRecord>(): Promise<T[]>
 
   // todo: removeById
 }
@@ -25,6 +27,10 @@ export interface SearchPageConfig {
     isAsc: 'asc' | 'desc',
     orderByColumn: string
   }
+  /**
+   * 为true表示拒绝分页, 将修改search方法调用为all方法调用
+   */
+  noPaging?: boolean
   /**
    * 默认分页
    */
@@ -42,6 +48,11 @@ export interface SearchPageConfig {
    * @param res 检索请求返回值
    */
   resolveSearchRes?<T>(res: T[]): void
+
+  /**
+   * 点击编辑按钮之后, 打开弹窗之前, 此时record已完成初始化
+   */
+  beforeEdit?(): void
 }
 
 /**
@@ -66,7 +77,7 @@ export type Paging = {
 /**
  * 检索页上下文
  */
-export type SearchPageContext<T> = {
+export type SearchPageContext<T extends DataRecord = DataRecord> = {
   /**
    * 检索表单
    */
@@ -150,9 +161,15 @@ export function useSearchPage<T extends DataRecord>(api: SearchPageApi, config: 
       loading.value = false
       return void console.log('取消请求')
     }
-    const {pageNum, pageSize, total, list} = await api.search(params).finally(() => loading.value = false)
-    paging.value = {pageNum, pageSize, total}
-    tableData.value = list
+    if (!config.noPaging && api.search) {
+      const {pageNum, pageSize, total, list} = await api.search(params).finally(() => loading.value = false)
+      paging.value = {pageNum, pageSize, total}
+      tableData.value = list
+    }else if (config.noPaging && api.all){
+      tableData.value = await api.all()
+    }else {
+      throw '请在分页时配置search函数, 或者在不分页时配置all函数'
+    }
   }
   const handleReset = async () => {
     paging.value.pageSize = undefined
@@ -169,6 +186,7 @@ export function useSearchPage<T extends DataRecord>(api: SearchPageApi, config: 
       }
       record.value = await api.getById(recordAble)
     }
+    await config.beforeEdit?.()
     editing.value = true
   }
 
@@ -212,7 +230,7 @@ export function useSearchPageEdit<T extends DataRecord>(formRef: Ref<InstanceTyp
   }
   return {
     editing: searchCtx.editing,
-    record: searchCtx.record,
+    record: searchCtx.record as Ref<T>,
     handleOk
   }
 }

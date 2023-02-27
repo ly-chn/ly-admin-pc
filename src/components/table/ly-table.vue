@@ -49,11 +49,11 @@ const props = defineProps({
    * 类型为 String 时，支持多层访问：user.info.id，但不支持 user.info[0].id，此种情况请使用 Function。
    */
   rowKey: {
-    type: [String, Function] as PropType<TableProps<any>['rowKey']>,
+    type: [String, Function] as PropType<TableProps<undefined>['rowKey']>,
     default: 'id'
   },
   // 合并行或列的计算方法
-  spanMethod: Function as PropType<TableProps<any>['spanMethod']>,
+  spanMethod: Function as PropType<TableProps<undefined>['spanMethod']>,
   // 是否懒加载子节点数据
   lazy: Boolean,
   // 是否显示表头
@@ -62,7 +62,7 @@ const props = defineProps({
     default: true
   },
   // 加载子节点数据的函数，lazy 为 true 时生效
-  load: Function as PropType<TableProps<any>['load']>,
+  load: Function as PropType<TableProps<unknown>['load']>,
   // 已选中的内容(v-model)
   selectedRowKeys: Array,
   // 表格唯一标识, 用于存储表格相关设置, 如果一个页面中包含多个表格, 则需要配置此参数, 否则可根据路由生成

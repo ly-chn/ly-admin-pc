@@ -17,6 +17,7 @@ import LyColumn from '@/components/table/column/ly-column.vue'
 import LyColumnAction from '@/components/table/column/ly-column-action.vue'
 import LyTree from '@/components/tree/ly-tree.vue'
 import LyBtnCreate from '@/components/button/ly-btn-create.vue'
+import LyBtnRemove from '@/components/button/ly-btn-remove.vue'
 
 export const LyComponent = {
   install: (Vue: App) => {
@@ -39,5 +40,6 @@ export const LyComponent = {
     Vue.component('LyBtnSearch', LyBtnSearch)
     Vue.component('LyBtnReset', LyBtnReset)
     Vue.component('LyBtnCreate', LyBtnCreate)
+    Vue.component('LyBtnRemove', LyBtnRemove)
   }
 }

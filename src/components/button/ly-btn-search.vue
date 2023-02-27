@@ -1,12 +1,12 @@
 <template>
-  <ly-btn icon="el-icon-Search" type="primary">搜索</ly-btn>
+  <ly-btn icon="el-icon-Search" type="primary" :link="isLink">搜索</ly-btn>
 </template>
 
 <script setup lang="ts">
-import type {PropType} from 'vue'
-import type {ElIconName} from '#/element-plus'
+import {useBtnLink} from '@/components/button/util/ly-btn-util'
 
-defineProps({
-  type: String as PropType<ElIconName>,
+const props = defineProps({
+  link: Boolean,
 })
+const isLink = useBtnLink(props)
 </script>

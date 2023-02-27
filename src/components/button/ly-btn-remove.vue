@@ -1,5 +1,5 @@
 <template>
-  <ly-btn type="primary" icon="el-icon-Plus" :link="isLink">新增</ly-btn>
+  <ly-btn type="primary" icon="el-icon-Delete" :link="isLink">删除</ly-btn>
 </template>
 
 <script setup lang="ts">

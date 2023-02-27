@@ -2,9 +2,14 @@
   <ly-area-search :context="dictItemSearchCtx">
     <template #aside>
       <el-input v-model="keywords" placeholder="过滤"/>
-      <ly-tree :data="dictList" :props="{label: 'dictName'}" @current-change="handleCurrentChange">
+      <ly-tree :data="dictCtx.tableData.value" :props="{label: 'dictName'}" @current-change="handleCurrentChange">
         <template #default="{data}">
-          {{ data.dictName }}
+          <div class="flex flex-1 justify-between">
+            {{ data.dictName }}
+            <div>
+              <ly-btn-remove/>
+            </div>
+          </div>
         </template>
       </ly-tree>
     </template>
@@ -34,6 +39,7 @@
 import {dictApi} from '@/api/system/dict'
 import {dictItemApi} from '@/api/system/dict-item'
 import LyBtnCreate from '@/components/button/ly-btn-create.vue'
+import LyBtnRemove from '@/components/button/ly-btn-remove.vue'
 import LyTree from '@/components/tree/ly-tree.vue'
 import {useSearchPage} from '@/use/search-page'
 import {ref} from 'vue'
@@ -52,8 +58,9 @@ const dictItemSearchCtx = useSearchPage(dictItemApi, {
 })
 const {searchForm, handleEdit} = dictItemSearchCtx
 
-const dictList = ref()
-dictApi.all().then(res => dictList.value = res)
+const dictCtx = useSearchPage(dictApi, {noPaging: true})
+// const dictList = ref()
+// dictApi.all().then(res => dictList.value = res)
 
 // todo: 根据字典类型分组
 function handleCurrentChange(data){
