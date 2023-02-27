@@ -1,5 +1,12 @@
 <template>
-  <el-button :disabled="disabled" :link="link" :loading="loading" :circle="circle" :plain="plain" :size="size" :text="text" :type="type">
+  <el-button :disabled="disabled"
+             :link="link"
+             :loading="loading"
+             :circle="circle"
+             :plain="plain"
+             :size="size"
+             :text="text"
+             :type="type">
     <template v-if="icon" #icon>
       <ly-icon :type="icon"/>
     </template>

@@ -59,7 +59,6 @@ export function calcShowAbleColumn(columns: Ref<LyTableColumnCollector[]>, check
   }
 
   const result = checkedColumns.filter(it => shouldShow(TreeUtil.findNode(columns.value, 'label', it, 'children')))
-  console.log('显示的列', result)
   return result
 }
 

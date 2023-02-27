@@ -2,8 +2,8 @@
   <ly-dialog v-model="editing" @ok="handleOk">
     <ly-form ref="formRef" only>
       <ly-input label="字典名称" v-model="record.dictName"/>
-      <ly-input label="字典名称" v-model="record.dictCode"/>
-      <ly-input label="字典名称" v-model="record.dictType"/>
+      <ly-input label="字典编码" v-model="record.dictCode"/>
+      <ly-input label="字典类型" v-model="record.dictType"/>
     </ly-form>
   </ly-dialog>
 </template>

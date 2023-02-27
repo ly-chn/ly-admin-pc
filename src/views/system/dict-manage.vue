@@ -1,13 +1,14 @@
 <template>
   <ly-area-search :context="dictItemSearchCtx">
     <template #aside>
-      <el-input v-model="keywords" placeholder="过滤"/>
+      <el-input v-model="keywords" placeholder="过滤..." style="min-width: 300px"/>
       <ly-tree :data="dictCtx.tableData.value" :props="{label: 'dictName'}" @current-change="handleCurrentChange">
         <template #default="{data}">
           <div class="flex flex-1 justify-between">
             {{ data.dictName }}
             <div>
-              <ly-btn-remove/>
+              <ly-btn-modify link @click="dictCtx.handleEdit(data)"/>
+              <ly-btn-remove link @click="$todo"/>
             </div>
           </div>
         </template>
