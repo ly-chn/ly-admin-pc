@@ -25,6 +25,7 @@ import type {RuleItem} from 'async-validator'
 import AsyncValidator from 'async-validator'
 import {LyFormConstant} from '@/components/form/util/ly-form-constant'
 import {Rules} from '@/plugin/ly-rules'
+import {nextTick} from 'vue'
 
 const compKey = Symbol.for('ly-form-item')
 
@@ -67,17 +68,13 @@ const slots = useSlots()
 const labelRef = ref<HTMLDivElement>()
 
 const hasLabel = computed(() => props.label || slots.label)
-const updateLabelWidth = (width: number) => {
-  formCtx?.registerLabelWidth(compKey, width)
+
+const updateLabelWidth = () => {
+  nextTick(()=>formCtx?.registerLabelWidth(compKey, getLabelWidth()))
 }
 
 const getLabelWidth = () => {
-  if (labelRef.value) {
-    const width = window.getComputedStyle(labelRef.value).width
-    return Math.ceil(Number.parseFloat(width))
-  } else {
-    return 0
-  }
+  return labelRef.value ? Math.ceil(Number.parseFloat(window.getComputedStyle(labelRef.value).width)) : 0
 }
 useResizeObserver(
   () => (labelRef.value?.firstElementChild) as HTMLElement | null,
@@ -87,7 +84,7 @@ onMounted(() => {
   updateLabelWidth(getLabelWidth())
 })
 onBeforeUnmount(() => {
-  updateLabelWidth(0)
+  formCtx?.registerLabelWidth(compKey, 0)
 })
 watchEffect(() => {
   if (labelRef.value && formCtx?.autoLabelWidth) {

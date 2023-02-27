@@ -7,19 +7,19 @@ import {searchAreaCtxKey} from '@/components/area/area-ctx'
 import type {PagingVO} from '#/rest'
 import type {DataRecord} from '#/rest'
 
-export interface SearchPageApi {
+export interface CrudApi {
   search?<P = unknown, T = DataRecord>(params: P): Promise<PagingVO<T>>
 
   edit?<P = unknown, R = void>(record: P): Promise<R>
 
-  getById?<T = DataRecord>(id: string): Promise<T>
-  
-  all?<T=DataRecord>(): Promise<T[]>
+  getById?<T = DataRecord>(id: string | number): Promise<T>
 
-  // todo: removeById
+  all?<T = DataRecord>(): Promise<T[]>
+
+  remove?(id: string | string[]): Promise<void>
 }
 
-export interface SearchPageConfig {
+export interface CrudConfig {
   /**
    * 默认检索条件
    */
@@ -77,7 +77,7 @@ export type Paging = {
 /**
  * 检索页上下文
  */
-export type SearchPageContext<T extends DataRecord = DataRecord> = {
+export type CrudContext<T extends DataRecord = DataRecord> = {
   /**
    * 检索表单
    */
@@ -112,6 +112,10 @@ export type SearchPageContext<T extends DataRecord = DataRecord> = {
    */
   editing: Ref<boolean>
   /**
+   * 当前数据提交loading状态
+   */
+  updating: Ref<boolean>
+  /**
    * 点击新增/修改时的事件
    * @param {string} recordId 不存在时表示新增, 否则表示修改, 传字符串将getById, 否则直接使用
    * @return {Promise<void>}
@@ -121,15 +125,23 @@ export type SearchPageContext<T extends DataRecord = DataRecord> = {
    * 新增/修改完成
    * @param {Ref<InstanceType<typeof LyForm>>} formRef 表单存在则自动执行校验
    */
-  handleSubmit: (formRef?: Ref<InstanceType<typeof LyForm>>) => Promise<void>
+  handleSubmit(formRef?: Ref<InstanceType<typeof LyForm>>): Promise<void>
+  /**
+   *
+   * @param {string | string[]} id
+   * @return {Promise<void>}
+   */
+  handleRemove(id: string | string[]): Promise<void>
 }
 
 /**
  * 检索页面-编辑弹窗上下文
  */
-export type SearchPageEditContext<T> = {
+export type CrudEditContext<T> = {
   // 当前编辑状态
   editing: Ref<boolean>
+  // 当前数据提交loading状态
+  updating: Ref<boolean>
   // 当前编辑的对象
   record: Ref<T>
   // 提交事件处理
@@ -140,9 +152,9 @@ export type SearchPageEditContext<T> = {
  * 用于快速构建检索页面逻辑操作
  * @param api 所需api, 检索, 修改, 通过id查找, 批量删除
  * @param config
- * @return {SearchPageContext}
+ * @return {CrudContext}
  */
-export function useSearchPage<T extends DataRecord>(api: SearchPageApi, config: SearchPageConfig = {}): SearchPageContext<T> {
+export function useCrud<T extends DataRecord>(api: CrudApi, config: CrudConfig = {}): CrudContext<T> {
   const {
     defaultOrder = {isAsc: 'desc', orderByColumn: 'createTime'},
     beforeSearch = (v: unknown) => v,
@@ -153,6 +165,7 @@ export function useSearchPage<T extends DataRecord>(api: SearchPageApi, config: 
   const tableData = ref()
   const loading = ref(false)
   const editing = ref(false)
+  const updating = ref(false)
   const record = ref<T>() as Ref<T>
   const handleSearch = async () => {
     loading.value = true
@@ -165,9 +178,9 @@ export function useSearchPage<T extends DataRecord>(api: SearchPageApi, config: 
       const {pageNum, pageSize, total, list} = await api.search(params).finally(() => loading.value = false)
       paging.value = {pageNum, pageSize, total}
       tableData.value = list
-    }else if (config.noPaging && api.all){
+    } else if (config.noPaging && api.all) {
       tableData.value = await api.all()
-    }else {
+    } else {
       throw '请在分页时配置search函数, 或者在不分页时配置all函数'
     }
   }
@@ -178,13 +191,15 @@ export function useSearchPage<T extends DataRecord>(api: SearchPageApi, config: 
   }
   handleReset().then()
   const handleEdit = async (recordAble?: unknown) => {
-    if (!recordAble || typeof recordAble !== 'string') {
+    if (!recordAble) {
       record.value = {} as T
-    } else {
+    } else if (['string', 'number'].includes(typeof recordAble)) {
       if (!api.getById) {
         throw Error('无法执行编辑操作: 需提供api: getById')
       }
-      record.value = await api.getById(recordAble)
+      record.value = await api.getById(recordAble as string)
+    } else {
+      record.value = JSON.parse(JSON.stringify(recordAble)) as T
     }
     await config.beforeEdit?.()
     editing.value = true
@@ -194,9 +209,25 @@ export function useSearchPage<T extends DataRecord>(api: SearchPageApi, config: 
     if (!api.edit) {
       throw Error('需提供edit api')
     }
-    await formRef?.value?.validate()
-    await api.edit?.(record.value)
-    ElMessage.success(record.value?.id ? '已修改' : '已添加')
+    updating.value = true
+    try {
+      await formRef?.value?.validate()
+      await api.edit?.(record.value)
+      await handleSearch()
+      await ElMessage.success(record.value?.id ? '已修改' : '已添加')
+      editing.value = false
+    } finally {
+      updating.value = false
+    }
+  }
+
+  const handleRemove = async (id: string | string[]) => {
+    if (!api.remove) {
+      throw Error('无法执行删除操作: 需提供api: remove')
+    }
+    await api.remove?.(id)
+    ElMessage.info('已删除')
+    await handleSearch()
   }
   return {
     searchForm,
@@ -207,15 +238,17 @@ export function useSearchPage<T extends DataRecord>(api: SearchPageApi, config: 
     tableData,
     record,
     editing,
+    updating,
     handleEdit,
-    handleSubmit
+    handleSubmit,
+    handleRemove
   }
 }
 
 /**
  * 检索页内容
  */
-export function useSearchPageEdit<T extends DataRecord>(formRef: Ref<InstanceType<typeof LyForm>> | undefined): SearchPageEditContext<T> {
+export function useCrudEdit<T extends DataRecord>(formRef: Ref<InstanceType<typeof LyForm>> | undefined): CrudEditContext<T> {
   const searchCtx = inject(searchAreaCtxKey, null)
   if (!searchCtx) {
     throw Error('需置于检索表单上下文之中')
@@ -230,6 +263,7 @@ export function useSearchPageEdit<T extends DataRecord>(formRef: Ref<InstanceTyp
   }
   return {
     editing: searchCtx.editing,
+    updating: searchCtx.updating,
     record: searchCtx.record as Ref<T>,
     handleOk
   }

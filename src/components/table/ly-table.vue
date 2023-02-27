@@ -19,7 +19,7 @@ import {useFieldModel} from '@/components/form/util/form-util'
 import {calcShowAbleColumn, getRowIdentity, tableStore, useColumnCollect} from '@/components/table/ly-table-util'
 import {searchAreaCtxKey} from '@/components/area/area-ctx'
 import LyPaging from '@/components/special/ly-paging.vue'
-import type {Paging} from '@/use/search-page'
+import type {Paging} from '@/use/simple-crud'
 import {lyTableColumnCustomerCtxSymbol} from '@/components/table/ly-table-ctx'
 import {useRoute} from 'vue-router'
 

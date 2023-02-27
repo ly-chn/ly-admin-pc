@@ -1,9 +1,5 @@
 <template>
-  <div class="flex-1">
-    <slot/>
-    <div v-if="$slots.default" style="height: 20px"></div>
-    <slot name="table"/>
-  </div>
+  <slot></slot>
 </template>
 
 <script lang="ts" setup>
@@ -18,6 +14,6 @@ const props = defineProps({
     required: true
   }
 })
-provide(searchAreaCtxKey, props.context)
 
+provide(searchAreaCtxKey, props.context)
 </script>

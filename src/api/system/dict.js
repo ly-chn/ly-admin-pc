@@ -13,5 +13,7 @@ export const dictApi = {
   getById(id) {
     return rest.get(`sys-dict/${id}`)
   },
-
+  remove(id) {
+    return rest.delete(`sys-dict/remove/${id}`)
+  },
 }

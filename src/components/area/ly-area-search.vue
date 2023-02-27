@@ -11,13 +11,13 @@
 </template>
 
 <script lang="ts" setup>
-import type {SearchPageContext} from '@/use/search-page'
+import type {CrudContext} from '@/use/simple-crud'
 import type {PropType} from 'vue'
 import AreaSearchMain from '@/components/area/component/area-search-main.vue'
 
 defineProps({
   context: {
-    type: Object as PropType<SearchPageContext>,
+    type: Object as PropType<CrudContext>,
     required: true
   }
 })
