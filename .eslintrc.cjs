@@ -33,6 +33,6 @@ module.exports = {
       'never'
     ],
     // 'vue/no-setup-props-destructure': 'off',
-    // '@typescript-eslint/no-explicit-any': 'off'
+    '@typescript-eslint/no-explicit-any': 'off'
   }
 }

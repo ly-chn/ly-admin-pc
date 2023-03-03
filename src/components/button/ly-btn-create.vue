@@ -1,20 +1,18 @@
 <template>
-  <ly-btn :disabled="disabled"
+  <ly-btn :class="cssClass"
           :link="isLink"
           icon="el-icon-Plus"
           type="primary"
-          @click="emits('click')">新增
+          @click="emitClick">新增
   </ly-btn>
 </template>
 
 <script lang="ts" setup>
-import {useBtnLink} from '@/components/button/util/ly-btn-util'
+import {useBtnHolder} from '@/components/button/util/ly-btn-util'
+import {lyBtnProps} from '@/components/button/util/btn-props'
 
-const props = defineProps({
-  link: Boolean,
-  disabled: Boolean
-})
+const props = defineProps({...lyBtnProps})
 
 const emits = defineEmits(['click'])
-const isLink = useBtnLink(props)
+const {isLink, emitClick, cssClass} = useBtnHolder(props, emits)
 </script>

@@ -2,14 +2,22 @@
   <ly-area-search :context="dictItemCtx">
     <template #aside>
       <ly-area-crud :context="dictCtx">
-        <el-input v-model="keywords" placeholder="过滤..." style="min-width: 300px"/>
-        <ly-tree :data="dictCtx.tableData.value" :props="{label: 'dictName'}" @current-change="handleCurrentChange">
+        <div class="flex">
+          <el-input v-model="keywords" class="flex-1" placeholder="过滤..."/>
+          <ly-btn-create title="添加字典" @click="dictCtx.handleEdit"/>
+        </div>
+        <ly-tree :data="dictTreeData"
+                 :props="{label: 'dictName'}"
+                 style="min-width: 300px"
+                 :keywords="keywords"
+                 @current-change="handleCurrentChange">
           <template #default="{data}">
             <div class="flex flex-1 justify-between">
               {{ data.dictName }}
-              <div>
+              <div v-if="data.id">
+                <ly-to-clipboard :text="data.dictCode"/>
                 <ly-btn-modify link @click="dictCtx.handleEdit(data)"/>
-                <ly-btn-remove link @click="dictCtx.handleRemove(data.id)"/>
+                <ly-btn-remove link @click="handleRemoveDict(data.id)"/>
               </div>
             </div>
           </template>
@@ -19,10 +27,10 @@
     </template>
 
     <ly-form quarter search-form>
-      <ly-input label="字典标签" v-model="searchForm.label"/>
-      <ly-input label="字典值" v-model="searchForm.value"/>
+      <ly-input label="名称" v-model="searchForm.label"/>
+      <ly-input label="编码" v-model="searchForm.value"/>
       <template #operation>
-        <ly-btn-create @click="dictItemCtx.handleEdit" :disabled="!currentDictId"/>
+        <ly-btn-create :disabled="!currentDictId" disabled-tips="请选择一个字典" @click="dictItemCtx.handleEdit"/>
       </template>
       <dict-item-edit/>
     </ly-form>
@@ -30,11 +38,20 @@
     <template #table>
       <ly-table adjust-column>
         <ly-column-index/>
-        <ly-column label="字典名称" :key="'字典名称'" prop="dictName"/>
-        <ly-column label="字典编码" :key="'字典编码'" prop="dictCode">
-          <ly-column label="字典类型" :key="'字典类型'" prop="dictType"/>
-          <ly-column label="创建时间" prop="createTime"/>
+        <ly-column label="名称" prop="label">
+          <template #default="{row}">{{ row.label }}</template>
         </ly-column>
+        <ly-column label="编码" prop="value"/>
+        <ly-column label="排序值" prop="orderWeight"/>
+        <ly-column label="提示" prop="tips"/>
+        <ly-column label="备注" prop="remark"/>
+        <ly-column label="最新更新" prop="updateTime"/>
+        <ly-column-action>
+          <template #default="{row}">
+            <ly-btn-modify @click="dictItemCtx.handleEdit(row)"/>
+            <ly-btn-remove @click="dictItemCtx.handleRemove(row.id)"/>
+          </template>
+        </ly-column-action>
       </ly-table>
     </template>
   </ly-area-search>
@@ -43,14 +60,12 @@
 <script setup>
 import {dictApi} from '@/api/system/dict'
 import {dictItemApi} from '@/api/system/dict-item'
-import LyAreaCrud from '@/components/area/ly-area-crud.vue'
-import LyBtnCreate from '@/components/button/ly-btn-create.vue'
-import LyBtnRemove from '@/components/button/ly-btn-remove.vue'
-import LyTree from '@/components/tree/ly-tree.vue'
+import LyToClipboard from '@/components/special/ly-to-clipboard.vue'
+import {useDictStore} from '@/store/dict'
 import {useCrud} from '@/use/simple-crud'
 import DictEdit from '@/views/system/component/dict-edit.vue'
 import DictItemEdit from '@/views/system/component/dict-item-edit.vue'
-import {ref} from 'vue'
+import {computed, ref} from 'vue'
 
 const currentDictId = ref()
 
@@ -62,16 +77,36 @@ const dictItemCtx = useCrud(dictItemApi, {
     }
     params.dictId = currentDictId.value
     return params
+  },
+  beforeEdit(record) {
+    record.value.dictId = currentDictId.value
   }
 })
 const {searchForm} = dictItemCtx
 
 const dictCtx = useCrud(dictApi, {noPaging: true})
-// const dictList = ref()
-// dictApi.all().then(res => dictList.value = res)
 
-// todo: 根据字典类型分组
-function handleCurrentChange(data){
+/**
+ * 移除字典, 清空字典项
+ */
+async function handleRemoveDict(id) {
+  await dictCtx.handleRemove(id)
+  currentDictId.value = null
+  dictItemCtx.tableData.value = []
+}
+
+const dictType = useDictStore().getDict('dict_type')
+
+const dictTreeData = computed(() => {
+  return dictType.value.map(it => {
+    return {
+      dictName: it.label,
+      children: dictCtx.tableData.value.filter(dict => dict.dictType === it.value)
+    }
+  })
+})
+
+function handleCurrentChange(data) {
   currentDictId.value = data.id
   dictItemCtx.handleSearch()
 }

@@ -146,7 +146,7 @@ const onValidationFailed = (error: FormValidateFailure) => {
   setValidationState('error')
   validateMessage.value = errors?.[0]?.message ?? '校验失败'
 }
-const doValidate = async (rules: RuleItem[]): Promise<any> => {
+const doValidate = async (rules: RuleItem[]) => {
   const validator = new AsyncValidator({
     target: rules
   })

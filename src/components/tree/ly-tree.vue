@@ -105,7 +105,7 @@ const currentNodeKey = useFieldModel(props, emits, 'currentNodeKey')
 
 function handleCurrentNodeChange(data: BasicTree<string>, node: TreeNode) {
   if (props.nodeKey) {
-    currentNodeKey.value = data[props.nodeKey] as any
+    currentNodeKey.value = data[props.nodeKey] as unknown as string
   }
   emits('current-change', data, node)
 }

@@ -1,19 +1,21 @@
 <template>
-  <ly-btn type="primary"
-          icon="el-icon-Delete"
+  <ly-btn :class="cssClass"
           :link="isLink"
+          icon="el-icon-Delete"
+          type="primary"
           @click="handleClick">删除
   </ly-btn>
 </template>
 
-<script setup lang="ts">
-import {useBtnLink} from '@/components/button/util/ly-btn-util'
+<script lang="ts" setup>
+import {useBtnHolder} from '@/components/button/util/ly-btn-util'
 import {ElMessageBox} from 'element-plus'
+import {ElMessage} from 'element-plus'
 import type {PropType} from 'vue'
+import {lyBtnProps} from '@/components/button/util/btn-props'
 
 const props = defineProps({
-  link: Boolean,
-  disabled: Boolean,
+  ...lyBtnProps,
   /**
    * 如果配置此项, 则将其作为提示文案
    */
@@ -24,12 +26,16 @@ const props = defineProps({
   unimportant: Boolean
 })
 const emits = defineEmits(['click'])
-const isLink = useBtnLink(props)
+const {isLink, cssClass} = useBtnHolder(props, emits)
 
 async function handleClick() {
-  if (!props.unimportant) {
-    await ElMessageBox.confirm(props.tips?.() ?? '确认删除吗? 该操作不可还原', '警告', {type: 'warning'})
+  if (props.disabled && props.disabledTips) {
+    return ElMessage.info(props.disabledTips)
+  } else if (!props.disabled) {
+    if (!props.unimportant) {
+      await ElMessageBox.confirm(props.tips?.() ?? '确认删除吗? 该操作不可还原', '警告', {type: 'warning'})
+    }
+    emits('click')
   }
-  emits('click')
 }
 </script>

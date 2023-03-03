@@ -1,7 +1,7 @@
 <template>
-  <el-table-column :width="width" :fixed="fixed" label="操作" align="center">
+  <el-table-column label="操作" :fixed="fixed" :width="width" align="center">
     <template #default="{ row, column, $index }">
-        <slot v-bind="{ row, column, $index }"/>
+      <slot :column="column" :row="row" v-bind="{$index: $index}"/>
     </template>
   </el-table-column>
 </template>
@@ -15,4 +15,3 @@ defineProps({
   fixed: [Boolean, String] as PropType<boolean | 'left' | 'right'>
 })
 </script>
-

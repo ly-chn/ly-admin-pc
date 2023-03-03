@@ -19,21 +19,28 @@ import LyTree from '@/components/tree/ly-tree.vue'
 import LyBtnCreate from '@/components/button/ly-btn-create.vue'
 import LyBtnRemove from '@/components/button/ly-btn-remove.vue'
 import LyBtnModify from '@/components/button/ly-btn-modify.vue'
+import LyAreaCrud from '@/components/area/ly-area-crud.vue'
 
 export const LyComponent = {
+  // webstorm暂时无法识别自动注册/name形式注册组件
   install: (Vue: App) => {
     Vue.component('LyIcon', LyIcon)
-    Vue.component('LyInput', LyInput)
+    Vue.component('LyToggle', LyToggle)
+
     Vue.component('LyForm', LyForm)
     Vue.component('LyFormItem', LyFormItem)
-    Vue.component('LyToggle', LyToggle)
+    Vue.component('LyInput', LyInput)
     Vue.component('LySelect', LySelect)
-    Vue.component('LyAreaSearch', LyAreaSearch)
+
     Vue.component('LyTable', LyTable)
-    Vue.component('LyColumn', LyColumn)
-    Vue.component('LyColumnIndex', LyColumnIndex)
-    Vue.component('LyColumnAction', LyColumnAction)
     Vue.component('LyColumnSelection', LyColumnSelection)
+    Vue.component('LyColumnIndex', LyColumnIndex)
+    Vue.component('LyColumn', LyColumn)
+    Vue.component('LyColumnAction', LyColumnAction)
+
+    Vue.component('LyAreaSearch', LyAreaSearch)
+    Vue.component('LyAreaCrud', LyAreaCrud)
+
     Vue.component('LyDialog', LyDialog)
     Vue.component('LyTree', LyTree)
 

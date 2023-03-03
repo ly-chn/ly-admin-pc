@@ -1,7 +1,8 @@
-import {computed, inject, reactive, ref, watchEffect} from 'vue'
-import type {DictOptionsProps, LyColSpanProps, LyDictItem, LyFormFieldProps} from '@/components/form/util/form-props'
+import {computed, inject, reactive} from 'vue'
+import type {DictOptionsProps, LyColSpanProps, LyFormFieldProps} from '@/components/form/util/form-props'
 import {lyFormCtxKey} from '@/components/form/util/form-ctx'
 import type {Prefix} from '#/utility-type'
+import {useDictStore} from '@/store/dict'
 
 export function useAutoLabelWidth(maxLabelWidth: number) {
   const labelWidthMap = reactive(new Map<symbol, number>())
@@ -56,15 +57,16 @@ export function useFieldDisabled(props: LyFormFieldProps) {
 }
 
 export function useDictOption(props: DictOptionsProps) {
-  const options = ref<LyDictItem[]>([])
-  watchEffect(() => {
+  return computed(() => {
     if (props.options) {
-      options.value = props.options
+      return props.options
+    } else if (props.dictCode) {
+      return useDictStore().getDict(props.dictCode).value
     } else {
-      options.value = []
+      console.warn('需要提供dictCode / dictOptions')
+      return []
     }
   })
-  return options
 }
 
 /**

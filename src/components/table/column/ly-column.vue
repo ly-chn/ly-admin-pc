@@ -2,10 +2,11 @@
 import {dictOptionsProps} from '@/components/form/util/form-props'
 import {LyPropType} from '@/components/util/ly-prop-type'
 import type {PropType} from 'vue'
-import {computed, inject, onMounted, reactive, ref} from 'vue'
+import {computed, inject, onMounted, reactive} from 'vue'
 import {lyTableColumnCollectCtxSymbol, lyTableColumnCustomerCtxSymbol} from '@/components/table/ly-table-ctx'
 import {useColumnCollect} from '@/components/table/ly-table-util'
 import {ElTableColumn} from 'element-plus'
+import {usePropBoolify} from '@/components/util/ly-prop-boolify'
 
 const props = defineProps({
   ...dictOptionsProps,
@@ -14,11 +15,8 @@ const props = defineProps({
     type: String,
     required: true
   },
-  // 字段名称 对应列内容的字段名， 也可以使用 property 属性
-  prop: {
-    type: String,
-    required: true
-  },
+  // 字段名称 对应列内容的字段名
+  prop: String,
   // 对应列的宽度
   width: LyPropType.sideLength,
   // 对应列的最小宽度， 对应列的最小宽度，与 width 的区别是 width 是固定的，min-width 会把剩余宽度按比例分配给设置了 min-width 的列
@@ -27,13 +25,24 @@ const props = defineProps({
   fixed: [Boolean, String] as PropType<true | 'left' | 'right'>,
   // 为true表示可排序, 表现为分页处理
   sortable: Boolean,
+  /**
+   * 居左快捷配置, 见align
+   */
+  left: Boolean,
+  /**
+   * 居中快捷配置, 见align
+   */
+  center: Boolean,
+  /**
+   * 居右快捷配置, 见align
+   */
+  right: Boolean,
   // 对齐方式
   align: String as PropType<'left' | 'center' | 'right'>
 })
 
 const columnCollectCtx = inject(lyTableColumnCollectCtxSymbol)
 const children = useColumnCollect()
-const el = ref<HTMLDivElement | InstanceType<typeof ElTableColumn>>()
 const columnContext = reactive({
   label: props.label,
   children: children
@@ -41,6 +50,7 @@ const columnContext = reactive({
 
 onMounted(() => columnCollectCtx?.addColumn(columnContext))
 
+const finalAlign = usePropBoolify(props, 'align', 'left', 'center', 'right')
 const columnCustomerContext = inject(lyTableColumnCustomerCtxSymbol)
 // 全部隐藏=全部显示
 const showAble = computed(() => !columnCustomerContext?.showAbleColumns.length || columnCustomerContext?.showAbleColumns?.includes(props.label))
@@ -48,22 +58,22 @@ const showAble = computed(() => !columnCustomerContext?.showAbleColumns.length |
 <template>
   <!--如果使用一些特殊手段, 会发生一些异常, 原因不明, 只能用这个笨办法了-->
   <el-table-column v-if="showAble"
-                   ref="el"
-                   :align="align"
+                   :align="finalAlign"
                    :fixed="fixed"
                    :label="label"
                    :min-width="minWidth"
                    :prop="prop"
                    :sortable="sortable"
+                   show-overflow-tooltip
                    :width="width">
-    <template v-if="$slots.default" #default="scope">
-      <slot v-bind="{ row: scope?.row, column: scope?.column, $index: scope?.$index }"/>
+    <template v-if="$slots.default" #default="{ row, column, $index }">
+      <slot :column="column" :row="row" v-bind="{$index: $index}"/>
     </template>
     <template v-if="$slots.header" #header>
       <slot name="header"/>
     </template>
   </el-table-column>
-  <div v-else ref="el">
-    <slot v-bind="{ row: undefined, column: undefined, $index: undefined }"/>
+  <div v-else>
+    <slot v-bind="{}"/>
   </div>
 </template>

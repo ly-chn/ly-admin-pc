@@ -8,7 +8,7 @@ import type {PagingVO} from '#/rest'
 import type {DataRecord} from '#/rest'
 
 export interface CrudApi {
-  search?<P = unknown, T = DataRecord>(params: P): Promise<PagingVO<T>>
+  search?<P = unknown, T extends DataRecord = DataRecord>(params: P): Promise<PagingVO<T>>
 
   edit?<P = unknown, R = void>(record: P): Promise<R>
 
@@ -35,24 +35,16 @@ export interface CrudConfig {
    * 默认分页
    */
   defaultPaging?: Record<string, unknown>
-
   /**
    * 检索之前钩子
    * @param {Record<string, unknown>} params 整理的检索条件, 含分页/排序等
    * @return {unknown} 返回falsy的值将取消请求, 否则作为检索条件使用
    */
   beforeSearch?(params: Record<string, unknown>): unknown
-
-  /**
-   * 返回内容处理
-   * @param res 检索请求返回值
-   */
-  resolveSearchRes?<T>(res: T[]): void
-
   /**
    * 点击编辑按钮之后, 打开弹窗之前, 此时record已完成初始化
    */
-  beforeEdit?(): void
+  beforeEdit?<T extends DataRecord>(record: Ref<T>): void
 }
 
 /**
@@ -150,6 +142,7 @@ export type CrudEditContext<T> = {
 
 /**
  * 用于快速构建检索页面逻辑操作
+ * tableData和record数据存在不同的可能性(并且不小), 但是为了减少心智负担, 搞成了一个类型
  * @param api 所需api, 检索, 修改, 通过id查找, 批量删除
  * @param config
  * @return {CrudContext}
@@ -157,31 +150,34 @@ export type CrudEditContext<T> = {
 export function useCrud<T extends DataRecord>(api: CrudApi, config: CrudConfig = {}): CrudContext<T> {
   const {
     defaultOrder = {isAsc: 'desc', orderByColumn: 'createTime'},
-    beforeSearch = (v: unknown) => v,
+    beforeSearch = v => v,
     defaultPaging = {}
   } = config
   const searchForm = ref<Record<string, unknown>>({})
   const paging = ref<Paging>({...defaultPaging})
-  const tableData = ref()
+  const tableData: Ref<T[]> = ref([])
   const loading = ref(false)
   const editing = ref(false)
   const updating = ref(false)
   const record = ref<T>() as Ref<T>
   const handleSearch = async () => {
-    loading.value = true
     const params = beforeSearch({...defaultOrder, ...defaultPaging, ...searchForm.value})
     if (!params) {
-      loading.value = false
       return void console.log('取消请求')
     }
-    if (!config.noPaging && api.search) {
-      const {pageNum, pageSize, total, list} = await api.search(params).finally(() => loading.value = false)
-      paging.value = {pageNum, pageSize, total}
-      tableData.value = list
-    } else if (config.noPaging && api.all) {
-      tableData.value = await api.all()
-    } else {
-      throw '请在分页时配置search函数, 或者在不分页时配置all函数'
+    loading.value = true
+    try {
+      if (!config.noPaging && api.search) {
+        const {pageNum, pageSize, total, list} = await api.search(params)
+        paging.value = {pageNum, pageSize, total}
+        tableData.value = list as T[]
+      } else if (config.noPaging && api.all) {
+        tableData.value = await api.all()
+      } else {
+        throw '请在分页时配置search函数, 或者在不分页时配置all函数'
+      }
+    } finally {
+      loading.value = false
     }
   }
   const handleReset = async () => {
@@ -201,18 +197,18 @@ export function useCrud<T extends DataRecord>(api: CrudApi, config: CrudConfig =
     } else {
       record.value = JSON.parse(JSON.stringify(recordAble)) as T
     }
-    await config.beforeEdit?.()
+    await config.beforeEdit?.(record)
     editing.value = true
   }
 
   const handleSubmit = async (formRef?: Ref<InstanceType<typeof LyForm>>) => {
     if (!api.edit) {
-      throw Error('需提供edit api')
+      throw Error('无法执行提交操作: 需提供api: edit')
     }
     updating.value = true
     try {
       await formRef?.value?.validate()
-      await api.edit?.(record.value)
+      await api.edit(record.value)
       await handleSearch()
       await ElMessage.success(record.value?.id ? '已修改' : '已添加')
       editing.value = false

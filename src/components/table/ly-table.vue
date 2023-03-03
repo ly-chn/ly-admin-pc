@@ -1,16 +1,6 @@
 <script lang="ts" setup>
 import {LyPropType} from '@/components/util/ly-prop-type'
-import {
-  computed,
-  inject,
-  nextTick,
-  onMounted,
-  provide,
-  reactive,
-  ref,
-  toRaw,
-  watchEffect
-} from 'vue'
+import {computed, inject, nextTick, onMounted, provide, reactive, ref, toRaw, watchEffect} from 'vue'
 import type {PropType} from 'vue'
 import type {CSSProperties} from 'vue'
 import {ElPopover, ElTable, ElTree} from 'element-plus'
@@ -73,18 +63,18 @@ const props = defineProps({
   // 允许自定义列
   adjustColumn: Boolean
 })
-const table = ref<InstanceType<typeof ElTable>>()
+const tableRef = ref<InstanceType<typeof ElTable>>()
 const emits = defineEmits(['update:selectedRowKeys'])
 
 // 选择列
 const selectRowKeys = useFieldModel(props, emits, 'selectedRowKeys')
 const handleRowSelect = () => {
-  selectRowKeys.value = (table.value?.getSelectionRows() as []).map(it => getRowIdentity(it, props.rowKey))
+  selectRowKeys.value = (tableRef.value?.getSelectionRows() as []).map(it => getRowIdentity(it, props.rowKey))
 }
 watchEffect(() => {
-  table.value?.clearSelection()
+  tableRef.value?.clearSelection()
   props.data?.filter(it => selectRowKeys.value?.includes(getRowIdentity(it, props.rowKey)))
-    .forEach(row => table.value?.toggleRowSelection(row, true))
+    .forEach(row => tableRef.value?.toggleRowSelection(row, true))
 })
 
 // 检索搭配
@@ -104,14 +94,13 @@ const checkedColumns = ref<string[]>([])
 function handleChangeColumnVisible() {
   checkedColumns.value = configColumnsRef.value?.getCheckedKeys() as string[]
   showAbleColumns.value = calcShowAbleColumn(columns, checkedColumns.value)
-  nextTick(() => {
-    console.log(table.value)
-    table.value?.doLayout()
-  })
+  nextTick(() => doLayout())
 }
 
+const doLayout = () => tableRef.value?.doLayout()
+
 const configColumnsRef = ref<InstanceType<typeof ElTree>>()
-const  handleStoreColumnConfig=()=> tableStore.setItem('checkedColumn' + tableId, toRaw(checkedColumns.value))
+const handleStoreColumnConfig = () => tableStore.setItem('checkedColumn' + tableId, toRaw(checkedColumns.value))
 onMounted(async () => {
   if (!props.adjustColumn) {
     return
@@ -126,6 +115,10 @@ onMounted(async () => {
 provide(lyTableColumnCustomerCtxSymbol, reactive({
   showAbleColumns: props.adjustColumn ? showAbleColumns : []
 }))
+
+defineExpose({
+  doLayout
+})
 const columnsRenderModel = computed(() => JSON.parse(JSON.stringify(columns.value)))
 </script>
 <template>
@@ -149,7 +142,7 @@ const columnsRenderModel = computed(() => JSON.parse(JSON.stringify(columns.valu
       </template>
     </el-popover>
   </div>
-  <el-table ref="table"
+  <el-table ref="tableRef"
             v-loading="finalLoading"
             :data="finalData"
             :height="height"

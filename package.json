@@ -13,8 +13,10 @@
     "@vueuse/core": "^9.5.0",
     "autoprefixer": "^10.4.13",
     "axios": "^1.2.6",
+    "clipboard-copy": "^4.0.1",
     "element-plus": "^2.2.30",
     "localforage": "^1.10.0",
+    "pinia": "^2.0.32",
     "pinyin-match": "^1.2.3",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"

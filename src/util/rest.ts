@@ -27,7 +27,8 @@ instance.interceptors.response.use(response => {
   return data
 }, error => {
   ElMessage.warning('请求异常')
-  return error
+  console.log('请求异常: ', error)
+  return Promise.reject(error)
 })
 
 export const rest: AxiosInstance = instance
