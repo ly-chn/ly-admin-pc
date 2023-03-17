@@ -3,7 +3,8 @@
           icon="el-icon-Edit"
           :link="isLink"
           @click="emitClick"
-          :class="cssClass">编辑
+          :class="cssClass">
+    <slot>修改</slot>
   </ly-btn>
 </template>
 

@@ -3,7 +3,8 @@
           type="primary"
           :link="isLink"
           @click="emitClick"
-          :class="cssClass">搜索
+          :class="cssClass">
+    <slot>搜索</slot>
   </ly-btn>
 </template>
 

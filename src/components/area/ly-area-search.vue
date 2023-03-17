@@ -11,6 +11,7 @@
 </template>
 
 <script lang="ts" setup>
+
 import type {CrudContext} from '@/use/simple-crud'
 import type {PropType} from 'vue'
 import AreaSearchMain from '@/components/area/component/area-search-main.vue'

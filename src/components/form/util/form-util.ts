@@ -3,6 +3,8 @@ import type {DictOptionsProps, LyColSpanProps, LyFormFieldProps} from '@/compone
 import {lyFormCtxKey} from '@/components/form/util/form-ctx'
 import type {Prefix} from '#/utility-type'
 import {useDictStore} from '@/store/dict'
+import type {ComputedRef} from 'vue'
+import type {LyDictItem} from '@/components/form/util/form-props'
 
 export function useAutoLabelWidth(maxLabelWidth: number) {
   const labelWidthMap = reactive(new Map<symbol, number>())
@@ -27,6 +29,9 @@ export function useAutoLabelWidth(maxLabelWidth: number) {
 }
 
 export function useColSpan(props?: LyColSpanProps) {
+  if ((props as any)?.searchForm) {
+    return 6
+  }
   if (props?.only) {
     return 24
   }
@@ -56,7 +61,7 @@ export function useFieldDisabled(props: LyFormFieldProps) {
   return computed(() => props.disabled || formInstance?.disabled)
 }
 
-export function useDictOption(props: DictOptionsProps) {
+export function useDictOption(props: DictOptionsProps): ComputedRef<LyDictItem[]> {
   return computed(() => {
     if (props.options) {
       return props.options

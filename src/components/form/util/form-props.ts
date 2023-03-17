@@ -58,7 +58,7 @@ export type LyDictItem = {
   // 值
   value: string
   // 字典项说明,会显示给前端
-  desc?: string
+  tips?: string
 }
 
 // 字典项通用

@@ -14,12 +14,8 @@ const {disabled, modelValue} = useFormField(props, emit)
 </script>
 <template>
   <ly-form-item :label="props.label" :rules="props.rules" :value="modelValue">
-    <el-select-v2 v-model="modelValue" :disabled="disabled" :options="options" :placeholder="placeholder">
-      <template #default="scope">
-        <slot v-bind="scope">
-          <div :title="scope.item.tips">{{ scope.item.label }}</div>
-        </slot>
-      </template>
-    </el-select-v2>
+    <el-radio-group :disabled="disabled" v-model="modelValue">
+      <el-radio v-for="option in options" :key="option.value" :label="option.value" :title="option.tips">{{ option.label}}</el-radio>
+    </el-radio-group>
   </ly-form-item>
 </template>

@@ -3,7 +3,8 @@
           icon="el-icon-Refresh"
           :link="isLink"
           @click="emitClick"
-          :class="cssClass">重置
+          :class="cssClass">
+    <slot>重置</slot>
   </ly-btn>
 </template>
 

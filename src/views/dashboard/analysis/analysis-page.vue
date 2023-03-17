@@ -12,20 +12,10 @@
 </template>
 
 <script lang="ts" setup>
-
 import {reactive, ref} from 'vue'
-import type {LyDictItem} from '@/components/form/util/form-props'
 import LyBtnSearch from '@/components/button/ly-btn-search.vue'
 
 const form: Record<string, unknown> = reactive({})
-const options: LyDictItem[] = [{
-  label: '男',
-  value: '1',
-  desc: '指男人，与“女”相对'
-}, {
-  label: '女',
-  value: '2',
-  desc: '指女人，与“男”相对'
-}]
+
 const formRef = ref(null)
 </script>

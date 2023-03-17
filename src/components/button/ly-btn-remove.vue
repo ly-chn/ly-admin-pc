@@ -3,7 +3,8 @@
           :link="isLink"
           icon="el-icon-Delete"
           type="primary"
-          @click="handleClick">删除
+          @click="handleClick">
+    <slot>删除</slot>
   </ly-btn>
 </template>
 

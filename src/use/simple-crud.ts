@@ -112,7 +112,7 @@ export type CrudContext<T extends DataRecord = DataRecord> = {
    * @param {string} recordId 不存在时表示新增, 否则表示修改, 传字符串将getById, 否则直接使用
    * @return {Promise<void>}
    */
-  handleEdit: (recordAble: unknown) => Promise<void>
+  handleEdit: (recordAble?: unknown) => Promise<void>
   /**
    * 新增/修改完成
    * @param {Ref<InstanceType<typeof LyForm>>} formRef 表单存在则自动执行校验

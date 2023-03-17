@@ -3,7 +3,8 @@
           :link="isLink"
           icon="el-icon-Plus"
           type="primary"
-          @click="emitClick">新增
+          @click="emitClick">
+    <slot>新增</slot>
   </ly-btn>
 </template>
 

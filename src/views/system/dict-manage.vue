@@ -26,7 +26,7 @@
       </ly-area-crud>
     </template>
 
-    <ly-form quarter search-form>
+    <ly-form search-form>
       <ly-input label="名称" v-model="searchForm.label"/>
       <ly-input label="编码" v-model="searchForm.value"/>
       <template #operation>

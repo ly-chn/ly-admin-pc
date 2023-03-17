@@ -58,16 +58,7 @@ export function calcShowAbleColumn(columns: Ref<LyTableColumnCollector[]>, check
     return column.children.some(it => shouldShow(it))
   }
 
-  const result = checkedColumns.filter(it => shouldShow(TreeUtil.findNode(columns.value, 'label', it, 'children')))
-  return result
-}
-
-export type TableStore = {
-  // 选中的列
-  checkedColumn: {
-    key: string
-    value: string[]
-  }
+  return checkedColumns.filter(it => shouldShow(TreeUtil.findNode(columns.value, 'label', it, 'children')))
 }
 
 export const tableStore = localforage.createInstance({name: 'table-store'})

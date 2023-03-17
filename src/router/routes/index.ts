@@ -73,6 +73,13 @@ export const visitorRoutes: RouteRecordRaw[] = [
       meta: {
         title: '字典管理'
       }
+    }, {
+      id: IdUtil.nextId(),
+      path: 'permission-manage',
+      component: () => import('@/views/system/permission-manage.vue'),
+      meta: {
+        title: '权限管理'
+      }
     }]
   }
 ]

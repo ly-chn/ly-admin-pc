@@ -7,6 +7,8 @@ import {lyTableColumnCollectCtxSymbol, lyTableColumnCustomerCtxSymbol} from '@/c
 import {useColumnCollect} from '@/components/table/ly-table-util'
 import {ElTableColumn} from 'element-plus'
 import {usePropBoolify} from '@/components/util/ly-prop-boolify'
+import LyDictRender from '@/components/special/ly-dict-render.vue'
+import {get} from 'lodash-es'
 
 const props = defineProps({
   ...dictOptionsProps,
@@ -38,7 +40,9 @@ const props = defineProps({
    */
   right: Boolean,
   // 对齐方式
-  align: String as PropType<'left' | 'center' | 'right'>
+  align: String as PropType<'left' | 'center' | 'right'>,
+  // 见ly-dict-render组件asText属性
+  asText: Boolean
 })
 
 const columnCollectCtx = inject(lyTableColumnCollectCtxSymbol)
@@ -52,8 +56,9 @@ onMounted(() => columnCollectCtx?.addColumn(columnContext))
 
 const finalAlign = usePropBoolify(props, 'align', 'left', 'center', 'right')
 const columnCustomerContext = inject(lyTableColumnCustomerCtxSymbol)
-// 全部隐藏=全部显示
+// 全部隐藏=全部显示 todo: 面板展开时, 同步显示效果会更好
 const showAble = computed(() => !columnCustomerContext?.showAbleColumns.length || columnCustomerContext?.showAbleColumns?.includes(props.label))
+
 </script>
 <template>
   <!--如果使用一些特殊手段, 会发生一些异常, 原因不明, 只能用这个笨办法了-->
@@ -64,10 +69,16 @@ const showAble = computed(() => !columnCustomerContext?.showAbleColumns.length |
                    :min-width="minWidth"
                    :prop="prop"
                    :sortable="sortable"
-                   show-overflow-tooltip
-                   :width="width">
+                   :width="width"
+                   show-overflow-tooltip>
     <template v-if="$slots.default" #default="{ row, column, $index }">
       <slot :column="column" :row="row" v-bind="{$index: $index}"/>
+    </template>
+    <template v-else-if="props.dictCode||options" #default="{row}">
+      <ly-dict-render :as-text="asText"
+                      :dict-code="dictCode"
+                      :model-value="get(row, props.prop)"
+                      :options="options"/>
     </template>
     <template v-if="$slots.header" #header>
       <slot name="header"/>

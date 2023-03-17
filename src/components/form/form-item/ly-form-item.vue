@@ -78,10 +78,10 @@ const getLabelWidth = () => {
 }
 useResizeObserver(
   () => (labelRef.value?.firstElementChild) as HTMLElement | null,
-  () => updateLabelWidth(getLabelWidth())
+  () => updateLabelWidth()
 )
 onMounted(() => {
-  updateLabelWidth(getLabelWidth())
+  updateLabelWidth()
 })
 onBeforeUnmount(() => {
   formCtx?.registerLabelWidth(compKey, 0)

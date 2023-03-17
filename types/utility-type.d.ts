@@ -33,6 +33,6 @@ export type PrefixKey<K, T extends string> = keyof PrefixRecord<K, T>
 /**
  * 基础树状结构
  */
-export type BasicTree<K extends string> = {
-  [key in K]?: BasicTree<K>[]
+export type BasicTree<K extends string, T extends BasicTree<K, T> = BasicTree<K, T>> = {
+  [key in K]?: T[]
 }

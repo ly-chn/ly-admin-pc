@@ -1,5 +1,7 @@
 <template>
-  <component :is="asText?'span':'el-tag'" v-for="option in renderList" :key="option.value"></component>
+  <component :is="asText?'span':'el-tag'" disable-transitions v-for="option in renderList" :key="option.value">
+    {{option.label}}
+  </component>
 </template>
 
 <script lang="ts" setup>
