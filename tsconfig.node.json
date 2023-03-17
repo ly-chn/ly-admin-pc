@@ -4,7 +4,8 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
-    "importsNotUsedAsValues": "error"
+    "importsNotUsedAsValues": "error",
+    "types": ["node", "webpack-env"]
   },
   "include": ["vite.config.ts"]
 }

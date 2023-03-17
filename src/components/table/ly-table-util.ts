@@ -61,5 +61,25 @@ export function calcShowAbleColumn(columns: Ref<LyTableColumnCollector[]>, check
   return checkedColumns.filter(it => shouldShow(TreeUtil.findNode(columns.value, 'label', it, 'children')))
 }
 
+/**
+ * 来自element-ui
+ */
+export function getPropByPath(obj: any, path: string) {
+  let tempObj = obj
+  path = path.replace(/\[(\w+)]/g, '.$1').replace(/^\./, '')
+
+  const keyArr = path.split('.')
+  let i = 0
+  for (let len = keyArr.length; i < len - 1; ++i) {
+    if (!tempObj) break
+    const key = keyArr[i]
+    if (key in tempObj) {
+      tempObj = tempObj[key]
+    } else {
+      break
+    }
+  }
+  return tempObj?.[keyArr[i]]
+}
 export const tableStore = localforage.createInstance({name: 'table-store'})
 

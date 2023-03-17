@@ -4,11 +4,10 @@ import {LyPropType} from '@/components/util/ly-prop-type'
 import type {PropType} from 'vue'
 import {computed, inject, onMounted, reactive} from 'vue'
 import {lyTableColumnCollectCtxSymbol, lyTableColumnCustomerCtxSymbol} from '@/components/table/ly-table-ctx'
-import {useColumnCollect} from '@/components/table/ly-table-util'
+import {getPropByPath, useColumnCollect} from '@/components/table/ly-table-util'
 import {ElTableColumn} from 'element-plus'
 import {usePropBoolify} from '@/components/util/ly-prop-boolify'
 import LyDictRender from '@/components/special/ly-dict-render.vue'
-import {get} from 'lodash-es'
 
 const props = defineProps({
   ...dictOptionsProps,
@@ -77,7 +76,7 @@ const showAble = computed(() => !columnCustomerContext?.showAbleColumns.length |
     <template v-else-if="props.dictCode||options" #default="{row}">
       <ly-dict-render :as-text="asText"
                       :dict-code="dictCode"
-                      :model-value="get(row, props.prop)"
+                      :model-value="getPropByPath(row, props.prop)"
                       :options="options"/>
     </template>
     <template v-if="$slots.header" #header>

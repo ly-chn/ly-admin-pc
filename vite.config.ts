@@ -1,28 +1,26 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
-import {resolve} from 'path'
 import eslintPlugin from 'vite-plugin-eslint'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 import { fileURLToPath, URL } from 'node:url'
-
-function pathResolve(dir: string) {
-  return resolve(process.cwd(), '.', dir)
-}
-
+import PurgeIcons from 'vite-plugin-purge-icons'
+import WindiCSS from 'vite-plugin-windicss'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue({reactivityTransform: true}),
+    vue(),
+    PurgeIcons(),
+    WindiCSS(),
     eslintPlugin({
       include: ['src/**/*.js', 'src/**/*.vue', 'src/*.js', 'src/*.vue']
     }),
     AutoImport({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver()]
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver()]
     })
   ],
   resolve: {
