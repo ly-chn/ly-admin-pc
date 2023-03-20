@@ -1,5 +1,5 @@
 <template>
-  <component :is="asText?'span':'el-tag'" disable-transitions v-for="option in renderList" :key="option.value">
+  <component :is="asText?'span':'el-tag'" disable-transitions v-for="option in renderList" :title="option.tips" :key="option.value">
     {{option.label}}
   </component>
 </template>
@@ -24,6 +24,7 @@ const options = useDictOption(props)
 
 const renderList = computed(() => {
   const value = CastUtil.array(props.modelValue)
+  console.log(value, props.modelValue)
   return options.value.filter(it => value.includes(it.value))
 })
 </script>

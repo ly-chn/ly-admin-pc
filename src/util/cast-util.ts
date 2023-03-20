@@ -9,7 +9,7 @@ export class CastUtil {
     if (Array.isArray(target)) {
       return target
     }
-    if (target instanceof String) {
+    if (typeof target === 'string') {
       return target.split(',') as unknown[] as T[]
     }
     return []
