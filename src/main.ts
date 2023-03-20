@@ -7,6 +7,7 @@ import {LyComponent} from '@/components/ly-component'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import {LyPlugin} from '@/plugin'
 import {createPinia} from 'pinia'
+import 'virtual:windi.css'
 
 const app = createApp(App)
 

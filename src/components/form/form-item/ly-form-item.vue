@@ -20,12 +20,12 @@ import {lyFormCtxKey} from '@/components/form/util/form-ctx'
 import type {FormItemRule, FormItemValidateState, FormValidateFailure, FormItemContext} from 'element-plus'
 import {formItemContextKey, useNamespace, useSize} from 'element-plus'
 import {IsInstance} from '@/util/is-instance'
-import {castArray} from 'lodash'
 import type {RuleItem} from 'async-validator'
 import AsyncValidator from 'async-validator'
 import {LyFormConstant} from '@/components/form/util/ly-form-constant'
 import {Rules} from '@/plugin/ly-rules'
 import {nextTick} from 'vue'
+import {CastUtil} from '@/util/cast-util'
 
 const compKey = Symbol.for('ly-form-item')
 
@@ -115,7 +115,7 @@ const validateMessage = ref('')
 const normalizedRules = computed(() => {
   const rules: FormValidateRule[] = []
   if (props.rules) {
-    rules.push(...castArray(props.rules))
+    rules.push(...CastUtil.array(props.rules))
   }
   const result = rules.map(rule => {
     if (rule === Rules.must) {
@@ -135,7 +135,7 @@ const setValidationState = (state: FormItemValidateState) => {
   validateState.value = state
 }
 const getFilteredRule = (trigger: string) => normalizedRules.value
-  .filter(rule => !rule.trigger || !trigger || castArray(rule.trigger).includes(trigger))
+  .filter(rule => !rule.trigger || !trigger || CastUtil.array(rule.trigger).includes(trigger))
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
   .map(({trigger, ...rule}) => rule)
 const onValidationFailed = (error: FormValidateFailure) => {
@@ -242,9 +242,5 @@ defineExpose({
 
 .ly-form-item {
   @apply px-2 mb-4
-}
-
-.ly-form-item__content {
-  @apply flex-1
 }
 </style>

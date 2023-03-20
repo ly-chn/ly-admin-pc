@@ -2,13 +2,16 @@
  * 类型转换工具类
  */
 export class CastUtil {
-  static array(v: string | string[] | undefined) {
-    if (!v) {
-      return []
+  static array<T>(target: T|T[]) {
+    if (!target) {
+      return [] as T[]
     }
-    if (Array.isArray(v)) {
-      return v
+    if (Array.isArray(target)) {
+      return target
     }
-    return v?.split(',') ?? []
+    if (target instanceof String) {
+      return target.split(',') as unknown[] as T[]
+    }
+    return []
   }
 }

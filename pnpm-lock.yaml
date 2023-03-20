@@ -11,6 +11,7 @@ specifiers:
   '@vitejs/plugin-vue': ^3.2.0
   '@vue/tsconfig': ^0.1.3
   '@vueuse/core': ^9.5.0
+  async-validator: ^4.2.5
   axios: ^1.2.6
   clipboard-copy: ^4.0.1
   element-plus: ^2.2.30
@@ -38,6 +39,7 @@ specifiers:
 dependencies:
   '@element-plus/icons-vue': registry.npmmirror.com/@element-plus/icons-vue/2.1.0_vue@3.2.47
   '@vueuse/core': registry.npmmirror.com/@vueuse/core/9.13.0_vue@3.2.47
+  async-validator: registry.npmmirror.com/async-validator/4.2.5
   axios: registry.npmmirror.com/axios/1.3.4
   clipboard-copy: registry.npmmirror.com/clipboard-copy/4.0.1
   element-plus: registry.npmmirror.com/element-plus/2.3.0_vue@3.2.47

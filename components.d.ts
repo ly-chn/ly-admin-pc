@@ -39,7 +39,6 @@ declare module '@vue/runtime-core' {
     LyAreaCrud: typeof import('./src/components/area/ly-area-crud.vue')['default']
     LyAreaSearch: typeof import('./src/components/area/ly-area-search.vue')['default']
     LyBtn: typeof import('./src/components/button/ly-btn.vue')['default']
-    LyBtnCliboard: typeof import('./src/components/button/ly-btn-cliboard.vue')['default']
     LyBtnCreate: typeof import('./src/components/button/ly-btn-create.vue')['default']
     LyBtnModify: typeof import('./src/components/button/ly-btn-modify.vue')['default']
     LyBtnRemove: typeof import('./src/components/button/ly-btn-remove.vue')['default']
