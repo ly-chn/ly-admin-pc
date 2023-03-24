@@ -23,11 +23,11 @@ export {}
     const iconData: { prefix: string, icons: string[] } = await import('@iconify/json/json/' + iconId + '.json')
     if (iconData) {
       const {prefix, icons} = iconData
-      allIcon = allIcon.concat(Object.keys(icons).map(icon=>prefix+':'+icon))
+      allIcon = allIcon.concat(Object.keys(icons).map(icon => prefix + ':' + icon))
     }
   }
   fs.writeFileSync('src/components/special/icon/iconify.ts',
-    `export const DefineIcon = ${JSON.stringify(allIcon, null, 2)}`
-      .replace(/"/g, '\''))
+    `export const DefineIcon = '${allIcon.join(',')}'`)
+  fs.writeFileSync('types/iconify.d.ts', `export type IconifyIconType = ${allIcon.map(it => `'${it}'`).join('|')}`)
 })()
 

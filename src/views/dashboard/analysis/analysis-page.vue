@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ly-icon type="el-edit"/>
+    <ly-icon :type="'ep:add-location'"/>
     <ly-form ref="formRef" one-third>
       <ly-input label="姓名" v-model="form.name" :rules="$rules.must"/>
       <ly-input label="手机号" v-model="form.mobile"/>

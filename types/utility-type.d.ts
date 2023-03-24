@@ -36,3 +36,13 @@ export type PrefixKey<K, T extends string> = keyof PrefixRecord<K, T>
 export type BasicTree<K extends string, T extends BasicTree<K, T> = BasicTree<K, T>> = {
   [key in K]?: T[]
 }
+
+/**
+ * 字符串分割
+ * @example
+ * type Temp = StrSplit<'a-b-c', '-'> // 'a' | 'b' | 'c'
+ */
+type StrSplitHelper<T extends string, D extends string, I extends string = never> = T extends '' ? never :
+  T extends `${infer F}${D}${infer R}` ? StrSplitHelper<R, D, I | F> : I | T
+
+export type StrSplit<T extends string, D extends string> = StrSplitHelper<T, D>

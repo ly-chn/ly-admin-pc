@@ -18,14 +18,14 @@
 
 <script lang="ts" setup>
 import type {PropType} from 'vue'
-import type {ElIconName} from '#/element-plus'
 import {LyPropType} from '@/components/util/ly-prop-type'
+import type {IconifyIconType} from '#/iconify'
 
 defineProps({
   /**
    * 图标
    */
-  icon: String as PropType<ElIconName>,
+  icon: String as PropType<IconifyIconType>,
   /**
    * 尺寸
    */
