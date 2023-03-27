@@ -1,7 +1,7 @@
 <template>
   <ly-btn :class="cssClass"
           :link="isLink"
-          icon="el-icon-Plus"
+          icon="ep:plus"
           type="primary"
           @click="emitClick">
     <slot>新增</slot>

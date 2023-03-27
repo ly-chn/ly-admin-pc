@@ -7,10 +7,10 @@
              :size="size"
              :text="text"
              :type="type">
-    <template v-if="icon" #icon>
+    <template v-if="showIcon" #icon>
       <ly-icon :type="icon"/>
     </template>
-    <template #default v-if="$slots.default">
+    <template #default v-if="slots.default">
       <slot/>
     </template>
   </el-button>
@@ -20,8 +20,10 @@
 import type {PropType} from 'vue'
 import {LyPropType} from '@/components/util/ly-prop-type'
 import type {IconifyIconType} from '#/iconify'
+import {computed} from 'vue'
+import {useSlots} from 'vue'
 
-defineProps({
+const props = defineProps({
   /**
    * 图标
    */
@@ -58,5 +60,10 @@ defineProps({
    * 是否为圆形按钮
    */
   circle: Boolean
+})
+
+const slots = useSlots()
+const showIcon = computed(()=> {
+  return props.icon && !(props.link && slots.default)
 })
 </script>

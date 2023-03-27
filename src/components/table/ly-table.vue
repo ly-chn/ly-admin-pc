@@ -138,7 +138,7 @@ const columnsRenderModel = computed(() => JSON.parse(JSON.stringify(columns.valu
                  @check="handleChangeColumnVisible"/>
       </template>
       <template #reference>
-        <ly-btn icon="el-icon-Setting" size="small"/>
+        <ly-btn icon="ep:setting" size="small"/>
       </template>
     </el-popover>
   </div>

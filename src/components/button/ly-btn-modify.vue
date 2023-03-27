@@ -1,6 +1,6 @@
 <template>
   <ly-btn type="primary"
-          icon="el-icon-Edit"
+          icon="ep:edit"
           :link="isLink"
           @click="emitClick"
           :class="cssClass">

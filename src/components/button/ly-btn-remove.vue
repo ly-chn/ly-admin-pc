@@ -1,7 +1,7 @@
 <template>
   <ly-btn :class="cssClass"
           :link="isLink"
-          icon="el-icon-Delete"
+          icon="ep:delete"
           type="primary"
           @click="handleClick">
     <slot>删除</slot>

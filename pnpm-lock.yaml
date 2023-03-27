@@ -1,7 +1,6 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@element-plus/icons-vue': ^2.0.10
   '@iconify/iconify': ^3.1.0
   '@iconify/json': ^2.2.35
   '@purge-icons/generated': ^0.9.0
@@ -38,7 +37,6 @@ specifiers:
   windicss: ^3.5.6
 
 dependencies:
-  '@element-plus/icons-vue': registry.npmmirror.com/@element-plus/icons-vue/2.1.0_vue@3.2.47
   '@iconify/iconify': registry.npmmirror.com/@iconify/iconify/3.1.0
   '@vueuse/core': registry.npmmirror.com/@vueuse/core/9.13.0_vue@3.2.47
   async-validator: registry.npmmirror.com/async-validator/4.2.5

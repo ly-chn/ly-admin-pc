@@ -24,7 +24,6 @@ const options = useDictOption(props)
 
 const renderList = computed(() => {
   const value = CastUtil.array(props.modelValue)
-  console.log(value, props.modelValue)
   return options.value.filter(it => value.includes(it.value))
 })
 </script>

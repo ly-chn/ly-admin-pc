@@ -11,8 +11,8 @@
     <el-container>
       <el-header>
         <ly-toggle v-model="drawer">
-          <ly-icon v-if="drawer" type="el-icon-Fold"/>
-          <ly-icon v-else type="el-icon-Expand"/>
+          <ly-icon v-if="drawer" type="ep:fold"/>
+          <ly-icon v-else type="ep:expand"/>
         </ly-toggle>
       </el-header>
       <el-main>

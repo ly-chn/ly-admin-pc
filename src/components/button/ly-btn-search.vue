@@ -1,5 +1,5 @@
 <template>
-  <ly-btn icon="???"
+  <ly-btn icon="ep:search"
           type="primary"
           :link="isLink"
           @click="emitClick"

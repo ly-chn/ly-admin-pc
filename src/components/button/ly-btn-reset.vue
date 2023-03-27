@@ -1,6 +1,6 @@
 <template>
   <ly-btn type="info"
-          icon="el-icon-Refresh"
+          icon="ep:refresh"
           :link="isLink"
           @click="emitClick"
           :class="cssClass">

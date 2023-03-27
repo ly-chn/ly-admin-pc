@@ -54,6 +54,7 @@ declare module '@vue/runtime-core' {
     LyForm: typeof import('./src/components/form/form/ly-form.vue')['default']
     LyFormItem: typeof import('./src/components/form/form-item/ly-form-item.vue')['default']
     LyIcon: typeof import('./src/components/special/ly-icon.vue')['default']
+    LyIconPicker: typeof import('./src/components/special/ly-icon-picker.vue')['default']
     LyInput: typeof import('./src/components/form/form-item/ly-input.vue')['default']
     LyPaging: typeof import('./src/components/special/ly-paging.vue')['default']
     LyRadio: typeof import('./src/components/form/form-item/ly-radio.vue')['default']

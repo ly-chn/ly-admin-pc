@@ -30,7 +30,7 @@
       <ly-input label="名称" v-model="searchForm.label"/>
       <ly-input label="编码" v-model="searchForm.value"/>
       <template #operation>
-        <ly-btn-create :disabled="!currentDictId" disabled-tips="请选择一个字典" @click="dictItemCtx.handleEdit"/>
+        <ly-btn-create :disabled="!currentDict" disabled-tips="请选择一个字典" @click="dictItemCtx.handleEdit"/>
       </template>
       <dict-item-edit/>
     </ly-form>
@@ -39,7 +39,9 @@
       <ly-table adjust-column>
         <ly-column-index/>
         <ly-column label="名称" prop="label">
-          <template #default="{row}">{{ row.label }}</template>
+          <template #default="{row}">
+            <ly-dict-render v-model="row.value" :dict-code="currentDict.dictCode"/>
+          </template>
         </ly-column>
         <ly-column label="编码" prop="value"/>
         <ly-column label="排序值" prop="orderWeight"/>
@@ -60,26 +62,27 @@
 <script setup>
 import {dictApi} from '@/api/system/dict'
 import {dictItemApi} from '@/api/system/dict-item'
+import LyDictRender from '@/components/special/ly-dict-render.vue'
 import LyToClipboard from '@/components/special/ly-to-clipboard.vue'
 import {useDictStore} from '@/store/dict'
 import {useCrud} from '@/use/simple-crud'
 import DictEdit from '@/views/system/component/dict-edit.vue'
 import DictItemEdit from '@/views/system/component/dict-item-edit.vue'
-import {computed, ref} from 'vue'
+import {computed, ref, watch} from 'vue'
 
-const currentDictId = ref()
+const currentDict = ref()
 
 const keywords = ref()
 const dictItemCtx = useCrud(dictItemApi, {
   beforeSearch: (params) => {
-    if (!currentDictId.value) {
+    if (!currentDict.value) {
       return null
     }
-    params.dictId = currentDictId.value
+    params.dictId = currentDict.value.id
     return params
   },
   beforeEdit(record) {
-    record.value.dictId = currentDictId.value
+    record.value.dictId = currentDict.value.id
   }
 })
 const {searchForm} = dictItemCtx
@@ -91,11 +94,12 @@ const dictCtx = useCrud(dictApi, {noPaging: true})
  */
 async function handleRemoveDict(id) {
   await dictCtx.handleRemove(id)
-  currentDictId.value = null
+  currentDict.value = null
   dictItemCtx.tableData.value = []
 }
 
-const dictType = useDictStore().getDict('dict_type')
+const dictStore = useDictStore()
+const dictType = dictStore.getDict('dict_type')
 
 const dictTreeData = computed(() => {
   return dictType.value.map(it => {
@@ -105,9 +109,14 @@ const dictTreeData = computed(() => {
     }
   })
 })
-
 function handleCurrentChange(data) {
-  currentDictId.value = data.id
+  currentDict.value = data
   dictItemCtx.handleSearch()
 }
+
+// after edit dict item, refresh dict
+watch(()=> dictCtx.editing, value=> {
+  !value.value && dictStore.refreshDict(currentDict.value.dictCode)
+})
+
 </script>

@@ -1,10 +1,11 @@
 <template>
-  <ly-btn icon="el-icon-DocumentCopy" title="点击复制" link @click="handleClick"/>
+  <ly-btn icon="ep:document" type="primary" @mouseenter="refreshTitle" :title="title" link @click.stop="handleClick"/>
 </template>
 
 <script lang="ts" setup>
 
 import {ClipboardUtil} from '@/util/clipboard-util'
+import {ref} from 'vue'
 
 const props = defineProps<{
   text: string | (()=>string)
@@ -21,4 +22,6 @@ const handleClick = function () {
     ClipboardUtil.copy(props.text())
   }
 }
+const title = ref<string>('点击复制')
+const refreshTitle = ()=>title.value = typeof props.text === 'function' ? props.text() : props.text
 </script>
