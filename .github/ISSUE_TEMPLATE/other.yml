@@ -1,0 +1,15 @@
+name: "交流讨论"
+description: "交流讨论"
+title: "[other]: "
+labels: ["other"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        建议[加群](https://sa-token.cc/doc.html#/more/join-group)讨论
+        ---
+  - type: textarea
+    attributes:
+      label: '-'
+      placeholder: '当然也可以在此处讨论
+      '

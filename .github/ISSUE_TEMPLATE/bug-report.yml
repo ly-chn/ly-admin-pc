@@ -1,0 +1,39 @@
+name: "提交 Bug"
+description: "预期之外的错误"
+title: "[BUG]: "
+labels: ["Bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        如果你不确定这是Bug, 你可以: 
+        
+        - 在[常见问题排查](https://sa-token.cc/doc.html#/more/common-questions)中判断问题是否存在
+        - [加群](https://sa-token.cc/doc.html#/more/join-group)讨论
+        - 请在 [issue](./?q=is%3Aissue) 中查看是否存在类似的问题
+        ---
+
+  - type: input
+    attributes:
+      label: "当前使用的版本"
+      description: "建议更新到最新版, 测试是否可复现"
+      placeholder: "最新版"
+
+  - type: input
+    attributes:
+      label: "最小可重现仓库地址"
+      description: "如果复现步骤比较复杂，请将 demo 上传到 gitee / github 并留下地址"
+      placeholder: "https://github.com/..."
+
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: "复现步骤"
+      description: "请清晰描述复现方式"
+      placeholder: "首先...然后...就会..."
+
+  - type: textarea
+    attributes:
+      label: "报错信息"
+      description: "如有异常, 请在下方贴出具体报错堆栈信息"

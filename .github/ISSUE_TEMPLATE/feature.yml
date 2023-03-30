@@ -1,0 +1,16 @@
+name: "功能建议"
+description: "我有一个 good idea"
+title: "[Feature]: "
+labels: ["Feature"]
+body:
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: "场景阐述"
+      description: "请描述该功能适用的场景"
+
+  - type: textarea
+    attributes:
+      label: "功能描述"
+      description: "请对此功能尽可能详细的描述"
