@@ -36,6 +36,7 @@ declare module '@vue/runtime-core' {
     ElTree: typeof import('element-plus/es')['ElTree']
     ElTreeSelect: typeof import('element-plus/es')['ElTreeSelect']
     EmptyWrapper: typeof import('./src/components/table/empty-wrapper.vue')['default']
+    IconPicker: typeof import('./src/components/special/icon-picker.vue')['default']
     LyAreaCrud: typeof import('./src/components/area/ly-area-crud.vue')['default']
     LyAreaSearch: typeof import('./src/components/area/ly-area-search.vue')['default']
     LyBtn: typeof import('./src/components/button/ly-btn.vue')['default']

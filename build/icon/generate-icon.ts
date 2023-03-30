@@ -27,7 +27,7 @@ export {}
     }
   }
   fs.writeFileSync('src/components/special/icon/iconify.ts',
-    `export const DefineIcon = '${allIcon.join(',')}'`)
+    `export const IconifyIcons = '${allIcon.join(',')}'`)
   fs.writeFileSync('types/iconify.d.ts', `export type IconifyIconType = ${allIcon.map(it => `'${it}'`).join('|')}`)
 })()
 
