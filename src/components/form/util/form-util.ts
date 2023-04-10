@@ -52,7 +52,7 @@ export function useColSpan(props?: LyColSpanProps) {
 export function useFormField(props: LyFormFieldProps, emit: (event: 'update:modelValue', ...args: any[]) => void) {
   return {
     disabled: useFieldDisabled(props),
-    modelValue: useFieldModel(props, emit)
+    model: useFieldModel(props, emit)
   }
 }
 

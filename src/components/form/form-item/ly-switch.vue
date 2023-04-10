@@ -1,8 +1,8 @@
 <template>
-  <ly-form-item :label="props.label" :rules="props.rules" :value="modelValue">
+  <ly-form-item :label="props.label" :rules="props.rules" :value="model">
     <!--todo: 找一个修改文本的方式-->
     <el-switch
-        v-model="modelValue"
+        v-model="model"
         :disabled="disabled"
         active-text="是"
         inactive-text="否"
@@ -19,5 +19,5 @@ const props = defineProps({
   ...formFieldProps
 })
 const emit = defineEmits(['update:modelValue'])
-const {modelValue, disabled} = useFormField(props, emit)
+const {model, disabled} = useFormField(props, emit)
 </script>

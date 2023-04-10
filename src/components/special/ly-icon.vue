@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import type {PropType} from 'vue'
 import {ref} from 'vue'
-import {unref} from 'vue'
 import {onMounted} from 'vue'
-import Iconify from '@purge-icons/generated'
 import {watch} from 'vue'
+import Iconify from '@purge-icons/generated'
 import type {IconifyIconType} from '#/iconify'
+import {ElIcon} from 'element-plus'
 
 const props = defineProps({
   /**
@@ -23,14 +23,15 @@ const props = defineProps({
   /**
    * 大小
    */
-  size: [String, Number]
+  size: [Number, String],
+  /**
+   * icon旋转角度(0-360)
+   */
+  rotate: Number
 })
-const spanRef = ref<HTMLSpanElement>()
-const updateIcon  = ()=>{
-  const span = document.createElement('span')
-  span.className = 'iconify'
-  span.dataset.icon = props.type
-  const spanEl = unref(spanRef)
+const spanRef = ref<InstanceType<typeof ElIcon>>()
+const updateIcon = () => {
+  const spanEl = spanRef.value?.$el
   if (spanEl) {
     spanEl.textContent = ''
     if (props.type) {
@@ -40,15 +41,30 @@ const updateIcon  = ()=>{
       }
     }
   }
-
 }
 onMounted(updateIcon)
-watch(()=>props.type, updateIcon)
+watch(() => props.type, updateIcon)
 </script>
 <template>
-  <el-icon :color="color" :size="size">
-  <span ref="spanRef"
-      :class="[$attrs.class, 'app-iconify anticon', spin && 'app-iconify-spin']"
-  ></span>
-  </el-icon>
+  <el-icon ref="spanRef"
+           :class="[$attrs.class, spin && 'icon-spinner']"
+           :color="color"
+           :size="size"/>
 </template>
+<style scoped>
+.icon-spinner {
+  animation: spin-animation 1s infinite;
+  animation-timing-function: linear;
+  display: inline-block;
+}
+
+@keyframes spin-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>

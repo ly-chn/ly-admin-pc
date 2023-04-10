@@ -17,7 +17,12 @@ const props = defineProps({
   total: {
     type: Number,
     default: 0
-  }
+  },
+  layout: {
+    type: String,
+    default: 'prev, pager, next, jumper, ->, total'
+  },
+  hideOnSinglePage: Boolean
 })
 
 const emits = defineEmits(['update:pageSize', 'update:pageNum'])
@@ -28,8 +33,12 @@ const pageNum = useFieldModel(props, emits, 'pageNum')
 <template>
   <el-pagination v-model:current-page="pageNum"
                  v-model:page-size="pageSize"
-                 background
-                 small
+                 :layout="layout"
                  :page-sizes="[10, 20, 30, 50]"
-                 :total="total"/>
+                 :total="total"
+                 background
+                 :hide-on-single-page="hideOnSinglePage"
+                 small>
+    <slot/>
+  </el-pagination>
 </template>

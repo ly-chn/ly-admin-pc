@@ -10,11 +10,11 @@ const emit = defineEmits(['update:modelValue'])
 
 const options = useDictOption(props)
 
-const {disabled, modelValue} = useFormField(props, emit)
+const {disabled, model} = useFormField(props, emit)
 </script>
 <template>
-  <ly-form-item :label="props.label" :rules="props.rules" :value="modelValue">
-    <el-radio-group :disabled="disabled" v-model="modelValue">
+  <ly-form-item :label="props.label" :rules="props.rules" :value="model">
+    <el-radio-group :disabled="disabled" v-model="model">
       <el-radio v-for="option in options" :key="option.value" :label="option.value" :title="option.tips">{{ option.label}}</el-radio>
     </el-radio-group>
   </ly-form-item>

@@ -26,11 +26,11 @@ const props = defineProps({
   ...formFieldProps
 })
 const emit = defineEmits(['update:modelValue'])
-const {modelValue, disabled} = useFormField(props, emit)
+const {model, disabled} = useFormField(props, emit)
 </script>
 <template>
-  <ly-form-item :label="props.label" :rules="props.rules" :value="modelValue">
-    <el-input v-model="modelValue"
+  <ly-form-item :label="props.label" :rules="props.rules" :value="model">
+    <el-input v-model="model"
               :disabled="disabled"
               :maxlength="maxlength"
               :minlength="minlength"

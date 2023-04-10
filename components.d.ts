@@ -57,6 +57,7 @@ declare module '@vue/runtime-core' {
     LyIcon: typeof import('./src/components/special/ly-icon.vue')['default']
     LyIconPicker: typeof import('./src/components/special/ly-icon-picker.vue')['default']
     LyInput: typeof import('./src/components/form/form-item/ly-input.vue')['default']
+    LyInputIcon: typeof import('./src/components/form/form-item/ly-input-icon.vue')['default']
     LyPaging: typeof import('./src/components/special/ly-paging.vue')['default']
     LyRadio: typeof import('./src/components/form/form-item/ly-radio.vue')['default']
     LySelect: typeof import('./src/components/form/form-item/ly-select.vue')['default']
