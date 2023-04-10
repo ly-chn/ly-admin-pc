@@ -1,6 +1,7 @@
 <template>
   <!--todo: 增加鱼眼效果?-->
-  <el-popover :width="314"
+  <el-popover :disabled="disabled"
+              :width="314"
               placement="bottom">
     <template #reference>
       <ly-icon :type="model || 'ep:grid'"/>
@@ -32,7 +33,8 @@ import type {IconifyIconType} from '#/iconify'
 const iconTypeList = IconifyIcons.split(',') as IconifyIconType[]
 
 const props = defineProps<{
-  modelValue?: string
+  modelValue?: string,
+  disabled?: boolean
 }>()
 const emits = defineEmits<{
   (e: 'update:modelValue', value?: string): void

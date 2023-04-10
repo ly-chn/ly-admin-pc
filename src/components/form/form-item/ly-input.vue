@@ -31,6 +31,7 @@ const {model, disabled} = useFormField(props, emit)
 <template>
   <ly-form-item :label="props.label" :rules="props.rules" :value="model">
     <el-input v-model="model"
+              clearable
               :disabled="disabled"
               :maxlength="maxlength"
               :minlength="minlength"

@@ -1,6 +1,7 @@
 <template>
   <div>
     <ly-icon-picker v-model="icon"/>
+    <ly-input-icon label="hi" v-model="icon"/>
   </div>
 </template>
 
