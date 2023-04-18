@@ -24,6 +24,7 @@ import LyRadio from '@/components/form/form-item/ly-radio.vue'
 import LySwitch from '@/components/form/form-item/ly-switch.vue'
 import LyInputIcon from '@/components/form/form-item/ly-input-icon.vue'
 import LyIconPicker from '@/components/special/ly-icon-picker.vue'
+import LyTreeSelect from '@/components/form/form-item/ly-tree-select.vue'
 
 export const LyComponent = {
   // webstorm暂时无法识别自动注册/name形式注册组件
@@ -38,6 +39,7 @@ export const LyComponent = {
     Vue.component('LySelect', LySelect)
     Vue.component('LyRadio', LyRadio)
     Vue.component('LySwitch', LySwitch)
+    Vue.component('LyTreeSelect', LyTreeSelect)
 
     Vue.component('LyTable', LyTable)
     Vue.component('LyColumnSelection', LyColumnSelection)

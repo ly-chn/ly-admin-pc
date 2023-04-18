@@ -12,6 +12,7 @@
         <ly-input label="菜单名称" v-model="record.name"/>
         <ly-input label="上级菜单" v-model="record.parentId"/>
         <ly-input label="访问路径" v-model="record.path"/>
+        <ly-tree-select label="前端组件" :data="viewsData" v-model="record.component"/>
         <ly-input label="前端组件" v-model="record.component"/>
         <ly-input label="组件名称" v-model="record.componentName"/>
         <ly-input label="默认跳转" v-model="record.redirect"/>
@@ -28,8 +29,9 @@
 
 <script setup>
 import {useCrudEdit} from '@/use/simple-crud'
+import {ViewsScan} from '@/util/views-scan'
 import {ref} from 'vue'
-
+const viewsData = ViewsScan.tree()
 const formRef = ref()
 const {editing, record, handleOk} = useCrudEdit(formRef)
 </script>

@@ -30,23 +30,27 @@ export class TreeUtil {
    * 过滤树节点
    * @param tree 目标树
    * @param keywords 关键词
-   * @param childrenKey 子节点的key
    * @param keyList 允许匹配的key列表, 如果不传或空数组, 则匹配所有key
    * @return 过滤后的树
    */
-  static filter<K extends Extract<keyof T, string>, T extends BasicTree<K>>
-  (tree: T[] | undefined, keywords: string, childrenKey: K = 'children' as K, keyList?: K[]): T[] {
+  static filter<K extends Extract<keyof T, string>, T extends BasicTree>
+  (tree: T[] | undefined, keywords: string,  keyList?: K[]): T[] {
     keywords = keywords?.trim()
     if (!keywords || !tree) {
       return []
     }
-    const validNode = new Set<BasicTree<K>>()
-    function valid(node: BasicTree<K>): boolean {
+    const validNode = new Set<BasicTree>()
+    function valid(node: BasicTree): boolean {
+      if (!keyList?.length) {
+        return false
+      }
       if (validNode.has(node)) {
         return true
       }
-      const nodeElement = node[childrenKey]
-      const valueCollect = Object.keys(node).filter(key => !keyList?.length || keyList.includes(key as K)).map(key => node[key as K]).join('')
+      const nodeElement = node.children
+      const valueCollect = Object.keys(node)
+        .filter(key => keyList.includes(key as K))
+        .map(key => node[key as keyof  BasicTree]).join('')
       const res = valueCollect.includes(keywords) || nodeElement?.some(it => valid(it)) || false
       if (res) {
         validNode.add(node)
@@ -54,9 +58,9 @@ export class TreeUtil {
       }
       return false
     }
-    function filter(list?: BasicTree<K>[]) {
+    function filter(list?:BasicTree[]) {
       const res = list?.filter(t => valid(t)) || []
-      res.forEach(item => item[childrenKey] ? filter(item[childrenKey]) : item[childrenKey])
+      res.forEach(item => item.children ? filter(item.children) : item.children)
       return res
     }
     return filter(tree) as T[]

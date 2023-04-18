@@ -1,3 +1,5 @@
+import {key} from 'localforage'
+
 /**
  * 给类型加上前缀
  * @example
@@ -33,9 +35,9 @@ export type PrefixKey<K, T extends string> = keyof PrefixRecord<K, T>
 /**
  * 基础树状结构
  */
-export type BasicTree<K extends string, T extends BasicTree<K, T> = BasicTree<K, T>> = {
-  [key in K]?: T[]
-}
+export type BasicTree<T extends Record<any, any> = any> = {
+  children?: BasicTree<T>[]
+} & T
 
 /**
  * 字符串分割

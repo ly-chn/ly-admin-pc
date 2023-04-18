@@ -6,6 +6,7 @@
       <ly-input label="手机号" v-model="form.mobile"/>
       <ly-input label="身份证" v-model="form.idCard"/>
       <ly-select label="性别" v-model="form.sex" dict-code="sex" :rules="$rules.must"/>
+
     </ly-form>
     <ly-btn-search/>
   </div>
@@ -14,8 +15,9 @@
 <script lang="ts" setup>
 import {reactive, ref} from 'vue'
 import LyBtnSearch from '@/components/button/ly-btn-search.vue'
+import {ViewsScan} from '@/util/views-scan'
 
 const form: Record<string, unknown> = reactive({})
-
+const data = ViewsScan.tree()
 const formRef = ref(null)
 </script>
