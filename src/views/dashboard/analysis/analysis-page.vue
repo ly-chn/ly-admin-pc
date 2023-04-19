@@ -15,9 +15,7 @@
 <script lang="ts" setup>
 import {reactive, ref} from 'vue'
 import LyBtnSearch from '@/components/button/ly-btn-search.vue'
-import {ViewsScan} from '@/util/views-scan'
 
 const form: Record<string, unknown> = reactive({})
-const data = ViewsScan.tree()
 const formRef = ref(null)
 </script>

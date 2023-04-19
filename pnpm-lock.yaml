@@ -14,7 +14,7 @@ specifiers:
   async-validator: ^4.2.5
   axios: ^1.2.6
   clipboard-copy: ^4.0.1
-  element-plus: ^2.2.30
+  element-plus: ^2.3.3
   eslint: ^8.27.0
   eslint-plugin-vue: ^9.7.0
   esno: ^0.16.3
@@ -42,7 +42,7 @@ dependencies:
   async-validator: registry.npmmirror.com/async-validator/4.2.5
   axios: registry.npmmirror.com/axios/1.3.4
   clipboard-copy: registry.npmmirror.com/clipboard-copy/4.0.1
-  element-plus: registry.npmmirror.com/element-plus/2.3.0_vue@3.2.47
+  element-plus: registry.npmmirror.com/element-plus/2.3.3_vue@3.2.47
   localforage: registry.npmmirror.com/localforage/1.10.0
   pinia: registry.npmmirror.com/pinia/2.0.33_5yi2kxxaqg74pgvs6b75qdtvru
   pinyin-match: registry.npmmirror.com/pinyin-match/1.2.4
@@ -1612,11 +1612,11 @@ packages:
     version: 0.2.0
     dev: true
 
-  registry.npmmirror.com/element-plus/2.3.0_vue@3.2.47:
-    resolution: {integrity: sha512-3s3JO4+LHLi61tFwF2emIHx6nxwKKdj5YWcj3GUBoXKhbuRjhq6xqaxWpBlPk7jySr/8Eci5++T2THbvrpGn7A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/element-plus/-/element-plus-2.3.0.tgz}
-    id: registry.npmmirror.com/element-plus/2.3.0
+  registry.npmmirror.com/element-plus/2.3.3_vue@3.2.47:
+    resolution: {integrity: sha512-Zy61OXrG6b4FF3h29A9ZOUkaEQXjCuFwNa7DlpB3Vo+42Tw5zBbHe5a4BY7i56TVJG5xTbS9UQyA726J91pDqg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/element-plus/-/element-plus-2.3.3.tgz}
+    id: registry.npmmirror.com/element-plus/2.3.3
     name: element-plus
-    version: 2.3.0
+    version: 2.3.3
     peerDependencies:
       vue: ^3.2.0
     dependencies:

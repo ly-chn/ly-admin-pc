@@ -10,7 +10,7 @@ const emit = defineEmits(['update:modelValue'])
 const {model, disabled} = useFormField(props, emit)
 </script>
 <template>
-  <ly-form-item :label="props.label" :rules="props.rules" :value="model">
+  <ly-form-item :label="label" :rules="rules" :value="model">
     <el-tree-select :data="data" v-model="model" :disabled="disabled"/>
   </ly-form-item>
 </template>
