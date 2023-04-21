@@ -13,6 +13,7 @@
         <ly-input label="上级菜单" v-model="record.parentId"/>
         <ly-input-icon label="访问路径" v-model="record.icon"/>
         <ly-input label="访问路径" v-model="record.path"/>
+        <ly-select label="布局组件" v-if="record.permissionType === '0'" :options="layoutComponentList" v-model="record.component"/>
         <ly-tree-select label="前端组件" :data="viewsData" v-model="record.component"/>
         <ly-input label="前端组件" v-model="record.component"/>
         <ly-input label="组件名称" v-model="record.componentName"/>
@@ -30,7 +31,16 @@
 import {useCrudEdit} from '@/use/simple-crud'
 import {ViewsScan} from '@/util/views-scan'
 import {ref} from 'vue'
+// 页面组件树
 const viewsData = ViewsScan.tree()
+/**
+ * 布局组件
+ * @type {LyDictItem[]}
+ */
+const layoutComponentList = [{
+  label: '常规页面',
+  value: 'layouts/page-layout/page-layout'
+}]
 const formRef = ref()
 const {editing, record, handleOk} = useCrudEdit(formRef)
 </script>

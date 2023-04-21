@@ -7,7 +7,7 @@ export class ViewsScan {
     const baseDir = '/src/views/'
     const fileList = Object.keys(import.meta.glob('@/views/**/*.vue'))
       .map(it => it.replace(baseDir, ''))
-      .filter(it => it.includes('component'))
+      .filter(it => !it.includes('component'))
       .sort((a, b) => a.localeCompare(b))
     return this.#arrayToTree(fileList)
   }

@@ -11,7 +11,7 @@ const emit = defineEmits(['update:modelValue'])
 const {model, disabled} = useFormField(props, emit)
 </script>
 <template>
-  <ly-form-item :label="props.label" :rules="props.rules" :value="model">
+  <ly-form-item :label="label" :tips="tips" :rules="rules" :value="model">
     <el-input :model-value="model"
               clearable
               @clear="model = undefined"

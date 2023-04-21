@@ -22,7 +22,11 @@ export const formFieldProps = {
   /**
    * 占位文字
    */
-  placeholder: String
+  placeholder: String,
+  /**
+   * 提示文案
+   */
+  tips: [String, Function] as PropType<string | (()=> string)>
 }
 export type LyFormFieldProps = ExtractPropTypes<typeof formFieldProps>
 // 布局通用

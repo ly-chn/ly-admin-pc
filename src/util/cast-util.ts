@@ -1,8 +1,16 @@
+import type {ValueGetter} from '#/utility-type'
+
 /**
  * 类型转换工具类
  */
 export class CastUtil {
-  static array<T>(target: T|T[]) {
+  /**
+   * 给定数组值, 则返回数组, 否则原样返回
+   * @example
+   * CastUtil.array('1') // ['1']
+   * CastUtil.array(['1']) // ['1']
+   */
+  static array<T>(target: T | T[]) {
     if (!target) {
       return [] as T[]
     }
@@ -13,5 +21,19 @@ export class CastUtil {
       return target.split(',') as unknown[] as T[]
     }
     return []
+  }
+
+  /**
+   * 给定函数值则返回执行结果, 否则原样返回
+   * @example
+   * CastUtil.unwrap('1') // '1'
+   * CastUtil.unwrap(()=>"1") // '1'
+   * CastUtil.unwrap() // undefined
+   */
+  static unwrap<T>(target?: ValueGetter<T>): T | undefined {
+    if (typeof target === 'function') {
+      return (target as () => T)()
+    }
+    return target as T
   }
 }

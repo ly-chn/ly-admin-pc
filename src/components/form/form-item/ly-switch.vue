@@ -1,5 +1,5 @@
 <template>
-  <ly-form-item :label="props.label" :rules="props.rules" :value="model">
+  <ly-form-item :label="label" :tips="tips" :rules="rules" :value="model">
     <!--todo: 找一个修改文本的方式-->
     <el-switch
         v-model="model"

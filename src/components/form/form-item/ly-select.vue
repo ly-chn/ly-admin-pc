@@ -13,7 +13,7 @@ const options = useDictOption(props)
 const {disabled, model} = useFormField(props, emit)
 </script>
 <template>
-  <ly-form-item :label="props.label" :rules="props.rules" :value="model">
+  <ly-form-item :label="label" :tips="tips" :rules="rules" :value="model">
     <el-select-v2 v-model="model" :disabled="disabled" :options="options" :placeholder="placeholder">
       <template #default="scope">
         <slot v-bind="scope">

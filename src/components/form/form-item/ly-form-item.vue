@@ -60,6 +60,10 @@ const props = defineProps({
    * 当前表单值, 用于表单校验时使用
    */
   value: null,
+  /**
+   * 提示文案
+   */
+  tips: [String, Function] as PropType<string | (()=> string)>,
   ...colSpanProps
 })
 
@@ -196,6 +200,7 @@ const formItemClasses = computed(() => [
 ])
 const validateStateDebounced = refDebounced(validateState, 100)
 
+const tipsContent = computed(()=> CastUtil.unwrap(props.tips))
 
 const context = reactive({
   validateState,
@@ -218,7 +223,15 @@ defineExpose({
                ref="labelRef"
                :for="labelFor"
                class="el-form-item__label ly-form-item__label">
-      <slot name="label">{{ label }}</slot>
+      <slot name="label">
+        {{ tipsContent }}
+        <el-popover>
+          {{tips}}
+          <template #reference>
+            <ly-icon type="ep:warning" v-if="tips"/>
+          </template>
+        </el-popover>
+      </slot>
     </component>
     <div :class="ns.e('content')">
       <slot/>

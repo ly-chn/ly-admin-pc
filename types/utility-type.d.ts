@@ -1,5 +1,3 @@
-import {key} from 'localforage'
-
 /**
  * 给类型加上前缀
  * @example
@@ -38,6 +36,11 @@ export type PrefixKey<K, T extends string> = keyof PrefixRecord<K, T>
 export type BasicTree<T extends Record<any, any> = any> = {
   children?: BasicTree<T>[]
 } & T
+
+/**
+ * 获取值, 可能是函数或值类型, 注意: T不能是函数
+ */
+export type ValueGetter<T> = T extends ()=>any ? never : T | (() => T) | undefined
 
 /**
  * 字符串分割

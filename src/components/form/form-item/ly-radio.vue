@@ -13,7 +13,7 @@ const options = useDictOption(props)
 const {disabled, model} = useFormField(props, emit)
 </script>
 <template>
-  <ly-form-item :label="props.label" :rules="props.rules" :value="model">
+  <ly-form-item :label="label" :tips="tips" :rules="rules" :value="model">
     <el-radio-group :disabled="disabled" v-model="model">
       <el-radio v-for="option in options" :key="option.value" :label="option.value" :title="option.tips">{{ option.label}}</el-radio>
     </el-radio-group>
