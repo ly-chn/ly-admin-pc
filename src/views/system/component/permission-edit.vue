@@ -16,7 +16,7 @@
         <ly-select label="布局组件" v-if="record.permissionType === '0'" :options="layoutComponentList" v-model="record.component"/>
         <ly-tree-select label="前端组件" :data="viewsData" v-model="record.component"/>
         <ly-input label="前端组件" v-model="record.component"/>
-        <ly-input label="组件名称" v-model="record.componentName"/>
+        <ly-input label="组件名称" :placeholder="componentNamePlaceholder" v-model="record.componentName"/>
         <ly-input label="默认跳转" v-model="record.redirect"/>
         <ly-input label="排序" v-model="record.orderWeight"/>
         <ly-switch label="是否缓存" v-model="record.keepAlive"/>
@@ -29,10 +29,12 @@
 
 <script setup>
 import {useCrudEdit} from '@/use/simple-crud'
+import {RouterUtil} from '@/util/router-util'
 import {ViewsScan} from '@/util/views-scan'
-import {ref} from 'vue'
+import {computed, ref} from 'vue'
 // 页面组件树
 const viewsData = ViewsScan.tree()
+
 /**
  * 布局组件
  * @type {LyDictItem[]}
@@ -41,6 +43,11 @@ const layoutComponentList = [{
   label: '常规页面',
   value: 'layouts/page-layout/page-layout'
 }]
+
+const componentNamePlaceholder = computed(()=> {
+  RouterUtil.getNameByPath(record.component)
+  return ''
+})
 const formRef = ref()
 const {editing, record, handleOk} = useCrudEdit(formRef)
 </script>
