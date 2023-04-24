@@ -68,38 +68,40 @@ import {useDictStore} from '@/store/dict'
 import {useCrud} from '@/use/simple-crud'
 import DictEdit from '@/views/system/component/dict-edit.vue'
 import DictItemEdit from '@/views/system/component/dict-item-edit.vue'
-import {computed, ref, watch} from 'vue'
+import {computed, reactive, ref, watch} from 'vue'
 
-const currentDict = ref()
+const currentDict = reactive({id: null, dictCode: null})
 
 const keywords = ref()
 const dictItemCtx = useCrud(dictItemApi, {
   beforeSearch: (params) => {
-    if (!currentDict.value) {
+    if (!currentDict.id) {
       return null
     }
-    params.dictId = currentDict.value.id
+    params.dictId = currentDict.id
     return params
   },
   beforeEdit(record) {
-    record.value.dictId = currentDict.value.id
-  }
+    record.value.dictId = currentDict.id
+  },
+  name: 'dictitem'
 })
 const {searchForm} = dictItemCtx
 
-const dictCtx = useCrud(dictApi, {noPaging: true})
+const dictCtx = useCrud(dictApi, {noPaging: true, name: 'dict'})
 
 /**
  * 移除字典, 清空字典项
  */
 async function handleRemoveDict(id) {
   await dictCtx.handleRemove(id)
-  currentDict.value = null
+  currentDict.id = null
+  currentDict.dictCode = null
   dictItemCtx.tableData.value = []
 }
 
 const dictStore = useDictStore()
-const dictType = dictStore.getDict('dict_type')
+const dictType = dictStore.dictPool['dict_type']
 
 const dictTreeData = computed(() => {
   return dictType.value.map(it => {
@@ -109,14 +111,17 @@ const dictTreeData = computed(() => {
     }
   })
 })
+
 function handleCurrentChange(data) {
-  currentDict.value = data
+  currentDict.id = data.id
+  currentDict.dictCode = data.dictCode
   dictItemCtx.handleSearch()
 }
 
 // after edit dict item, refresh dict
-watch(()=> dictCtx.editing, value=> {
-  !value.value && dictStore.refreshDict(currentDict.value.dictCode)
+watch(()=> dictItemCtx.editing, value=> {
+  console.log('watch value')
+  !value && dictStore.refresh(currentDict.dictCode)
 })
 
 </script>

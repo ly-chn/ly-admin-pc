@@ -64,8 +64,11 @@ export function calcShowAbleColumn(columns: Ref<LyTableColumnCollector[]>, check
 /**
  * 来自element-ui
  */
-export function getPropByPath(obj: any, path: string) {
+export function getPropByPath(obj: any, path: string | undefined) {
   let tempObj = obj
+  if (!path) {
+    return undefined
+  }
   path = path.replace(/\[(\w+)]/g, '.$1').replace(/^\./, '')
 
   const keyArr = path.split('.')
@@ -81,5 +84,6 @@ export function getPropByPath(obj: any, path: string) {
   }
   return tempObj?.[keyArr[i]]
 }
+
 export const tableStore = localforage.createInstance({name: 'table-store'})
 

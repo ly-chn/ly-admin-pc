@@ -1,34 +1,52 @@
 import {defineStore} from 'pinia'
 import type {LyDictItem} from '@/components/form/util/form-props'
-import {shallowRef} from 'vue'
-import type {ShallowRef} from 'vue'
 import {CallCache} from '@/util/call-cache'
 import {dictItemApi} from '@/api/system/dict-item'
+import {shallowReactive} from 'vue'
+import {shallowRef} from 'vue'
+import type {ShallowRef} from 'vue'
 
-export const useDictStore = defineStore('dict', () => {
-  const dictCache = new Map<string, ShallowRef<LyDictItem[]>>()
-  /**
-   * 获取字典, 注意: 不要修改字典数据, 如需修改, 手动copy一份
-   * @param dictCode 字典编码
-   * @return {ShallowRef<LyDictItem[]>} 字典数据
-   */
-  const getDict = (dictCode: string) => {
-    // set default
-    dictCache.has(dictCode) || dictCache.set(dictCode, shallowRef<LyDictItem[]>([]))
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    CallCache.call(dictItemApi.getByDictCode, 5, dictCode).then(res => dictCache.get(dictCode)!.value = res)
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return dictCache.get(dictCode)!
+export const useDictStore = defineStore('dict', (): DictStore => {
+  const dictPool = shallowReactive(new Proxy({}, {
+    get(target: Record<string, ShallowRef<LyDictItem[]>>, dictCode: string): any {
+      // 字典不存在, 初始化字典
+      if (!target[dictCode]) {
+        target[dictCode] = shallowRef([])
+        setTimeout(async () => {
+          target[dictCode].value = await CallCache.call(dictItemApi.getByDictCode, 5, dictCode)
+        })
+      }
+      return target[dictCode]
+    }
+  }))
+
+  const refresh = async (dictCode: string) => {
+    console.debug('update dictCode', dictCode)
+    if (dictCode) {
+      const value = await CallCache.call(dictItemApi.getByDictCode, 5, dictCode)
+      dictPool[dictCode] ??= shallowRef([])
+      dictPool[dictCode].value = value
+      return
+    }
+    await Promise.all(Object.keys(dictPool)
+      .map(dictCode => CallCache.call(dictItemApi.getByDictCode, 5, dictCode)
+        .then(value => {
+          dictPool[dictCode] ??= shallowRef([])
+          dictPool[dictCode].value = value
+        })))
   }
-  /**
-   * 刷新字典数据
-   * @param dictCode 字典编码
-   */
-  const refreshDict = (dictCode: string) => {
-    // set default
-    dictCache.has(dictCode) || dictCache.set(dictCode, shallowRef<LyDictItem[]>([]))
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    dictItemApi.getByDictCode(dictCode).then(res => dictCache.get(dictCode)!.value = res)
-  }
-  return {getDict, refreshDict}
+  return {dictPool, refresh}
 })
+
+export type DictStore = {
+  /**
+   * 字典池, key为字典编码, value为字典项
+   */
+  dictPool: Record<string, ShallowRef<LyDictItem[]>>
+  /**
+   * 刷新字典编码
+   * @param {string} dictCode, 指定字典编码, 如果不指定, 则刷新所有
+   * @return {Promise<void>}
+   */
+  refresh(dictCode?: string): Promise<void>
+}

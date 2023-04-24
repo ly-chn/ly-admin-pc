@@ -8,33 +8,30 @@ import type {PagingVO} from '#/rest'
 import type {DataRecord} from '#/rest'
 
 export interface CrudApi {
+  // 分页查询
   search?<P = unknown, T extends DataRecord = DataRecord>(params: P): Promise<PagingVO<T>>
-
+  // 新增/修改
   edit?<P = unknown, R = void>(record: P): Promise<R>
-
+  // 通过id获取单条
   getById?<T = DataRecord>(id: string | number): Promise<T>
-
+  // 获取全部
   all?<T = DataRecord>(): Promise<T[]>
-
+  // 通过id/id列表批量删除
   remove?(id: string | string[]): Promise<void>
 }
 
 export interface CrudConfig {
-  /**
-   * 默认检索条件
-   */
+  // 默认排序
   defaultOrder?: {
     isAsc: 'asc' | 'desc',
     orderByColumn: string
   }
-  /**
-   * 为true表示拒绝分页, 将修改search方法调用为all方法调用
-   */
+  // 为true表示拒绝分页, 将修改search方法调用为all方法调用
   noPaging?: boolean
-  /**
-   * 默认分页
-   */
+  // 默认分页
   defaultPaging?: Record<string, unknown>
+  // 仅仅一个标识, 无具体左右, 值随意, debug可能会用到
+  name?: string
   /**
    * 检索之前钩子
    * @param {Record<string, unknown>} params 整理的检索条件, 含分页/排序等
@@ -45,6 +42,8 @@ export interface CrudConfig {
    * 点击编辑按钮之后, 打开弹窗之前, 此时record已完成初始化
    */
   beforeEdit?<T extends DataRecord>(record: Ref<T>): void
+  // 修改后钩子
+  afterEdit?(): void
 }
 
 /**
@@ -52,17 +51,11 @@ export interface CrudConfig {
  * lyTodo: 移动到分页组件中
  */
 export type Paging = {
-  /**
-   * 页码
-   */
+  // 页码
   pageNum?: number,
-  /**
-   * 分页大小
-   */
+  // 分页大小
   pageSize?: number,
-  /**
-   * 总数
-   */
+  // 总数
   total?: number
 }
 
@@ -70,49 +63,33 @@ export type Paging = {
  * 检索页上下文
  */
 export type CrudContext<T extends DataRecord = DataRecord> = {
-  /**
-   * 检索表单
-   */
+  // 仅仅一个标识, 无具体左右, 值随意, debug可能会用到
+  name: CrudConfig['name']
+  // 检索表单
   searchForm: Ref<Record<string, unknown>>
-  /**
-   * 执行检索
-   */
+  // 执行检索
   handleSearch: () => Promise<void>
-  /**
-   * 重置检索条件
-   */
+  // 重置检索条件
   handleReset: () => Promise<void>
-  /**
-   * 检索loading状态, 用于表格, 检索/重置按钮
-   */
+  // 检索loading状态, 用于表格, 检索/重置按钮
   loading: Ref<boolean>
-  /**
-   * 检索的分页信息
-   */
+  // 检索的分页信息
   paging: Ref<Paging>
-  /**
-   * 检索结果-列表数据
-   */
+  // 检索结果-列表数据
   tableData: Ref<T[]>
 
-  /**
-   * 当前正在编辑的对象
-   */
+  // 当前正在编辑的对象
   record: Ref<T>
-  /**
-   * 当前编辑状态
-   */
+  // 当前编辑状态
   editing: Ref<boolean>
-  /**
-   * 当前数据提交loading状态
-   */
+  // 当前数据提交loading状态
   updating: Ref<boolean>
   /**
    * 点击新增/修改时的事件
-   * @param {string} recordId 不存在时表示新增, 否则表示修改, 传字符串将getById, 否则直接使用
+   * @param {string} recordAble 不存在时表示新增, 否则表示修改, 传字符串将getById, 否则直接使用
    * @return {Promise<void>}
    */
-  handleEdit: (recordAble?: unknown) => Promise<void>
+  handleEdit(recordAble?: unknown): Promise<void>
   /**
    * 新增/修改完成
    * @param {Ref<InstanceType<typeof LyForm>>} formRef 表单存在则自动执行校验
@@ -130,6 +107,8 @@ export type CrudContext<T extends DataRecord = DataRecord> = {
  * 检索页面-编辑弹窗上下文
  */
 export type CrudEditContext<T> = {
+  // 仅仅一个标识, 无具体左右, 值随意, debug可能会用到
+  name: CrudConfig['name']
   // 当前编辑状态
   editing: Ref<boolean>
   // 当前数据提交loading状态
@@ -163,7 +142,7 @@ export function useCrud<T extends DataRecord>(api: CrudApi, config: CrudConfig =
   const handleSearch = async () => {
     const params = beforeSearch({...defaultOrder, ...defaultPaging, ...searchForm.value})
     if (!params) {
-      return void console.log('取消请求')
+      return void console.debug('取消请求')
     }
     loading.value = true
     try {
@@ -237,12 +216,13 @@ export function useCrud<T extends DataRecord>(api: CrudApi, config: CrudConfig =
     updating,
     handleEdit,
     handleSubmit,
-    handleRemove
+    handleRemove,
+    name: config.name
   }
 }
 
 /**
- * 检索页内容
+ * 表单编辑, 仅支持非同一vue组件
  */
 export function useCrudEdit<T extends DataRecord>(formRef: Ref<InstanceType<typeof LyForm>> | undefined): CrudEditContext<T> {
   const searchCtx = inject(searchAreaCtxKey, null)
@@ -257,10 +237,12 @@ export function useCrudEdit<T extends DataRecord>(formRef: Ref<InstanceType<type
   const handleOk = async () => {
     await searchCtx.handleSubmit(formRef)
   }
+  console.log('searchCtx', searchCtx)
   return {
     editing: searchCtx.editing,
     updating: searchCtx.updating,
     record: searchCtx.record as Ref<T>,
-    handleOk
+    handleOk,
+    name: searchCtx.name
   }
 }

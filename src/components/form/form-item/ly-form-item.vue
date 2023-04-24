@@ -1,30 +1,20 @@
 <script lang="ts" setup>
-import {
-  computed,
-  inject,
-  onBeforeUnmount,
-  onMounted,
-  provide,
-  reactive,
-  ref,
-  useSlots,
-  watchEffect
-} from 'vue'
+import {computed, inject, onBeforeUnmount, onMounted, provide, reactive, ref, useSlots, watchEffect} from 'vue'
 import type {PropType} from 'vue'
+import {nextTick} from 'vue'
 import {colSpanProps} from '@/components/form/util/form-props'
 import type {FormValidateRule} from '@/components/form/util/form-props'
 import type {FormValidateRuleGenerate} from '@/components/form/util/form-props'
 import {refDebounced, useResizeObserver} from '@vueuse/core'
 import {useColSpan} from '@/components/form/util/form-util'
 import {lyFormCtxKey} from '@/components/form/util/form-ctx'
-import type {FormItemRule, FormItemValidateState, FormValidateFailure, FormItemContext} from 'element-plus'
+import type {FormItemContext, FormItemRule, FormItemValidateState, FormValidateFailure} from 'element-plus'
 import {formItemContextKey, useNamespace, useSize} from 'element-plus'
 import {IsInstance} from '@/util/is-instance'
 import type {RuleItem} from 'async-validator'
 import AsyncValidator from 'async-validator'
 import {LyFormConstant} from '@/components/form/util/ly-form-constant'
 import {Rules} from '@/plugin/ly-rules'
-import {nextTick} from 'vue'
 import {CastUtil} from '@/util/cast-util'
 
 const compKey = Symbol.for('ly-form-item')
@@ -63,7 +53,7 @@ const props = defineProps({
   /**
    * 提示文案
    */
-  tips: [String, Function] as PropType<string | (()=> string)>,
+  tips: [String, Function] as PropType<string | (() => string)>,
   ...colSpanProps
 })
 
@@ -74,7 +64,7 @@ const labelRef = ref<HTMLDivElement>()
 const hasLabel = computed(() => props.label || slots.label)
 
 const updateLabelWidth = () => {
-  nextTick(()=>formCtx?.registerLabelWidth(compKey, getLabelWidth()))
+  nextTick(() => formCtx?.registerLabelWidth(compKey, getLabelWidth()))
 }
 
 const getLabelWidth = () => {
@@ -140,7 +130,7 @@ const setValidationState = (state: FormItemValidateState) => {
 }
 const getFilteredRule = (trigger: string) => normalizedRules.value
   .filter(rule => !rule.trigger || !trigger || CastUtil.array(rule.trigger).includes(trigger))
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   .map(({trigger, ...rule}) => rule)
 const onValidationFailed = (error: FormValidateFailure) => {
   const {errors, fields} = error
@@ -200,7 +190,7 @@ const formItemClasses = computed(() => [
 ])
 const validateStateDebounced = refDebounced(validateState, 100)
 
-const tipsContent = computed(()=> CastUtil.unwrap(props.tips))
+const tipsContent = computed(() => CastUtil.unwrap(props.tips))
 
 const context = reactive({
   validateState,
@@ -224,13 +214,11 @@ defineExpose({
                :for="labelFor"
                class="el-form-item__label ly-form-item__label">
       <slot name="label">
-        {{ tipsContent }}
-        <el-popover>
-          {{tips}}
-          <template #reference>
-            <ly-icon type="ep:warning" v-if="tips"/>
-          </template>
-        </el-popover>
+        {{ label }}
+        <el-tooltip v-if="tips"
+                    :content="tipsContent">
+          <ly-icon type="ep:warning"/>
+        </el-tooltip>
       </slot>
     </component>
     <div :class="ns.e('content')">

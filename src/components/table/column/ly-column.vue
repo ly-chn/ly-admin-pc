@@ -76,7 +76,7 @@ const showAble = computed(() => !columnCustomerContext?.showAbleColumns.length |
     <template v-else-if="props.dictCode||options" #default="{row}">
       <ly-dict-render :as-text="asText"
                       :dict-code="dictCode"
-                      :model-value="getPropByPath(row, props.prop)"
+                      :model-value="getPropByPath(row, prop)"
                       :options="options"/>
     </template>
     <template v-if="$slots.header" #header>

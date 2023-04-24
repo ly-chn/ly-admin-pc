@@ -17,8 +17,8 @@ export class CallCache {
    * @param params 目标函数的参数
    *
    * @example
-   * const fn = (a: string, b: number)=>a+b
-   * const s = CallCache.call(fn, 5, '1', 2) // s is string type
+   * const fn = (a: string, b: number)=> a + b
+   * const s = CallCache.call(fn, 5, '1', 2) // s is 'string'
    */
   static call<T extends (...args: any[]) => any>(method: T, activeSeconds: number, ...params: Parameters<T>): ReturnType<T> {
     if (!this.#callMap.has(method)) {

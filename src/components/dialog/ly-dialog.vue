@@ -4,6 +4,7 @@
              :title="title"
              :top="top"
              :width="width"
+             :close-on-click-modal="false"
              draggable>
     <slot/>
     <template #footer>
