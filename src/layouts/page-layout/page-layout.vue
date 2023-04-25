@@ -10,10 +10,8 @@
     </el-aside>
     <el-container>
       <el-header>
-        <ly-toggle v-model="drawer">
-          <ly-icon v-if="drawer" type="ep:fold"/>
-          <ly-icon v-else type="ep:expand"/>
-        </ly-toggle>
+        <ly-toggle v-model="drawer" off-icon="ep:expand" on-icon="ep:fold"/>
+        <ly-toggle v-model="darkScheme" off-icon="ep:moon" on-icon="ep:sunny"/>
       </el-header>
       <el-main>
         <router-view #default="{ Component, route }">
@@ -36,7 +34,10 @@ import {computed, ref} from 'vue'
 import SimpleMenuItem from '@/layouts/page-layout/simple-menu-item.vue'
 import {useRouter} from 'vue-router'
 
+// 菜单栏折叠状态
 const drawer = ref(false)
+
+const darkScheme = ref(false)
 
 const {options: {routes}, currentRoute} = useRouter()
 

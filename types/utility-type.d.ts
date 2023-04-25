@@ -34,6 +34,7 @@ export type PrefixKey<K, T extends string> = keyof PrefixRecord<K, T>
  * 基础树状结构
  */
 export type BasicTree<T extends Record<any, any> = any> = {
+  // 子节点
   children?: BasicTree<T>[]
 } & T
 

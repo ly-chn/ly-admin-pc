@@ -21,7 +21,7 @@
           <ly-btn-create @click="ctx.handleEdit({parentId: row.id, permissionType: 'route'})">添加子项</ly-btn-create>
         </ly-column-action>
       </ly-table>
-      <permission-edit/>
+      <permission-edit :tableData="ctx.tableData.value"/>
     </template>
   </ly-area-search>
 </template>

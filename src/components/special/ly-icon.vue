@@ -1,34 +1,21 @@
 <script lang="ts" setup>
-import type {PropType} from 'vue'
-import {ref} from 'vue'
-import {onMounted} from 'vue'
-import {watch} from 'vue'
+import {onMounted, ref, watch} from 'vue'
 import Iconify from '@purge-icons/generated'
 import type {IconifyIconType} from '#/iconify'
 import {ElIcon} from 'element-plus'
 
-const props = defineProps({
-  /**
-   * 图标类型
-   */
-  type: String as PropType<IconifyIconType>,
-  /**
-   * 图标颜色
-   */
-  color: String,
-  /**
-   * 是否旋转
-   */
-  spin: Boolean,
-  /**
-   * 大小
-   */
-  size: [Number, String],
-  /**
-   * icon旋转角度(0-360)
-   */
-  rotate: Number
-})
+const props = defineProps<{
+  // 图标类型
+  type?: IconifyIconType,
+  // 图标颜色
+  color?: string,
+  // 图标选择状态
+  spin?: boolean,
+  // 大小
+  size?: number | string,
+  // 图标旋转角度(0-360)
+  rotate?: number
+}>()
 const spanRef = ref<InstanceType<typeof ElIcon>>()
 const updateIcon = () => {
   const spanEl = spanRef.value?.$el

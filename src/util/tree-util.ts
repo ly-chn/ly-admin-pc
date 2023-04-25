@@ -36,6 +36,7 @@ export class TreeUtil {
   static filter<K extends Extract<keyof T, string>, T extends BasicTree>
   (tree: T[] | undefined, keywords: string,  keyList?: K[]): T[] {
     keywords = keywords?.trim()
+    console.log(tree)
     if (!keywords || !tree) {
       return []
     }
@@ -47,7 +48,7 @@ export class TreeUtil {
       if (validNode.has(node)) {
         return true
       }
-      const nodeElement = node.children
+      const nodeElement: BasicTree[] = node.children
       const valueCollect = Object.keys(node)
         .filter(key => keyList.includes(key as K))
         .map(key => node[key as keyof  BasicTree]).join('')

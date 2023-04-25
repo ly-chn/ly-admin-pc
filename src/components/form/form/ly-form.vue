@@ -48,8 +48,8 @@ const searchCtx = inject(searchAreaCtxKey, null)
         <div class="flex-1">
           <slot name="operation"/>
         </div>
-        <ly-btn-search :loading="searchCtx?.loading.value" @click="searchCtx?.handleSearch"/>
-        <ly-btn-reset :loading="searchCtx?.loading.value" @click="searchCtx?.handleReset"/>
+        <ly-btn-search :loading="searchCtx?.loading.value" @click="searchCtx.handleSearch"/>
+        <ly-btn-reset :loading="searchCtx?.loading.value" @click="searchCtx.handleReset"/>
       </el-col>
     </el-row>
   </form>

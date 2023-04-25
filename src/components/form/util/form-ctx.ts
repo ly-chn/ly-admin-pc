@@ -40,6 +40,7 @@ export const lyFormProps = {
    * 加载状态
    */
   loading: Boolean,
+  
   ...colSpanProps
 }
 export type LyFormProps = ExtractPropTypes<typeof lyFormProps>
