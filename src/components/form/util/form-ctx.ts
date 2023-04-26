@@ -7,40 +7,25 @@ import {LyPropType} from '@/components/util/ly-prop-type'
 
 
 export const lyFormProps = {
-  /**
-   * 为true时，表单不可编辑
-   */
+  // 为true时，表单不可编辑
   disabled: {
     type: Boolean
   },
-  /**
-   * 表单rule变化时触发校验
-   */
+  // 表单rule变化时触发校验
   validateOnRuleChange: Boolean,
-  /**
-   * 用于控制该表单内组件的尺寸
-   */
+  // 用于控制该表单内组件的尺寸
   size: LyPropType.size,
-  /**
-   * 当校验失败时，滚动到第一个错误表单项
-   */
+  // 当校验失败时，滚动到第一个错误表单项
   scrollToError: Boolean,
-  /**
-   * 最大label宽度
-   */
+  // 最大label宽度
   maxLabelWidth: {
     type: Number,
     default: 999
   },
-  /**
-   * 表单用于检索条件处理, 自动展示查询/重置按钮
-   */
+  // 表单用于检索条件处理, 自动展示查询/重置按钮
   searchForm: Boolean,
-  /**
-   * 加载状态
-   */
-  loading: Boolean,
-  
+  // 如果为true, 当表单组件销毁时, 将自动清空表单值
+  cleanUp: Boolean,
   ...colSpanProps
 }
 export type LyFormProps = ExtractPropTypes<typeof lyFormProps>

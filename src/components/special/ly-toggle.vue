@@ -23,7 +23,8 @@ const props = defineProps({
   // 真值对应文本
   onText: String,
   // 假值对应文本
-  offText: String
+  offText: String,
+  cleanUp: Boolean
 })
 const emit = defineEmits(['update:modelValue'])
 const {disabled, model} = useFormField(props, emit)
@@ -36,7 +37,7 @@ watchEffect(() => {
 const activated = computed(() => props.modelValue === props.onValue)
 const renderIcon = computed(() => props.onIcon && props.offIcon)
 const handleClick = () => {
-  if (!disabled) {
+  if (!disabled.value) {
     model.value = activated.value ? props.offValue : props.onValue
   }
 }
