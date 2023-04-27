@@ -12,8 +12,11 @@
       <ly-table adjust-column>
         <ly-column-index/>
         <ly-column label="权限类型" dict-code="permission_type" prop="permissionType"/>
-        <ly-column label="图标" prop="icon"/>
-        <ly-column label="名称" prop="name"/>
+        <ly-column label="名称" prop="name">
+          <template #default="{row}">
+            <ly-icon :type="row.icon"/> {{row.name}}
+          </template>
+        </ly-column>
         <ly-column label="路径" prop="path"/>
         <ly-column-action #default="{row}">
           <ly-btn-modify @click="ctx.handleEdit(row)"/>

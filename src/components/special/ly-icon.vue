@@ -34,6 +34,7 @@ watch(() => props.type, updateIcon)
 </script>
 <template>
   <el-icon ref="spanRef"
+           style="vertical-align: -0.125em"
            :class="[$attrs.class, spin && 'icon-spinner']"
            :color="color"
            :size="size"/>
