@@ -1,7 +1,6 @@
 import {createApp} from 'vue'
 import ElementPlus from 'element-plus'
 import 'virtual:windi.css'
-
 import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 import App from './app.vue'
@@ -18,5 +17,3 @@ app.use(createPinia())
   .use(LyComponent)
   .use(LyPlugin)
   .mount('#app')
-
-console.log(ViewsScan.tree())

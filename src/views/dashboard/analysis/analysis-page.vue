@@ -3,8 +3,8 @@
     <ly-icon :type="'ep:add-location'"/>
     <ly-form ref="formRef" one-third>
       <ly-input label="姓名" v-model="form.name" :rules="$rules.must"/>
-      <ly-input label="手机号" v-model="form.mobile"/>
-      <ly-input label="身份证" v-model="form.idCard"/>
+      <ly-input label="手机号" v-model="form.mobile" />
+      <ly-input label="身份证" v-model="form.idCard" />
       <ly-select label="性别" v-model="form.sex" dict-code="sex" :rules="$rules.must"/>
 
     </ly-form>
