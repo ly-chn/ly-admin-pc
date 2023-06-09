@@ -4,8 +4,7 @@ import {watchEffect} from 'vue'
 import {ElMessage} from 'element-plus'
 import type LyForm from '@/components/form/form/ly-form.vue'
 import {searchAreaCtxKey} from '@/components/area/area-ctx'
-import type {PagingVO} from '#/rest'
-import type {DataRecord} from '#/rest'
+import type {DataRecord, PagingVO} from '@/types/rest'
 
 export interface CrudApi {
   // 分页查询

@@ -1,7 +1,7 @@
 <template>
   <el-tree ref="treeRef"
            :data="data"
-           :empty-text="emptyText"
+           :empty-text="emptyText!"
            :filter-node-method="filterNode"
            :node-key="nodeKey"
            default-expand-all
@@ -19,10 +19,10 @@ import {computed, ref, watchEffect} from 'vue'
 import {useBridgeEmits} from '@/use/bridge-emits'
 import type {TreeNode} from 'element-plus'
 import {ElTree} from 'element-plus'
-import type {BasicTree} from '#/utility-type'
 import Pinyin from 'pinyin-match'
 import type {TreeComponentProps} from 'element-plus/es/components/tree/src/tree.type'
 import {useFieldModel} from '@/components/form/util/form-util'
+import {BasicTree} from '@/types/utility-type'
 
 const props = defineProps({
   /**
@@ -97,11 +97,11 @@ const bridgeEmits = useBridgeEmits(emits,
   ['check-change', 'node-click', 'node-contextmenu', 'node-collapse', 'node-expand', 'check'])
 
 watchEffect(() => treeRef.value?.filter(props.keywords?.trim()))
-const filterKey = computed(() => props.filterKey || [props.props.label])
+const filterKey = computed(() => props.filterKey || [props.props?.label])
 const filterNode = (keywords: string, data: BasicTree<string>) => !keywords || Object.keys(data)
   .some(k => filterKey.value.includes(k) && data[k] && Pinyin.match(String(data[k]), keywords))
 
-const currentNodeKey = useFieldModel(props, emits, 'currentNodeKey')
+const currentNodeKey = useFieldModel(props as any, emits, 'currentNodeKey')
 
 function handleCurrentNodeChange(data: BasicTree<string>, node: TreeNode) {
   if (props.nodeKey) {

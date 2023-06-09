@@ -11,6 +11,6 @@ export const permissionApi = {
     return rest.get(`sys-permission/${id}`)
   },
   remove(id) {
-    return rest.delete(`sys-permission/${id}`)
+    return rest.delete(`sys-permission/remove/${id}`)
   },
 }

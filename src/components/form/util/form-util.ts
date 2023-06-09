@@ -2,14 +2,14 @@ import type {ComputedRef} from 'vue'
 import {computed, type ExtractPropTypes, inject, onUnmounted, reactive} from 'vue'
 import type {DictOptionsProps, LyColSpanProps, LyDictItem} from '@/components/form/util/form-props'
 import {lyFormCtxKey} from '@/components/form/util/form-ctx'
-import type {Prefix} from '#/utility-type'
 import {useDictStore} from '@/store/dict'
+import type {Prefix} from '@/types/utility-type'
 
 // 最小化的表单项props
 const useFieldProp = {
   modelValue: null,
   disabled: Boolean,
-  cleanUp: Boolean
+  cleanUp: Boolean | undefined
 }
 
 // 最小化表单项props

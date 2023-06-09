@@ -6,6 +6,14 @@ export const PageLayout = () => import('@/layouts/page-layout/page-layout.vue')
 export const visitorRoutes: RouteRecordRaw[] = [
   {
     id: IdUtil.nextId(),
+    path: '/sign-in',
+    component: ()=>import('@/views/user/sign-in.vue'),
+    meta: {
+      title: '登录'
+    }
+  },
+  {
+    id: IdUtil.nextId(),
     path: '/',
     name: 'Dashboard',
     component: PageLayout,
@@ -24,7 +32,7 @@ export const visitorRoutes: RouteRecordRaw[] = [
         }
       }
     ]
-  },  {
+  }, {
     id: IdUtil.nextId(),
     path: '/tmp',
     name: 'Tmp',
