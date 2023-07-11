@@ -10,7 +10,7 @@ instance.interceptors.request.use(config => {
   config.headers.token = localStorage.getItem('token')
   return config
 }, error => {
-  console.log('req error : ', error)
+  console.error('req error : ', error)
   if (axios.isCancel(error)) {
     return error
   }
@@ -27,7 +27,7 @@ instance.interceptors.response.use(response => {
   return data
 }, error => {
   ElMessage.warning('请求异常')
-  console.log('请求异常: ', error)
+  console.error('请求异常: ', error)
   return Promise.reject(error)
 })
 

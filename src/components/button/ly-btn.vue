@@ -1,8 +1,8 @@
 <template>
-  <el-button :disabled="disabled"
+  <el-button :circle="circle"
+             :disabled="disabled"
              :link="link"
              :loading="loading"
-             :circle="circle"
              :plain="plain"
              :size="size"
              :text="text"
@@ -10,7 +10,7 @@
     <template v-if="showIcon" #icon>
       <ly-icon :type="icon"/>
     </template>
-    <template #default v-if="slots.default">
+    <template v-if="slots.default" #default>
       <slot/>
     </template>
   </el-button>
@@ -18,10 +18,9 @@
 
 <script lang="ts" setup>
 import type {PropType} from 'vue'
+import {computed, useSlots} from 'vue'
 import {LyPropType} from '@/components/util/ly-prop-type'
-import type {IconifyIconType} from '#/iconify'
-import {computed} from 'vue'
-import {useSlots} from 'vue'
+import {IconifyIconType} from '@/types/iconify'
 
 const props = defineProps({
   /**
@@ -63,7 +62,7 @@ const props = defineProps({
 })
 
 const slots = useSlots()
-const showIcon = computed(()=> {
+const showIcon = computed(() => {
   return props.icon && !(props.link && slots.default)
 })
 </script>

@@ -236,7 +236,6 @@ export function useCrudEdit<T extends DataRecord>(formRef: Ref<InstanceType<type
   const handleOk = async () => {
     await searchCtx.handleSubmit(formRef)
   }
-  console.log('searchCtx', searchCtx)
   return {
     editing: searchCtx.editing,
     updating: searchCtx.updating,

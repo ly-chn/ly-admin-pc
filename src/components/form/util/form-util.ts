@@ -23,8 +23,8 @@ export function useAutoLabelWidth(maxLabelWidth: number) {
     if (labelWidthMap.size === 0) {
       return ''
     }
-    const max = Math.min(Math.max(120, ...Array.from(labelWidthMap.values())), maxLabelWidth)
-    return max ? `${max}px` : ''
+    const max = Math.min(Math.max(80, ...Array.from(labelWidthMap.values())), maxLabelWidth) + 6
+    return `${max}px`
   })
   // 表单项更新label宽度
   const registerLabelWidth = (key: symbol, width: number) => {

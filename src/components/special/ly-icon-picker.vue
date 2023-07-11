@@ -28,7 +28,7 @@ import {useFieldModel} from '@/components/form/util/form-util'
 import {IconifyIcons} from '@/components/special/icon/iconify'
 import {computed, ref} from 'vue'
 import LyPaging from '@/components/special/ly-paging.vue'
-import type {IconifyIconType} from '#/iconify'
+import {IconifyIconType} from '@/types/iconify'
 
 const iconTypeList = IconifyIcons.split(',') as IconifyIconType[]
 

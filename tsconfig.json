@@ -12,7 +12,6 @@
     "skipLibCheck": true,
     "paths": {
       "@/*": ["./src/*"],
-      "#/*": ["./types/*"]
     },
     "lib": [
       "ES2020", "DOM"

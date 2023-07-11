@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type {PropType} from 'vue'
 import {computed, watchEffect} from 'vue'
-import type {IconifyIconType} from '#/iconify'
 import {useFormField} from '@/components/form/util/form-util'
+import {IconifyIconType} from '@/types/iconify'
 
 const props = defineProps({
   modelValue: null,

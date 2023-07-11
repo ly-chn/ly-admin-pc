@@ -1,4 +1,4 @@
-import type {ValueGetter} from '#/utility-type'
+import {ValueGetter} from '@/types/utility-type'
 
 /**
  * 类型转换工具类

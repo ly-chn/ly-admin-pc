@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import {onMounted, ref, watch} from 'vue'
-import Iconify from '@purge-icons/generated'
-import type {IconifyIconType} from '#/iconify'
-import {ElIcon} from 'element-plus'
+import {computed} from 'vue'
+import type {IconifyIconType} from '@/types/iconify'
+import {StyleUtil} from '@/components/util/style-util'
 
 const props = defineProps<{
   // 图标类型
@@ -16,29 +15,20 @@ const props = defineProps<{
   // 图标旋转角度(0-360)
   rotate?: number
 }>()
-const spanRef = ref<InstanceType<typeof ElIcon>>()
-const updateIcon = () => {
-  const spanEl = spanRef.value?.$el
-  if (spanEl) {
-    spanEl.textContent = ''
-    if (props.type) {
-      const svg = Iconify.renderSVG(props.type, {})
-      if (svg) {
-        spanEl.appendChild(svg)
-      }
-    }
+
+const style = computed(() => {
+  return {
+    color: props.color,
+    size: StyleUtil.addUnit( props.size)
   }
-}
-onMounted(updateIcon)
-watch(() => props.type, updateIcon)
+})
 </script>
+
 <template>
-  <el-icon ref="spanRef"
-           style="vertical-align: -0.125em"
-           :class="[$attrs.class, spin && 'icon-spinner']"
-           :color="color"
-           :size="size"/>
+  <i :class="[$attrs.class, spin && 'icon-spinner', `i-${props.type}`]"
+     :style="style"/>
 </template>
+
 <style scoped>
 .icon-spinner {
   animation: spin-animation 1s infinite;
@@ -47,11 +37,11 @@ watch(() => props.type, updateIcon)
 }
 
 @keyframes spin-animation {
-  0% {
+  from {
     transform: rotate(0deg);
   }
 
-  100% {
+  to {
     transform: rotate(360deg);
   }
 }

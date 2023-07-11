@@ -1,4 +1,4 @@
-import type {BasicTree} from '#/utility-type'
+import {BasicTree} from '@/types/utility-type'
 
 export type ViewsTree = BasicTree<{ label: string, value: string }>
 
@@ -6,7 +6,6 @@ export class ViewsScan {
   static tree() {
 
     const baseDir = '/src/views/'
-    console.log(import.meta.glob('@/views/**/*.vue'))
     const fileList = Object.keys(import.meta.glob('@/views/**/*.vue'))
       .map(it => it.replace(baseDir, ''))
       .filter(it => !it.includes('component'))

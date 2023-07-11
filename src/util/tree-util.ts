@@ -1,4 +1,4 @@
-import type  {BasicTree} from '#/utility-type'
+import {BasicTree} from '@/types/utility-type'
 
 export class TreeUtil {
   /**
@@ -36,9 +36,8 @@ export class TreeUtil {
   static filter<K extends Extract<keyof T, string>, T extends BasicTree>
   (tree: T[] | undefined, keywords: string,  keyList?: K[]): T[] {
     keywords = keywords?.trim()
-    console.log(tree)
     if (!keywords || !tree) {
-      return []
+      return tree ?? []
     }
     const validNode = new Set<BasicTree>()
     function valid(node: BasicTree): boolean {

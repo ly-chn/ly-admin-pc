@@ -8,8 +8,7 @@ body:
       value: |
         如果你不确定这是Bug, 你可以: 
         
-        - 在[常见问题排查](https://sa-token.cc/doc.html#/more/common-questions)中判断问题是否存在
-        - [加群](https://sa-token.cc/doc.html#/more/join-group)讨论
+        - 在[常见问题排查(暂无)]中判断问题是否存在
         - 请在 [issue](./?q=is%3Aissue) 中查看是否存在类似的问题
         ---
 

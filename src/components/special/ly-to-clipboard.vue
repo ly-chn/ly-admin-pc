@@ -13,7 +13,7 @@ const props = defineProps<{
 
 const handleClick = function () {
   if (!props.text) {
-    console.log('未提供复制的内容')
+    console.warn('未提供复制的内容')
     return
   }
   if (typeof props.text === 'string') {
