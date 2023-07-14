@@ -1,6 +1,6 @@
 <template>
   <ly-btn :link="link"
-          icon="ep:plus"
+          icon="ep:upload"
           type="primary"
           :disabled-tips="disabledTips"
           :disabled="disabled"
@@ -14,6 +14,8 @@ import {lyBtnProps} from '@/components/button/util/btn-props'
 import {useBridgeEmits} from '@/use/bridge-emits'
 
 defineProps({...lyBtnProps})
+
 const emits = defineEmits(['click'])
 const bridgeEmits = useBridgeEmits(emits, ['click'])
+
 </script>

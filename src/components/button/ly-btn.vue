@@ -1,12 +1,13 @@
 <template>
   <el-button :circle="circle"
-             :disabled="disabled"
+             :class="{'is-disabled': disabled}"
              :link="link"
              :loading="loading"
              :plain="plain"
              :size="size"
              :text="text"
-             :type="type">
+             :type="type"
+             @click="handleClick">
     <template v-if="showIcon" #icon>
       <ly-icon :type="icon"/>
     </template>
@@ -21,6 +22,7 @@ import type {PropType} from 'vue'
 import {computed, useSlots} from 'vue'
 import {LyPropType} from '@/components/util/ly-prop-type'
 import {IconifyIconType} from '@/types/iconify'
+import {ElMessage} from 'element-plus'
 
 const props = defineProps({
   /**
@@ -39,6 +41,10 @@ const props = defineProps({
    * 按钮是否为禁用状态
    */
   disabled: Boolean,
+  /**
+   * 禁用原因, 将作为提示展示给用户
+   */
+  disabledTips: String,
   /**
    * 是否为加载中状态
    */
@@ -61,8 +67,18 @@ const props = defineProps({
   circle: Boolean
 })
 
+const emits = defineEmits(['click'])
+
 const slots = useSlots()
 const showIcon = computed(() => {
   return props.icon && !(props.link && slots.default)
 })
+
+const handleClick = () => {
+  if (props.disabled && props.disabledTips) {
+    return ElMessage.info(props.disabledTips)
+  } else if (!props.disabled) {
+    emits('click')
+  }
+}
 </script>

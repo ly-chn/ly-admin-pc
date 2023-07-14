@@ -1,18 +1,19 @@
 <template>
   <ly-btn icon="ep:search"
           type="primary"
-          :link="isLink"
-          @click="emitClick"
-          :class="cssClass">
+          :link="link"
+          :disabled-tips="disabledTips"
+          :disabled="disabled"
+          v-bind="bridgeEmits">
     <slot>搜索</slot>
   </ly-btn>
 </template>
 
 <script setup lang="ts">
-import {useBtnHolder} from '@/components/button/util/ly-btn-util'
 import {lyBtnProps} from '@/components/button/util/btn-props'
+import {useBridgeEmits} from '@/use/bridge-emits'
 
-const props = defineProps({...lyBtnProps})
+defineProps({...lyBtnProps})
 const emits = defineEmits(['click'])
-const {isLink, emitClick, cssClass} = useBtnHolder(props, emits)
+const bridgeEmits = useBridgeEmits(emits, ['click'])
 </script>

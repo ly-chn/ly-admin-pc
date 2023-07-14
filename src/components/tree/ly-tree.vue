@@ -98,12 +98,12 @@ const bridgeEmits = useBridgeEmits(emits,
 
 watchEffect(() => treeRef.value?.filter(props.keywords?.trim()))
 const filterKey = computed(() => props.filterKey || [props.props?.label])
-const filterNode = (keywords: string, data: BasicTree<string>) => !keywords || Object.keys(data)
+const filterNode = (keywords: string, data: BasicTree) => !keywords || Object.keys(data)
   .some(k => filterKey.value.includes(k) && data[k] && Pinyin.match(String(data[k]), keywords))
 
 const currentNodeKey = useFieldModel(props as any, emits, 'currentNodeKey')
 
-function handleCurrentNodeChange(data: BasicTree<string>, node: TreeNode) {
+function handleCurrentNodeChange(data: BasicTree, node: TreeNode) {
   if (props.nodeKey) {
     currentNodeKey.value = data[props.nodeKey] as unknown as string
   }
