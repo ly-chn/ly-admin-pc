@@ -30,7 +30,7 @@ export class CastUtil {
    * CastUtil.unwrap(()=>"1") // '1'
    * CastUtil.unwrap() // undefined
    */
-  static unwrap<T>(target?: ValueGetter<T>): T | undefined {
+  static unwrap<T>(target?: ValueGetter<T>): T | void {
     if (typeof target === 'function') {
       return (target as () => T)()
     }

@@ -9,7 +9,7 @@ export class TreeUtil {
    * @param childrenKey 子节点key
    * @return 如未找到, 返回undefined, 否则返回该节点
    */
-  static findNode<T, K extends keyof T>(tree: T[], nodeKey: K, target: T[K], childrenKey: K = 'children' as K): T | undefined {
+  static findNode<T, K extends keyof T>(tree: T[], nodeKey: K, target: T[K], childrenKey: K = 'children' as K): T | void {
     if (!tree) {
       return undefined
     }
@@ -34,7 +34,7 @@ export class TreeUtil {
    * @return 过滤后的树
    */
   static filter<K extends Extract<keyof T, string>, T extends BasicTree>
-  (tree: T[] | undefined, keywords: string,  keyList?: K[]): T[] {
+  (tree: T[] | void, keywords: string,  keyList?: K[]): T[] {
     keywords = keywords?.trim()
     if (!keywords || !tree) {
       return tree ?? []

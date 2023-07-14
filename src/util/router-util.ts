@@ -13,7 +13,7 @@ export class RouterUtil {
    * getName('/abc/def.vue') // def
    * getName('/abc/def.hij.vue') // hij
    */
-  static getName(path?: string): string | undefined {
+  static getName(path?: string): string | void {
     if (this.hasSchema(path)) {
       return undefined
     }

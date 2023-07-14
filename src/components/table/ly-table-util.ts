@@ -8,7 +8,7 @@ import * as localforage from 'localforage'
 /**
  * 来自element-plus, 待其export后将移除
  */
-export const getRowIdentity = (row: any, rowKey: string | ((row: any) => string) | undefined): any => {
+export const getRowIdentity = (row: any, rowKey: string | ((row: any) => string) | void): any => {
   if (!row) throw new Error('Row is required when get row identity')
   if (typeof rowKey === 'string') {
     if (!rowKey.includes('.')) {
@@ -64,7 +64,7 @@ export function calcShowAbleColumn(columns: Ref<LyTableColumnCollector[]>, check
 /**
  * 来自element-ui
  */
-export function getPropByPath(obj: any, path: string | undefined) {
+export function getPropByPath(obj: any, path: string | void) {
   let tempObj = obj
   if (!path) {
     return undefined

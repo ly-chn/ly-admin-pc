@@ -41,7 +41,7 @@ export type BasicTree<T extends Record<any, any> = any> = {
 /**
  * 获取值, 可能是函数或值类型, 注意: T不能是函数
  */
-export type ValueGetter<T> = T extends ()=>any ? never : T | (() => T) | undefined
+export type ValueGetter<T> = T extends ()=>any ? never : T | (() => T) | void
 
 /**
  * 字符串分割

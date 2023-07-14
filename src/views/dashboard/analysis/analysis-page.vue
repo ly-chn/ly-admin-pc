@@ -1,7 +1,5 @@
 <template>
   <div>
-    <i class="i-ep-aim"></i>
-    <i class="i-ep:aim"></i>
     <ly-icon type="ep:aim"/>fda
     <ly-form ref="formRef" one-third>
       <ly-input label="姓名" v-model="form.name" :rules="$rules.must"/>

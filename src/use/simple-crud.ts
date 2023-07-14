@@ -223,7 +223,7 @@ export function useCrud<T extends DataRecord>(api: CrudApi, config: CrudConfig =
 /**
  * 表单编辑, 仅支持非同一vue组件
  */
-export function useCrudEdit<T extends DataRecord>(formRef: Ref<InstanceType<typeof LyForm>> | undefined): CrudEditContext<T> {
+export function useCrudEdit<T extends DataRecord>(formRef: Ref<InstanceType<typeof LyForm>> | void): CrudEditContext<T> {
   const searchCtx = inject(searchAreaCtxKey, null)
   if (!searchCtx) {
     throw Error('需置于检索表单上下文之中')

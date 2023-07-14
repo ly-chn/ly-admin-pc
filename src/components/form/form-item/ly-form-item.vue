@@ -96,7 +96,7 @@ const addInputId = (id: string) => {
 const removeInputId = (id: string) => {
   inputIds.value = inputIds.value.filter((listId) => listId !== id)
 }
-const labelFor = computed<string | undefined>(() => {
+const labelFor = computed<string | void>(() => {
   return inputIds.value?.[0]
 })
 

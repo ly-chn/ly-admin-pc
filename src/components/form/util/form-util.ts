@@ -5,15 +5,12 @@ import {lyFormCtxKey} from '@/components/form/util/form-ctx'
 import {useDictStore} from '@/store/dict'
 import type {Prefix} from '@/types/utility-type'
 
-// 最小化的表单项props
-const useFieldProp = {
-  modelValue: null,
-  disabled: Boolean,
-  cleanUp: Boolean | undefined
-}
-
 // 最小化表单项props
-export type LyUseFieldProp = ExtractPropTypes<typeof useFieldProp>
+export type LyUseFieldProp = ExtractPropTypes<{
+  modelValue: null,
+  disabled: boolean,
+  cleanUp?:boolean
+}>
 
 // 自动处理label宽度, 最大120px
 export function useAutoLabelWidth(maxLabelWidth: number) {

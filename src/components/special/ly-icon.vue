@@ -25,24 +25,6 @@ const style = computed(() => {
 </script>
 
 <template>
-  <i :class="[$attrs.class, spin && 'icon-spinner', `i-${props.type}`]"
+  <i :class="[$attrs.class, spin && 'icon-spinner', `i-${props.type}`, 'ly-icon']"
      :style="style"/>
 </template>
-
-<style scoped>
-.icon-spinner {
-  animation: spin-animation 1s infinite;
-  animation-timing-function: linear;
-  display: inline-block;
-}
-
-@keyframes spin-animation {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-</style>
