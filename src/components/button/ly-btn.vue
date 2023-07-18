@@ -1,6 +1,7 @@
 <template>
   <el-button :circle="circle"
              :class="{'is-disabled': disabled}"
+             class="ly-btn"
              :link="link"
              :loading="loading"
              :plain="plain"

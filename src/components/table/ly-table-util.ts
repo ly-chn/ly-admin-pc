@@ -43,7 +43,7 @@ export function useColumnCollect() {
  */
 export function calcShowAbleColumn(columns: Ref<LyTableColumnCollector[]>, checkedColumns: string[]) {
   // lyTodo: 优化这段代码
-  function shouldShow(column?: LyTableColumnCollector): boolean {
+  function shouldShow(column: void | LyTableColumnCollector): boolean {
     if (!column) {
       return false
     }

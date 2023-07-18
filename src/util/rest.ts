@@ -3,7 +3,7 @@ import {ElMessage} from 'element-plus'
 
 const instance = axios.create({
   timeout: 5 * 1000,
-  baseURL: import.meta.env.VITE_APP_BASE_URL
+  baseURL: import.meta.env.VITE_API_BASE_URL
 })
 
 instance.interceptors.request.use(config => {

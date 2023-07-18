@@ -2,13 +2,15 @@ import {defineStore} from 'pinia'
 import type {LyDictItem} from '@/components/form/util/form-props'
 import {CallCache} from '@/util/call-cache'
 import {dictItemApi} from '@/api/system/dict-item'
-import {shallowReactive} from 'vue'
-import {shallowRef} from 'vue'
 import type {ShallowRef} from 'vue'
+import {shallowReactive, shallowRef} from 'vue'
 
 export const useDictStore = defineStore('dict', (): DictStore => {
   const dictPool = shallowReactive(new Proxy({}, {
-    get(target: Record<string, ShallowRef<LyDictItem[]>>, dictCode: string): any {
+    get(target: Record<string | symbol, ShallowRef<LyDictItem[]>>, dictCode: string | symbol): any {
+      if (typeof dictCode !== 'string' || dictCode.startsWith?.('__v_')) {
+        return target[dictCode]
+      }
       // 字典不存在, 初始化字典
       if (!target[dictCode]) {
         target[dictCode] = shallowRef([])
@@ -35,7 +37,10 @@ export const useDictStore = defineStore('dict', (): DictStore => {
           dictPool[dictCode].value = value
         })))
   }
-  return {dictPool, refresh}
+  return {
+    dictPool,
+    refresh
+  }
 })
 
 export type DictStore = {

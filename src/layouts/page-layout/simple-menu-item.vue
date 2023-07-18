@@ -1,14 +1,14 @@
 <template>
-  <template v-if="menuItem.meta.hidden"></template>
+  <template v-if="menuItem.meta?.hidden"></template>
   <el-sub-menu :index="resolvePath(menuItem.path)" v-else-if="hasSubMenu">
-    <template #title>{{ menuItem.meta.title }}</template>
+    <template #title>{{ menuItem.meta?.title }}</template>
     <simple-menu-item v-for="child in menuItem.children" :key="child.id" :menu-item="child" :base-path="resolvePath(child.path)">
-      {{ child.meta.title }}
+      {{ child.meta?.title }}
     </simple-menu-item>
   </el-sub-menu>
   <!--lyTodo: 如果只有一个可用子菜单, 则跳转到子菜单-->
   <el-menu-item v-else :index="basePath">
-    {{ menuItem.meta.title }}
+    {{ menuItem.meta?.title }}
   </el-menu-item>
 </template>
 

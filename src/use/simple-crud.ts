@@ -93,7 +93,7 @@ export type CrudContext<T extends DataRecord = DataRecord> = {
    * 新增/修改完成
    * @param {Ref<InstanceType<typeof LyForm>>} formRef 表单存在则自动执行校验
    */
-  handleSubmit(formRef?: Ref<InstanceType<typeof LyForm>>): Promise<void>
+  handleSubmit(formRef: Ref<InstanceType<typeof LyForm>> | void): Promise<void>
   /**
    *
    * @param {string | string[]} id
