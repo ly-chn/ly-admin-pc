@@ -2,8 +2,7 @@
   <ly-btn type="info"
           icon="ep:refresh"
           :link="link"
-
-
+          :loading="loading"
           :disabled-tips="disabledTips"
           :disabled="disabled"
           v-bind="bridgeEmits">

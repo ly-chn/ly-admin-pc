@@ -1,28 +1,30 @@
 <template>
   <el-popover
+    :disabled="!templateName || loading"
+    :width="84"
     placement="top-start"
-    :width="200"
-    :disabled="!templateName"
     trigger="hover">
-    <el-link href="/test.txt" target="_blank">下载导入模板</el-link>
-    <el-link href="/import-template/test.txt" target="_blank">下载导入模板</el-link>
+    <el-link :href="`${appBase}/import-template/${templateName}`" download target="_blank">
+      <ly-icon type="ep:download"/>
+      下载导入模板
+    </el-link>
     <template #reference>
-      <ly-btn :link="link"
-              icon="ep:download"
-              type="primary"
+      <ly-btn :disabled="disabled"
               :disabled-tips="disabledTips"
-              :disabled="disabled"
-              v-bind="bridgeEmits">
+              :link="link"
+              icon="ep:download"
+              :loading="loading"
+              type="primary"
+              @click="handleClick">
         <slot>导入</slot>
       </ly-btn>
     </template>
   </el-popover>
-
 </template>
 
 <script lang="ts" setup>
 import {lyBtnProps} from '@/components/button/util/btn-props'
-import {useBridgeEmits} from '@/use/bridge-emits'
+import {FileUtil} from '@/util/file-util'
 
 defineProps({
   ...lyBtnProps,
@@ -31,18 +33,22 @@ defineProps({
    */
   templateName: String
 })
-
-const emits = defineEmits(['click'])
-const bridgeEmits = useBridgeEmits(emits, ['click'])
+const appBase = import.meta.env.BASE_URL
+const emits = defineEmits<{
+  click: [file: File]
+}>()
+const handleClick = async () => emits('click', await FileUtil.selectXlsx())
 </script>
 <style lang="scss" scoped>
-.template-download{
+.template-download {
   position: relative;
-  .download-link{
+
+  .download-link {
     display: none;
     position: absolute;
   }
-  &:hover .download-link{
+
+  &:hover .download-link {
     display: block;
   }
 }

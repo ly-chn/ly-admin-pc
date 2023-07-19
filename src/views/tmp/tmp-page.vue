@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ly-btn-import template-name="test.txt"/>
+    <ly-btn-import template-name="student.xlsx"/>
     <ly-input-icon label="hi" v-model="icon"/>
   </div>
 </template>

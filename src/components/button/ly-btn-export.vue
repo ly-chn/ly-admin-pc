@@ -2,6 +2,7 @@
   <ly-btn :link="link"
           icon="ep:upload"
           type="primary"
+          :loading="loading"
           :disabled-tips="disabledTips"
           :disabled="disabled"
           v-bind="bridgeEmits">

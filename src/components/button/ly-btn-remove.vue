@@ -2,6 +2,7 @@
   <ly-btn :link="link"
           icon="ep:delete"
           type="primary"
+          :loading="loading"
           :disabled="disabled"
           :disabled-tips="disabledTips"
           v-bind="bridgeEmits">

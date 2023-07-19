@@ -12,7 +12,11 @@ export const lyBtnProps = {
   /**
    * 禁用原因
    */
-  disabledTips: String
+  disabledTips: String,
+  /**
+   * 加载状态
+   */
+  loading: Boolean
 }
 
 export type LyBtnProps = ExtractPropTypes<typeof lyBtnProps>
