@@ -5,7 +5,7 @@
           :loading="loading"
           :disabled="disabled"
           :disabled-tips="disabledTips"
-          v-bind="bridgeEmits">
+          v-on="bridgeEmits">
     <slot>删除</slot>
   </ly-btn>
 </template>

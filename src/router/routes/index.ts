@@ -89,5 +89,20 @@ export const visitorRoutes: RouteRecordRaw[] = [
         title: '权限管理'
       }
     }]
+  }, {
+    id: IdUtil.nextId(),
+    path: '/demo',
+    component: PageLayout,
+    meta: {
+      title: '示例页面'
+    },
+    children: [{
+      id: IdUtil.nextId(),
+      path: 'demo-import-export',
+      component: () => import('@/views/demo/demo-import-export.vue'),
+      meta: {
+        title: '示例导入导出'
+      }
+    }]
   }
 ]

@@ -7,7 +7,7 @@
     </simple-menu-item>
   </el-sub-menu>
   <!--lyTodo: 如果只有一个可用子菜单, 则跳转到子菜单-->
-  <el-menu-item v-else :index="basePath">
+  <el-menu-item v-else :index="basePath" >
     {{ menuItem.meta?.title }}
   </el-menu-item>
 </template>
@@ -22,7 +22,7 @@ const props = defineProps<{
   basePath: string
 }>()
 
-const hasSubMenu = computed(() => (props.menuItem.children?.filter(it => !(it.meta?.hidden)).length ?? 0) > 1)
+const hasSubMenu = computed(() => (props.menuItem.children?.filter(it => !(it.meta?.hidden)).length ?? 0) > 0)
 
 const resolvePath = (targetPath: string): string => {
   if (IsInstance.url(targetPath)) {

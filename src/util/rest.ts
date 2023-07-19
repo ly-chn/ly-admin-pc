@@ -1,5 +1,6 @@
 import axios, {type AxiosInstance} from 'axios'
 import {ElMessage} from 'element-plus'
+import {FileUtil} from '@/util/file-util'
 
 const instance = axios.create({
   timeout: 5 * 1000,
@@ -14,12 +15,23 @@ instance.interceptors.request.use(config => {
   if (axios.isCancel(error)) {
     return error
   }
-  // const {response, code, message, config} = error || {}
   return Promise.reject(error)
 })
 
-instance.interceptors.response.use(response => {
-  const {code, message, data} = response.data
+instance.interceptors.response.use(async response => {
+  // 请求时设置返回blob, 但是实际上可能返回的是json的情况
+  if (response.data instanceof Blob) {
+    if (!response.headers['content-type']?.includes('application/json')) {
+      FileUtil.saveBlob(response.data, decodeURI(response.headers['filename'] ?? ''))
+      return null
+    }
+    response.data = JSON.parse(await (response.data as Blob).text())
+  }
+  const {
+    code,
+    message,
+    data
+  } = response.data
   if (code !== 2000) {
     ElMessage.warning(message)
     return Promise.reject(response)

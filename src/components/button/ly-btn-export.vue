@@ -1,12 +1,12 @@
 <template>
   <ly-btn :link="link"
-          icon="ep:upload"
+          icon="ep:download"
           type="primary"
           :loading="loading"
           :disabled-tips="disabledTips"
           :disabled="disabled"
-          v-bind="bridgeEmits">
-    <slot>新增</slot>
+          v-on="bridgeEmits">
+    <slot>导出</slot>
   </ly-btn>
 </template>
 

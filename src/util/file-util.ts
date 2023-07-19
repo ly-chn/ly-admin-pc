@@ -1,5 +1,6 @@
 export class FileUtil {
   static #input = document.createElement('input')
+  static #tagA = document.createElement('a')
   static {
     this.#input.type = 'file'
   }
@@ -16,6 +17,17 @@ export class FileUtil {
    */
   static selectXlsx() {
     return this.#selectFile('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+  }
+
+  /**
+   * 保存文件
+   */
+  static saveBlob(file: Blob, filename: string) {
+    this.#tagA.download = filename
+    const url = URL.createObjectURL(file)
+    this.#tagA.href = url
+    this.#tagA.click()
+    URL.revokeObjectURL(url)
   }
 
   /**
@@ -37,7 +49,7 @@ export class FileUtil {
       })
       this.#input.addEventListener('change', () => {
         window.removeEventListener('focus', cancelDetector)
-        resolve(this.#input.files[0])
+        resolve(this.#input.files?.[0] as File)
       })
       this.#input.click()
     })

@@ -84,7 +84,7 @@ const dictItemCtx = useCrud(dictItemApi, {
   beforeEdit(record) {
     record.value.dictId = currentDict.id
   },
-  name: 'dictitem'
+  name: 'dict-item'
 })
 const {searchForm} = dictItemCtx
 

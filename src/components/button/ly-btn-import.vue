@@ -12,7 +12,7 @@
       <ly-btn :disabled="disabled"
               :disabled-tips="disabledTips"
               :link="link"
-              icon="ep:download"
+              icon="ep:upload"
               :loading="loading"
               type="primary"
               @click="handleClick">

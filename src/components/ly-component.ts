@@ -26,6 +26,7 @@ import LyInputIcon from '@/components/form/form-item/ly-input-icon.vue'
 import LyIconPicker from '@/components/special/ly-icon-picker.vue'
 import LyTreeSelect from '@/components/form/form-item/ly-tree-select.vue'
 import LyBtnImport from '@/components/button/ly-btn-import.vue'
+import LyBtnExport from '@/components/button/ly-btn-export.vue'
 
 export const LyComponent = {
   // webstorm暂时无法识别自动注册/name形式注册组件
@@ -62,5 +63,6 @@ export const LyComponent = {
     Vue.component('LyBtnRemove', LyBtnRemove)
     Vue.component('LyBtnModify', LyBtnModify)
     Vue.component('LyBtnImport', LyBtnImport)
+    Vue.component('LyBtnExport', LyBtnExport)
   }
 }

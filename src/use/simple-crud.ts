@@ -95,7 +95,7 @@ export type CrudContext<T extends DataRecord = DataRecord> = {
    */
   handleSubmit(formRef: Ref<InstanceType<typeof LyForm>> | void): Promise<void>
   /**
-   *
+   * 移除/批量删除
    * @param {string | string[]} id
    * @return {Promise<void>}
    */
@@ -158,6 +158,7 @@ export function useCrud<T extends DataRecord>(api: CrudApi, config: CrudConfig =
       loading.value = false
     }
   }
+
   const handleReset = async () => {
     paging.value.pageSize = undefined
     paging.value.pageNum = 1
