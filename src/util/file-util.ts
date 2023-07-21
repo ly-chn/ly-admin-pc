@@ -37,6 +37,7 @@ export class FileUtil {
   static #selectFile(accept: string): Promise<File> {
     return new Promise((resolve, reject) => {
       this.#input.accept = accept
+      this.#input.value = ''
       const cancelDetector = () => {
         window.removeEventListener('focus', cancelDetector)
         setTimeout(() => {

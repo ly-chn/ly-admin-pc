@@ -1,0 +1,6 @@
+/*弹窗最大高度*/
+.el-dialog__body {
+  max-height: 80vh;
+  overflow: auto;
+  scrollbar-width: thin;
+}

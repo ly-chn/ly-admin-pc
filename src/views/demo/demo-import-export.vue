@@ -2,7 +2,7 @@
 import {demoImportExportApi} from '@/api/system/demo-import-export'
 import {ElMessage} from 'element-plus'
 
-const handleImport = async (file) => {
+const handleImport = async (file: File) => {
   // 导入成功或失败都会走then方法, 成功返回成功消息, 失败则返回Excel并自动下载, then中的回调值为null
   demoImportExportApi.demoImport(file).then(msg => msg && ElMessage.success(msg))
     .catch(console.log)
