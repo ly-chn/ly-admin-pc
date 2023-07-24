@@ -83,6 +83,20 @@ export const visitorRoutes: RouteRecordRaw[] = [
       meta: {
         title: '示例导入导出'
       }
+    }, {
+      id: IdUtil.nextId(),
+      path: 'demo-button-usage',
+      component: () => import('@/views/demo/demo-button-usage.vue'),
+      meta: {
+        title: '示例按钮使用'
+      }
+    }, {
+      id: IdUtil.nextId(),
+      path: 'temp-page',
+      component: () => import('@/views/demo/temp-page.vue'),
+      meta: {
+        title: '没用的临时页面'
+      }
     }]
   }
 ]

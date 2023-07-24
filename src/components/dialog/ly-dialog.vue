@@ -41,7 +41,11 @@ const props = defineProps({
   /**
    * 关闭前的回调，会暂停 Dialog 的关闭. 回调函数内执行 done 参数方法的时候才是真正关闭对话框的时候.
    */
-  beforeClose: Function as PropType<(done: (() => void)) => void>
+  beforeClose: Function as PropType<(done: (() => void)) => void>,
+  /**
+   * "确认"按钮加载状态
+   */
+  loading: Boolean
 })
 const emits = defineEmits(['update:modelValue', 'ok'])
 const modelValue = useFieldModel(props, emits)

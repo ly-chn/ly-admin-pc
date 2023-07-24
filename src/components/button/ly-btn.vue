@@ -1,13 +1,14 @@
 <template>
   <el-button :circle="circle"
              :class="{'is-disabled': disabled}"
-             class="ly-btn"
              :link="link"
              :loading="loading"
              :plain="plain"
              :size="size"
              :text="text"
              :type="type"
+             class="ly-btn"
+             v-auto-blur
              @click="handleClick">
     <template v-if="showIcon" #icon>
       <ly-icon :type="icon"/>
@@ -75,10 +76,12 @@ const showIcon = computed(() => {
   return props.icon && !(props.link && slots.default)
 })
 
+const unClickAble = computed(()=>props.disabled || props.loading)
+
 const handleClick = () => {
-  if (props.disabled && props.disabledTips) {
+  if (unClickAble.value && props.disabledTips) {
     return ElMessage.info(props.disabledTips)
-  } else if (!props.disabled) {
+  } else if (!unClickAble.value) {
     emits('click')
   }
 }

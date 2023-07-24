@@ -16,6 +16,7 @@ import AsyncValidator from 'async-validator'
 import {LyFormConstant} from '@/components/form/util/ly-form-constant'
 import {Rules} from '@/plugin/ly-rules'
 import {CastUtil} from '@/util/cast-util'
+import {ValueGetter} from '@/types/utility-type'
 
 const compKey = Symbol.for('ly-form-item')
 
@@ -53,7 +54,7 @@ const props = defineProps({
   /**
    * 提示文案
    */
-  tips: [String, Function] as PropType<string | (() => string)>,
+  tips: [String, Function] as PropType<ValueGetter<string>>,
   ...colSpanProps
 })
 
@@ -190,6 +191,7 @@ const formItemClasses = computed(() => [
 ])
 const validateStateDebounced = refDebounced(validateState, 100)
 
+// todo: 支持实时
 const tipsContent = computed(() => CastUtil.unwrap(props.tips))
 
 const context = reactive({
