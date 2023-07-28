@@ -39,6 +39,7 @@ declare module 'vue' {
     LyBtn: typeof import('./src/components/button/ly-btn.vue')['default']
     LyBtnCancel: typeof import('./src/components/button/ly-btn-cancel.vue')['default']
     LyBtnComfirm: typeof import('./src/components/button/ly-btn-comfirm.vue')['default']
+    LyBtnConfirm: typeof import('./src/components/button/ly-btn-confirm.vue')['default']
     LyBtnCreate: typeof import('./src/components/button/ly-btn-create.vue')['default']
     LyBtnExport: typeof import('./src/components/button/ly-btn-export.vue')['default']
     LyBtnImport: typeof import('./src/components/button/ly-btn-import.vue')['default']

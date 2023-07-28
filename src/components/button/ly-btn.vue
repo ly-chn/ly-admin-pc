@@ -8,7 +8,6 @@
              :text="text"
              :type="type"
              class="ly-btn"
-             v-auto-blur
              @click="handleClick">
     <template v-if="showIcon" #icon>
       <ly-icon :type="icon"/>

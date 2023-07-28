@@ -12,6 +12,8 @@
     <ly-btn-import/>
     <ly-btn-export/>
     <ly-btn-modify/>
+    <ly-btn icon="ep:aim">12</ly-btn>
+    <ly-btn icon="ly:duanxin">34</ly-btn>
   </div>
   <div>
     link样式: <br>
