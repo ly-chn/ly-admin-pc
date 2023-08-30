@@ -12,7 +12,7 @@ export class CastUtil {
    */
   static array<T>(target: T | T[]) {
     if (!target) {
-      return [] as T[]
+      return []
     }
     if (Array.isArray(target)) {
       return target

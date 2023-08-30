@@ -90,20 +90,15 @@ export function useDictOption(props: DictOptionsProps): ComputedRef<LyDictItem[]
  * @param props 组件props
  * @param key 组件props中的key
  * @param emit 组件emit
- * @param transformGet computed get转换, 参数为props[key]的值, 返回值作为computed的get返回值
- * @param transformSet computed set转换, 参数为set的参数, 返回值作为emit的参数
  * @return 可写计算属性
  */
 export function useFieldModel<T extends LyUseFieldProp, K extends Extract<keyof T, string>>
 (props: T,
   emit: (event: Prefix<'update:', K>, ...args: any[]) => void,
-  key: K = 'modelValue' as K,
-  transformGet?: (v: T[K]) => T[K],
-  transformSet?: (v: T[K]) => T[K]) {
-  const getV = () => transformGet?.(props[key]) ?? props[key]
+  key: K = 'modelValue' as K) {
   const model = computed({
     get() {
-      return getV()
+      return props[key]
     },
     set(v: T[K]) {
       // 禁用表单, 无法触发任何值的改变
@@ -111,10 +106,10 @@ export function useFieldModel<T extends LyUseFieldProp, K extends Extract<keyof 
         return
       }
       // 值没有发生改变, 则不触发emit
-      if (getV() === v) {
+      if (props[key] === v) {
         return
       }
-      emit(`update:${key}`, transformSet?.(v) ?? v)
+      emit(`update:${key}`, v)
     }
   })
   onUnmounted(() => {

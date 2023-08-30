@@ -3,10 +3,7 @@ import presetIcons from '@unocss/preset-icons'
 import {IconifyIcons} from './src/components/special/icon/iconify'
 import {FileSystemIconLoader} from '@iconify/utils/lib/loader/node-loaders'
 
-const loader = FileSystemIconLoader('./src/assets/svg-icon')
-const test = (name: string) => {
-  return loader(name)
-}
+const whRegex = /(width|height)="\d+(\.\d+)?px"\s?/g
 export default defineConfig({
   presets: [
     presetUno(),
@@ -16,12 +13,12 @@ export default defineConfig({
             'vertical-align': '-0.125em'
           },
           collections: {
-            //ly: test,
-            'ly': FileSystemIconLoader('./src/assets/icons', svg => svg.replace(/(<svg.*(width|height)=").*"(.*>)/, ''))
+            'ly': FileSystemIconLoader('./src/assets/svg-icon', svg => svg.replace(whRegex, ''))
           },
           customizations: {
             iconCustomizer(collection, icon, props) {
               if (collection === 'ly') {
+                console.log(collection, icon, props)
                 props.width = '14px'
                 props.height = '14px'
               }

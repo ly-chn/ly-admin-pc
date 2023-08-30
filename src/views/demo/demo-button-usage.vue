@@ -5,7 +5,7 @@
 <template>
   <div>
     按钮样式: <br>
-    <ly-btn-search/>
+    <ly-btn-search />
     <ly-btn-reset/>
     <ly-btn-create/>
     <ly-btn-remove/>

@@ -1,0 +1,70 @@
+name: deploy to my tencent
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    environment: deploy to tencent
+    runs-on: ubuntu-latest
+    env:
+      # 私钥
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      # 用户名
+      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+      # 主机地址
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      # 指纹
+      SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOST }}
+    steps:
+      # 创建ssh目录, 并启动ssh代理
+      - name: setup ssh
+        shell: bash
+        run: |
+          mkdir -p $HOME/.ssh
+      # 保存公钥到known_hosts
+      - name: configure ssh public key
+        shell: bash
+        run: echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+      # 保存私钥到ssh-agent
+      - name: setup ssh private key
+        shell: bash
+        run: |
+          eval $(ssh-agent)
+          # 将进程信息保存到环境变量, 方便后面的程序使用, 如docker
+          echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $GITHUB_ENV
+          echo "SSH_AGENT_PID=SSH_AGENT_PID" >> $GITHUB_ENV
+          echo "$SSH_PRIVATE_KEY" | ssh-add -
+          ssh-add -l
+          ssh $SSH_USERNAME@$SSH_HOST "df -h"
+      # 创建并使用docker远程上下文
+      - name: create and use docker remote context
+        shell: bash
+        run: |
+          docker context create remote --docker "host=ssh://${{ env.SSH_USERNAME }}@${{ env.SSH_HOST }}"
+          docker context use remote
+      # 检出代码
+      - name: checkout
+        uses: actions/checkout@v3
+      # 安装nodejs 18和yarn
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: yarn
+      # 安装依赖
+      - name: install dependencies
+        run: yarn install
+      # 构建
+      - name: build
+        run: yarn build
+      # 移除历史镜像
+      - name: remove docker image
+        run: docker rmi -f ly-admin-pc || true
+      # 构建docker镜像
+      - name: build docker image
+        run: docker build --no-cache -f ./build/docker/Dockerfile -t ly-admin-pc .
+      # 启动新的docker镜像
+      - name: start docker container
+        run: docker run -d -p 8001:80 --name ly-admin-pc ly-admin-pc

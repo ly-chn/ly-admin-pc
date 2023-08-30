@@ -92,6 +92,13 @@ export const visitorRoutes: RouteRecordRaw[] = [
       }
     }, {
       id: IdUtil.nextId(),
+      path: 'demo-icon-usage',
+      component: () => import('@/views/demo/demo-icon-usage.vue'),
+      meta: {
+        title: '示例图标使用'
+      }
+    }, {
+      id: IdUtil.nextId(),
       path: 'temp-page',
       component: () => import('@/views/demo/temp-page.vue'),
       meta: {
