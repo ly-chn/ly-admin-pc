@@ -37,12 +37,11 @@ jobs:
           echo "SSH_AGENT_PID=SSH_AGENT_PID" >> $GITHUB_ENV
           echo "$SSH_PRIVATE_KEY" | ssh-add -
           ssh-add -l
-          ssh $SSH_USERNAME@$SSH_HOST "df -h"
       # 创建并使用docker远程上下文
       - name: create and use docker remote context
         shell: bash
         run: |
-          docker context create remote --docker "host=ssh://${{ env.SSH_USERNAME }}@${{ env.SSH_HOST }}"
+          docker context create remote --docker "host=ssh://$SSH_USERNAME@$SSH_HOST"
           docker context use remote
       # 检出代码
       - name: checkout
@@ -60,8 +59,10 @@ jobs:
       - name: build
         run: yarn build
       # 移除历史镜像
-      - name: remove docker image
-        run: docker rmi -f ly-admin-pc || true
+      - name: remove docker image and container
+        run: |
+          docker rm -f ly-admin-pc || true
+          docker rmi -f ly-admin-pc || true
       # 构建docker镜像
       - name: build docker image
         run: docker build --no-cache -f ./build/docker/Dockerfile -t ly-admin-pc .
