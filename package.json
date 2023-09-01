@@ -9,7 +9,7 @@
     "test": "vitest run",
     "build": "vite build --base=/ly-admin-pc/",
     "preview": "vite preview",
-    "gen:icon": "esno ./build/icon/generate-icon.ts"
+    "tsc": "vue-tsc --noEmit"
   },
   "dependencies": {
     "@vueuse/core": "^10.1.2",
@@ -26,7 +26,6 @@
   },
   "devDependencies": {
     "@iconify/json": "^2.2.88",
-    "@types/inquirer": "^9.0.3",
     "@types/webpack-env": "^1.18.1",
     "@typescript-eslint/eslint-plugin": "^5.59.9",
     "@typescript-eslint/parser": "^5.59.9",
@@ -35,8 +34,6 @@
     "@vue/tsconfig": "^0.4.0",
     "eslint": "^8.42.0",
     "eslint-plugin-vue": "^9.14.1",
-    "esno": "^0.16.3",
-    "inquirer": "^9.2.7",
     "sass": "^1.62.1",
     "typescript": "5.0.4",
     "unocss": "^0.53.1",

@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import {computed} from 'vue'
-import type {IconifyIconType} from '@/types/iconify'
 import {StyleUtil} from '@/components/util/style-util'
+import {IconType} from '@/types/icon'
 
 const props = defineProps<{
   // 图标类型
-  type?: IconifyIconType,
+  type?: IconType,
   // 图标颜色
   color?: string,
   // 图标选择状态

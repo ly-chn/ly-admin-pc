@@ -25,12 +25,9 @@
 
 <script lang="ts" setup>
 import {useFieldModel} from '@/components/form/util/form-util'
-import {IconifyIcons} from '@/components/special/icon/iconify'
 import {computed, ref} from 'vue'
 import LyPaging from '@/components/special/ly-paging.vue'
-import {IconifyIconType} from '@/types/iconify'
-
-const iconTypeList = IconifyIcons.split(',') as IconifyIconType[]
+import {iconList} from '@/components/special/icon/project-icon'
 
 const props = defineProps<{
   modelValue?: string,
@@ -45,7 +42,7 @@ const searchValue = ref<string>()
 const pageNum = ref(1)
 const sourceList = computed(() => {
   const s = searchValue.value?.trim()
-  return s ? iconTypeList.filter(it => it.includes(s)) : iconTypeList
+  return s ? iconList.filter(it => it.includes(s)) : iconList
 })
 const visibleIcon = computed(() => sourceList.value.slice((pageNum.value - 1) * 80, pageNum.value * 80))
 </script>

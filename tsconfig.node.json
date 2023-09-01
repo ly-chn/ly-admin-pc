@@ -5,7 +5,8 @@
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
     "importsNotUsedAsValues": "error",
+    "resolveJsonModule": true,
     "types": ["node", "webpack-env"]
   },
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.ts", "build/vite-plugin/vite-plugin-icon-loader.ts"]
 }

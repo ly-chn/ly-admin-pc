@@ -2,7 +2,7 @@
 import type {PropType} from 'vue'
 import {computed, watchEffect} from 'vue'
 import {useFormField} from '@/components/form/util/form-util'
-import {IconifyIconType} from '@/types/iconify'
+import {IconType} from '@/types/icon'
 
 const props = defineProps({
   modelValue: null,
@@ -17,9 +17,9 @@ const props = defineProps({
   // 禁用
   disabled: Boolean,
   // 真值对应图标
-  onIcon: String as PropType<IconifyIconType>,
+  onIcon: String as PropType<IconType>,
   // 假值对应图标
-  offIcon: String as PropType<IconifyIconType>,
+  offIcon: String as PropType<IconType>,
   // 真值对应文本
   onText: String,
   // 假值对应文本

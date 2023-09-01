@@ -22,14 +22,14 @@
 import type {PropType} from 'vue'
 import {computed, useSlots} from 'vue'
 import {LyPropType} from '@/components/util/ly-prop-type'
-import {IconifyIconType} from '@/types/iconify'
 import {ElMessage} from 'element-plus'
+import {IconType} from '@/types/icon'
 
 const props = defineProps({
   /**
    * 图标
    */
-  icon: String as PropType<IconifyIconType>,
+  icon: String as PropType<IconType>,
   /**
    * 尺寸
    */

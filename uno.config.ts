@@ -26,6 +26,4 @@ export default defineConfig({
           }
         }) as any
   ],
-  // 将icon图标集添加到safelislt
-  safelist: ['i-ly:duanxin'].concat(IconifyIcons.split(',').map(it => `i-${it}`))
 })
