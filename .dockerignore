@@ -2,3 +2,4 @@
 *
 # but not these files...
 !dist
+!build
