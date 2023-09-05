@@ -1,7 +1,7 @@
 import {defineConfig, presetUno} from 'unocss'
 import presetIcons from '@unocss/preset-icons'
-import {IconifyIcons} from './src/components/special/icon/iconify'
 import {FileSystemIconLoader} from '@iconify/utils/lib/loader/node-loaders'
+import {iconList} from './src/components/special/icon/project-icon'
 
 const whRegex = /(width|height)="\d+(\.\d+)?px"\s?/g
 export default defineConfig({
@@ -18,7 +18,6 @@ export default defineConfig({
           customizations: {
             iconCustomizer(collection, icon, props) {
               if (collection === 'ly') {
-                console.log(collection, icon, props)
                 props.width = '14px'
                 props.height = '14px'
               }
@@ -26,4 +25,5 @@ export default defineConfig({
           }
         }) as any
   ],
+  safelist: iconList.map(it=>`i-${it}`)
 })

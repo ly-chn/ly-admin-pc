@@ -42,8 +42,8 @@ const VitePluginIconLoader = (options?: IconLoaderOptions): Plugin => {
       }
     }
     fs.writeFileSync('src/components/special/icon/project-icon.ts',
-      `export const iconifyIcons = '${allIconifyIcons.map(i=>'i-'+i).join(',')}'\n`
-      + `export const iustomIcons = '${allCustomIcons.map(i=>'i-ly:'+i).join(',')}'\n`
+      `export const iconifyIcons = '${allIconifyIcons.join(',')}'\n`
+      + `export const iustomIcons = '${allCustomIcons.map(i=>'ly:'+i).join(',')}'\n`
       +'export const iconList = (iconifyIcons+ \',\' + iustomIcons).split(\',\')')
     fs.writeFileSync('src/types/icon.d.ts',
       `export type IconifyIcons = ${allIconifyIcons.map(i=>`'${i}'`).join('|')}\n`

@@ -1,3 +1,5 @@
+import {ref} from 'vue'
+
 export class FileUtil {
   static #input = document.createElement('input')
   static #tagA = document.createElement('a')
@@ -54,5 +56,16 @@ export class FileUtil {
       })
       this.#input.click()
     })
+  }
+
+  /**
+   * 文件上传 自动切片
+   * @param file
+   * @return
+   */
+  static upload(file: File) {
+    console.log('file is', file)
+    const process = ref(0)
+    return {process}
   }
 }
