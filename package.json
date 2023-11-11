@@ -14,7 +14,7 @@
   "dependencies": {
     "@vueuse/core": "^10.1.2",
     "async-validator": "^4.2.5",
-    "axios": "^1.4.0",
+    "axios": "^1.6.0",
     "clipboard-copy": "^4.0.1",
     "element-plus": "^2.3.6",
     "localforage": "^1.10.0",
