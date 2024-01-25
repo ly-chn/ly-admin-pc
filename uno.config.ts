@@ -1,6 +1,7 @@
 import {defineConfig, presetUno} from 'unocss'
 import presetIcons from '@unocss/preset-icons'
 import {FileSystemIconLoader} from '@iconify/utils/lib/loader/node-loaders'
+// noinspection ES6PreferShortImport
 import {iconList} from './src/components/special/icon/project-icon'
 
 const whRegex = /(width|height)="\d+(\.\d+)?px"\s?/g
