@@ -14,7 +14,7 @@ export const visitorRoutes: RouteRecordRaw[] = [
   },
   {
     id: IdUtil.nextId(),
-    path: '/',
+    path: '',
     name: 'Dashboard',
     component: PageLayout,
     redirect: '/dashboard/analysis',
@@ -24,7 +24,7 @@ export const visitorRoutes: RouteRecordRaw[] = [
     children: [
       {
         id: IdUtil.nextId(),
-        path: '/dashboard/analysis',
+        path: 'dashboard/analysis',
         name: 'Analysis',
         component: () => import('@/views/dashboard/analysis/analysis-page.vue'),
         meta: {

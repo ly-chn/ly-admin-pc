@@ -50,8 +50,8 @@
         <ly-column label="最新更新" prop="updateTime"/>
         <ly-column-action>
           <template #default="{row}">
-            <ly-btn-modify @click="dictItemCtx.handleEdit(row)"/>
-            <ly-btn-remove @click="dictItemCtx.handleRemove(row.id)"/>
+            <ly-btn-modify link @click="dictItemCtx.handleEdit(row)"/>
+            <ly-btn-remove link @click="dictItemCtx.handleRemove(row.id)"/>
           </template>
         </ly-column-action>
       </ly-table>

@@ -6,7 +6,6 @@ import Components from 'unplugin-vue-components/vite'
 import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 import {fileURLToPath, URL} from 'node:url'
 import UnoCss from 'unocss/vite'
-import Inspect from 'vite-plugin-inspect'
 import VitePluginIconLoader from './build/vite-plugin/vite-plugin-icon-loader'
 // https://vitejs.dev/config/
 export default defineConfig(({mode}) => {
@@ -14,7 +13,6 @@ export default defineConfig(({mode}) => {
     base: loadEnv(mode, process.cwd()).VITE_APP_BASE,
     plugins: [
       vue(),
-      Inspect(),
       UnoCss(),
       eslintPlugin({
         include: ['src/**/*.js', 'src/**/*.vue', 'src/*.js', 'src/*.vue']
