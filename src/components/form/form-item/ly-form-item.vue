@@ -1,15 +1,32 @@
 <script lang="ts" setup>
-import {computed, inject, onBeforeUnmount, onMounted, provide, reactive, ref, useSlots, watchEffect} from 'vue'
 import type {PropType} from 'vue'
-import {nextTick} from 'vue'
+import {
+  computed,
+  inject,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  provide,
+  reactive,
+  ref,
+  useSlots,
+  watchEffect
+} from 'vue'
+import type {FormValidateRule, FormValidateRuleGenerate} from '@/components/form/util/form-props'
 import {colSpanProps} from '@/components/form/util/form-props'
-import type {FormValidateRule} from '@/components/form/util/form-props'
-import type {FormValidateRuleGenerate} from '@/components/form/util/form-props'
 import {refDebounced, useResizeObserver} from '@vueuse/core'
 import {useColSpan} from '@/components/form/util/form-util'
 import {lyFormCtxKey} from '@/components/form/util/form-ctx'
-import type {FormItemContext, FormItemRule, FormItemValidateState, FormValidateFailure} from 'element-plus'
-import {formItemContextKey, useNamespace, useSize} from 'element-plus'
+import {
+  FormItemContext,
+  formItemContextKey,
+  FormItemRule,
+  FormItemValidateState,
+  FormValidateFailure,
+  useId,
+  useNamespace,
+  useSize
+} from 'element-plus'
 import {IsInstance} from '@/util/is-instance'
 import type {RuleItem} from 'async-validator'
 import AsyncValidator from 'async-validator'
@@ -62,7 +79,7 @@ const validateState = ref<FormItemValidateState>('')
 const slots = useSlots()
 const labelRef = ref<HTMLDivElement>()
 
-const hasLabel = computed(() => props.label || slots.label)
+const hasLabel = computed(() => !!(props.label || slots.label))
 
 const updateLabelWidth = () => {
   nextTick(() => formCtx?.registerLabelWidth(compKey, getLabelWidth()))
@@ -71,6 +88,9 @@ const updateLabelWidth = () => {
 const getLabelWidth = () => {
   return labelRef.value ? Math.ceil(Number.parseFloat(window.getComputedStyle(labelRef.value).width)) : 0
 }
+
+const labelId = useId().value
+
 useResizeObserver(
   () => (labelRef.value?.firstElementChild) as HTMLElement | null,
   () => updateLabelWidth()
@@ -122,7 +142,10 @@ const normalizedRules = computed(() => {
     return rule
   }) as FormItemRule[]
   if (result.some(it => it.required)) {
-    result.push({required: true, message: '自动生成的非空校验'})
+    result.push({
+      required: true,
+      message: '自动生成的非空校验'
+    })
   }
   return result
 })
@@ -131,10 +154,16 @@ const setValidationState = (state: FormItemValidateState) => {
 }
 const getFilteredRule = (trigger: string) => normalizedRules.value
   .filter(rule => !rule.trigger || !trigger || CastUtil.array(rule.trigger).includes(trigger))
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  .map(({trigger, ...rule}) => rule)
+  .map(({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    trigger,
+    ...rule
+  }) => rule)
 const onValidationFailed = (error: FormValidateFailure) => {
-  const {errors, fields} = error
+  const {
+    errors,
+    fields
+  } = error
   if (!errors || !fields) {
     console.error(error)
   }
@@ -191,10 +220,24 @@ const formItemClasses = computed(() => [
 ])
 const validateStateDebounced = refDebounced(validateState, 100)
 
-// todo: 支持实时
 const tipsContent = computed(() => CastUtil.unwrap(props.tips))
-
-const context = reactive({
+const formItemRef = ref<HTMLDivElement>()
+const context: FormItemContext = reactive({
+  $el: formItemRef,
+  // 没用
+  size: '',
+  labelId,
+  inputIds,
+  hasLabel: hasLabel.value,
+  fieldValue: props.value,
+  inlineMessage: '',
+  showMessage: true,
+  // todo: impl
+  resetField: () => {
+  },
+  labelWidth: '',
+  // todo: impl
+  isGroup: false,
   validateState,
   addInputId,
   removeInputId,
@@ -209,7 +252,7 @@ defineExpose({
 })
 </script>
 <template>
-  <el-col :class="formItemClasses" :span="finalSpan" class="flex ly-form-item">
+  <el-col ref="formItemRef" :class="formItemClasses" :span="finalSpan" class="flex ly-form-item">
     <component :is="labelFor?'label':'div'"
                v-if="hasLabel"
                ref="labelRef"

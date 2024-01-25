@@ -1,4 +1,5 @@
 import {ValueGetter} from '@/types/utility-type'
+import {unref} from 'vue'
 
 /**
  * 类型转换工具类
@@ -27,10 +28,12 @@ export class CastUtil {
    * 给定函数值则返回执行结果, 否则原样返回
    * @example
    * CastUtil.unwrap('1') // '1'
-   * CastUtil.unwrap(()=>"1") // '1'
+   * CastUtil.unwrap(()=>'1') // '1'
+   * CastUtil.unwrap(ref('1')) // '1'
    * CastUtil.unwrap() // undefined
    */
   static unwrap<T>(target?: ValueGetter<T>): T | void {
+    target = unref(target)
     if (typeof target === 'function') {
       return (target as () => T)()
     }

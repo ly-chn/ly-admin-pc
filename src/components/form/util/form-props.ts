@@ -17,6 +17,11 @@ export const formFieldProps = {
   tips: [String, Function] as PropType<string | (()=> string)>,
   // 如果为true, 当表单组件销毁时, 将自动清空表单值
   cleanUp: Boolean,
+  // 表单位置
+  labelPosition: {
+    type: String,
+    default: 'left'
+  }
 }
 export type LyFormFieldProps = ExtractPropTypes<typeof formFieldProps>
 // 布局通用
